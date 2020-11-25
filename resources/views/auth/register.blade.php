@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <h1>RubricApp</h1>
+            <span class="text-4xl font-extrabold pl-2 text-gray-300"><span class="text-4xl font-extrabold pl-2 text-white">Rubric</span>App</span>
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
@@ -31,7 +31,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('¿Ya esta registrado?') }}
+                    {{ __('¿Ya está registrado?') }}
                 </a>
 
                 <x-jet-button class="ml-4">

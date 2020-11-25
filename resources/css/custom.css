@@ -1,3 +1,20 @@
-.body-custom{
-    background-color: #ADB5BD;
-}
+li {
+    float: left;
+    border-right: 3px solid #30FFE3;
+  }
+  
+  li a {
+    display: block;
+    color: whitesmoke;
+    text-decoration: none;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  
+  li a:hover:not(.active) {
+    background-color: #111;
+  }
+  
+  li a:focus {
+    background-color: #EAB126
+  }
