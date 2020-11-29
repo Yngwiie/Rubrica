@@ -19,7 +19,7 @@
         </div>
 
         <!-- Delete User Confirmation Modal -->
-        <x-jet-dialog-modal wire:model="confirmingUserDeletion">
+        <x-jet-dialog-modal wire:model="confirmingUserDeletion" >
             <x-slot name="title">
                 {{ __('Eliminar Cuenta') }}
             </x-slot>
