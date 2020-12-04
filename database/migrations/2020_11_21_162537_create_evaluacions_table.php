@@ -18,7 +18,6 @@ class CreateEvaluacionsTable extends Migration
             $table->timestamps();
             $table->string('nombre',70)->notnull();
             $table->date('fecha')->nullable();
-            $table->string('nota');
             $table->unsignedBigInteger('id_modulo')->notnull();
             $table->foreign('id_modulo')->references('id')->on('modulos')->onDelete('cascade');
             

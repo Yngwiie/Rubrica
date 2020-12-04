@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\http\LiveWire\Modulos;
+use App\http\LiveWire\Show_modulo;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', Modulos::class)->name('dashboard');
-
+/* Route::middleware(['auth:sanctum', 'verified'])->get('/evaluaciones', Evaluaciones::class)->name('evaluaciones'); */
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-
-
+    Route::get('/show_modulo/{id_modulo}', Show_modulo::class)->name('show.modulo');
 });

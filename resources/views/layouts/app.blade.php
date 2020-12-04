@@ -22,12 +22,14 @@
         @livewireStyles
         
         <link rel="stylesheet" href="{{ asset('css/styles-sidebar.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+        
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script src="{{ asset('js/scripts-sidebar.js') }}" defer></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/custom.scss') }}">
     </head>
 
     <body class="sb-nav-fixed">
@@ -100,6 +102,15 @@
             })
             window.Livewire.on('moduloEliminado',()=>{
                 $('#deleteModulo').modal('hide');
+            })
+            window.Livewire.on('evaluacionAgregada',()=>{
+                $('#addEvaluacion').modal('hide');
+            })
+            window.Livewire.on('evaluacionEliminada',()=>{
+                $('#deleteEvaluacion').modal('hide');
+            })
+            window.Livewire.on('evaluacionEditada',()=>{
+                $('#editEvaluacion').modal('hide');
             })
         </script>
 

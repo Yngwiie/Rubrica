@@ -12,7 +12,7 @@ class estudiante_evaluacion extends Model
     protected $table = 'estudiante_evaluaciones';
 
     protected $fillable = [
-        'id_estudiante','id_evaluacion',
+        'id_estudiante','id_evaluacion','nota'
     ];
 
     public function estudiante(){

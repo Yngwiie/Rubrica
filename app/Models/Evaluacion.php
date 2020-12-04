@@ -12,7 +12,7 @@ class Evaluacion extends Model
     protected $table = 'evaluaciones';
 
     protected $fillable = [
-        'fecha','nombre','nota','id_modulo',
+        'fecha','nombre','id_modulo',
     ];
 
     public function modulo(){

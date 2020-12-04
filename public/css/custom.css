@@ -8,3 +8,42 @@
 .bg-sec{
     background-color: #CED4DA;
 }
+.breadcrumb{
+    background-color:#343A40;
+}
+.breadcrumb-item a{
+    padding: 0 5px;
+    color: white;
+    font-size: medium;
+  }
+  .breadcrumb-item.active{
+    color: #ADB5BD;
+    font-size: medium;
+}
+
+.nav-tabs .nav-link.active{
+    background-color: #343A40;
+    color:white;
+    
+
+}
+.nav-tabs .nav-link{
+    color: #777f88;
+    border: none;
+    
+}
+.thead-secondary{
+    background-color: #6C757D;
+    color: white;
+}
+.bg-secondary-custom{
+    background-color: #6C757D;
+    color: white;
+}
+.btn-sec:hover{
+    color:  #6C757D;
+
+}
+.btn-sec:focus{
+    box-shadow: none;
+}
