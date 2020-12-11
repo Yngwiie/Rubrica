@@ -27,6 +27,7 @@ class Show_modulo extends Component
         $searchTerm = '%'.$this->searchTerm.'%';
         $modulo = Modulo::find($this->id_modulo);
         $evaluaciones = Evaluacion::where('nombre','LIKE',$searchTerm)
+                        ->where('id_modulo','=',$this->id_modulo)
                         ->orderBy('id','DESC')->paginate(5);
         return view('livewire.show_modulo',['evaluaciones' => $evaluaciones, 'modulo' => $modulo]);
     }
@@ -43,7 +44,7 @@ class Show_modulo extends Component
             'nombre' => 'required|string|max:40',
             'fecha' => 'required',
         ]);
-
+        
         Evaluacion::create([
             'id_modulo' => $this->id_modulo,
             'nombre' => $validateData['nombre'],
@@ -105,4 +106,12 @@ class Show_modulo extends Component
         $this->emit('evaluacionEditada');
     }
 
+    public function setPage($url)
+    {
+        $this->currentPage = explode('page=',$url)[1];
+
+        Paginator::currentPageResolver(function(){
+            return $this->currentPage;
+        });
+    }
 }

@@ -1,11 +1,11 @@
 <div class="container">
     @include('mensajes-flash')
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-        <div class="card shadow-lg" >
-        
+        <div class="card shadow-lg">
+
             <div class="card-header">
-                    {{ Breadcrumbs::render('modulo', $modulo) }}
-                
+                {{ Breadcrumbs::render('modulo', $modulo) }}
+
             </div>
             <div class="card-body">
                 <ul class="nav nav-tabs">
@@ -16,7 +16,7 @@
                         <a class="nav-link " role="tab" data-toggle="tab" href="#estudiantes">Estudiantes</a>
                     </li>
                 </ul>
-                <div class="tab-content" >
+                <div class="tab-content">
                     <div class="tab-pane active" id="evaluaciones" role="tabpanel" aria-labelledby="pills-home-tab">
                         @include('livewire.evaluaciones')
                     </div>
@@ -24,18 +24,17 @@
                         Aquí se gestionaran estudiantes
                     </div>
                 </div>
-                            
-        
-            </div>
-            
-        </div>
-        
-        <script>
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                    $(this).remove(); 
-                });
-            }, 4000);
 
+
+            </div>
+
+        </div>
+
+        <script>
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                $(this).remove();
+            });
+        }, 4000);
         </script>
     </div>

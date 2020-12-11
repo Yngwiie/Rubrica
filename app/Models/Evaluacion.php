@@ -20,6 +20,6 @@ class Evaluacion extends Model
     }
 
     public function rubrica(){
-        return $this->hasOne('App\Models\Evaluacion','id_evaluacion');
+        return $this->hasOne('App\Models\Rubrica','id_evaluacion');
     }
 }

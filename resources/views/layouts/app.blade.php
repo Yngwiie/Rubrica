@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
         
         <!-- Styles -->
+        
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         
         
@@ -20,9 +21,10 @@
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
         @livewireStyles
-        
+        <!-- <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css"> -->
         <link rel="stylesheet" href="{{ asset('css/styles-sidebar.css') }}">
         
+
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script src="{{ asset('js/scripts-sidebar.js') }}" defer></script>
@@ -30,6 +32,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
         <link rel="stylesheet" href="{{ asset('css/custom.scss') }}">
+        <link rel="stylesheet" href="{{ asset('css/bd-wizard.css') }}">
+
     </head>
 
     <body class="sb-nav-fixed">
@@ -70,11 +74,11 @@
                                     <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
                                     Módulos
                                 </a>
-                                <a class="nav-link" href="#1">
+                                <a class="nav-link" href="{{route('misrubricas')}}">
                                     <div class="sb-nav-link-icon"><i class="far fa-list-alt"></i></div>
                                     Mis Rúbricas
                                 </a>
-                                <a class="nav-link" href="#2">
+                                <a class="nav-link" href="{{route('rubric.index')}}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-wrench"></i></div>
                                     Constructor de Rúbricas
                                 </a>
@@ -111,6 +115,10 @@
             })
             window.Livewire.on('evaluacionEditada',()=>{
                 $('#editEvaluacion').modal('hide');
+            })
+            
+            window.Livewire.on('rubricaEliminada',()=>{
+                $('#deleteRubrica').modal('hide');
             })
         </script>
 
@@ -157,5 +165,7 @@
 
 </body>
 
+<script src="{{ asset('js/jquery.steps.min.js') }}"></script>
+<script src="{{ asset('js/bd-wizard.js') }}"></script>
 
 </html>
