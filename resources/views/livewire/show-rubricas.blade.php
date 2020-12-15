@@ -36,8 +36,8 @@
                         <tr>
                             <td><i class="far fa-lg fa-list-alt"></i> {{$rubrica->titulo}}</td>
                             <td>{{$rubrica->evaluacion->nombre}} - {{$rubrica->evaluacion->modulo->nombre}}</td>
-                            <td><button class="btn  btn-sm btn-sec" data-toggle="modal" data-target="#editModulo"
-                                    wire:click="edit({{$rubrica->id}})"><i class="far fa-lg fa-edit"></i></button>
+                            <td><a class="btn btn-sm btn-sec" 
+                                   href="{{route('rubric.edit',$rubrica->id)}}"><i class="far fa-lg fa-edit"></i></a>
                                 <button class="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteRubrica"
                                     wire:click="delete({{$rubrica->id}})"><i style="color:red "
                                         class="far fa-lg fa-trash-alt"></i></button>

@@ -21,7 +21,7 @@ class Dimension extends Model
     public function aspectos(){
         return $this->hasMany('App\Models\Aspecto','id_dimension');
     }
-    public function nivelDesempeno(){
+    public function nivelesDesempeno(){
         return $this->hasMany('App\Models\NivelDesempeno','id_dimension');
     }
 }

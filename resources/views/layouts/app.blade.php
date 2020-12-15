@@ -78,6 +78,10 @@
                                     <div class="sb-nav-link-icon"><i class="far fa-list-alt"></i></div>
                                     Mis Rúbricas
                                 </a>
+                                <a class="nav-link" href="#2">
+                                    <div class="sb-nav-link-icon"><i class="far fa-list-alt"></i></div>
+                                    Rúbricas asociadas
+                                </a>
                                 <a class="nav-link" href="{{route('rubric.index')}}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-wrench"></i></div>
                                     Constructor de Rúbricas

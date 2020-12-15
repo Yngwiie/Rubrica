@@ -7,10 +7,10 @@
                 <a class="nav-link active" data-toggle="tab" href="#infoPanel" role="tab" id="adsBack">Info.
                     General</a>
             <li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#ads" role="tab" id="infoContinue" disabled>Datos
-                    académicos</a>
-            <li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#ads" role="tab" id="infoContinue" disabled>Info.
+                    Preliminar</a>
+            <li> -->
 
         </ul>
 
@@ -72,7 +72,7 @@
                         <label style="color:red">(*)</label>
                         <label>Campos obligatorios</label>
                         <div wire:ignore class="float-right">
-                            <button id="scheduleContinue" class="btn btn-secondary" disabled>Continuar</button>
+                            <button id="btnguardar" class="btn btn-secondary" type="submit" disabled>Guardar</button>
                         </div>
                         <br></br>
                     </div>
@@ -125,13 +125,13 @@ function validar() {
     var titulo = document.getElementById("titulo").value;
     var descripcion = document.getElementById("descripcion").value;
     if (titulo.length != 0 && descripcion.length != 0) {
-        $("#infoContinue").removeClass('disabled');
-        $('#scheduleContinue').prop('disabled', false);
+       /*  $("#btnguardar").removeClass('disabled'); */
+        $('#btnguardar').prop('disabled', false);
 
 
     } else {
-        $("#infoContinue").addClass('disabled');
-        $('#scheduleContinue').prop('disabled', true);
+        /* $("#btnguardar").addClass('disabled'); */
+        $('#btnguardar').prop('disabled', true);
     }
 };
 $(function() {

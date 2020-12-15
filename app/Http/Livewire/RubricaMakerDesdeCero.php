@@ -5,8 +5,10 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Evaluacion;
 use App\Models\Rubrica;
+use App\Models\Dimension;
+use App\Models\NivelDesempeno;
 
-class RubricaMaker extends Component
+class RubricaMakerDesdeCero extends Component
 {
     public $titulo;
     public $descripcion;
@@ -15,7 +17,7 @@ class RubricaMaker extends Component
     public function render()
     {
         $evaluaciones = Evaluacion::doesntHave('rubrica')->get();
-        return view('livewire.rubrica-maker',['evaluaciones' => $evaluaciones]);
+        return view('livewire.rubrica-makerDesdeCero',['evaluaciones' => $evaluaciones]);
     }
 
     public function resetInputFields()
@@ -34,12 +36,25 @@ class RubricaMaker extends Component
             'id_evaluacion' => 'required',
         ]);
        
-        Rubrica::create([
+        $rubrica = Rubrica::create([
             'id_evaluacion' => $this->id_evaluacion,
             'titulo' => $validateData['titulo'],
             'descripcion' => $validateData['descripcion'],
         ]);
+        $dimension = Dimension::create([
+            'nombre' => 'Dimension 1',
+            'id_rubrica' => $rubrica->id,
+        ]);
+        for($i = 1; $i <= 3; $i++){
+            NivelDesempeno::create([
+                'nombre' => 'nivel '.$i,
+                'ordenJerarquico' => $i,
+                'id_dimension' => $dimension->id,
+            ]);
+        }
+        
         session()->flash('success','Rúbrica asociada a su evaluación.');
         $this->resetInputFields();
+        return redirect()->route('rubric.edit', $rubrica->id);
     }
 }

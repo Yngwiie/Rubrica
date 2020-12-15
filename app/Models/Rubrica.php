@@ -18,4 +18,7 @@ class Rubrica extends Model
     public function evaluacion(){
         return $this->belongsTo('App\Models\Evaluacion','id_evaluacion');
     }
+    public function dimensiones(){
+        return $this->hasMany('App\Models\Dimension','id_rubrica');
+    }
 }

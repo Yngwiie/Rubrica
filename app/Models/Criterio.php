@@ -12,10 +12,13 @@ class Criterio extends Model
     protected $table = 'criterios';
 
     protected $fillable = [
-        'descripcion','id_nivelDesempeno',
+        'descripcion','id_aspecto',
     ];
 
-    public function nivelDesempeno(){
+    /* public function nivelDesempeno(){
         return $this->belongsTo('App\Models\NivelDesempeno','id_nivelDesempeno');
+    } */
+    public function aspecto(){
+        return $this->belongsTo('App\Models\Aspecto','id_aspecto');
     }
 }

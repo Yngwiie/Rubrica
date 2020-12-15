@@ -11,7 +11,6 @@
             </div>
             <div class="card-body">
 
-
                 <div class="d-flex justify-content-between">
                     <div class="col-md-4">
                         <button class="btn btn-md btn-sec" data-toggle="modal" data-target="#addModulo"><i
