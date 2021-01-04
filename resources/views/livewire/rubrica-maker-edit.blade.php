@@ -4,13 +4,13 @@
         <div class="form-group row">
             <label for="titulo" class="col-sm-2 col-form-label"><strong>Titulo</strong></label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="titulo" value="{{$rubrica->titulo}}"placeholder="Titulo">
+                <input type="text" class="form-control" id="titulo" wire:model.defer="rubrica.titulo" placeholder="Titulo">
             </div>
         </div>
         <div class="form-group row">
             <label for="Descripcion" class="col-sm-2 col-form-label"><strong>Descripción</strong></label>
             <div class="col-sm-5">
-                <textarea type="text" class="form-control" id="Descripcion" placeholder="Descripción">{{$rubrica->descripcion}}</textarea>
+                <textarea type="text" class="form-control" id="Descripcion" wire:model.defer="rubrica.descripcion" placeholder="Descripción"></textarea>
             </div>
         </div>
         <div class="form-group row">
@@ -21,88 +21,116 @@
         </div>
     </form>
     <div class="mb-2">
-        <button class="btn btn-md btn-sec add-dim"><i
+        <button onclick="anadirDimension()" class="btn btn-md btn-sec add-dim"><i
                 class="far fa-lg fa-plus-square"></i> Añadir Dimensión</button>
-        <button class="btn btn-primary float-right" wire:click="$emit('update')">Guardar Cambios</button>
+        <button class="btn btn-success" onclick="emitir()">Guardar Cambios</button>
     </div>
     <hr class="bg-dark">
+
     @foreach ($rubrica->dimensiones as $dimension)
-       <!--  <button type="button" onclick="anadirAspecto({{$dimension->id}})" class="btn btn-primary add-row" value="Añadir Aspecto"></button> -->
-        <button type="button" wire:click="storeAspect({{$dimension->id}})" class="btn btn-md btn-sec add-row"><i
+        <button type="button" onclick="anadirAspecto({{$dimension->id}})" class="btn btn-md btn-sec add-row"><i
                 class="far fa-lg fa-plus-square"></i>  Añadir Aspecto</button>
         <button type="button" class="btn btn-md btn-sec add-row"><i
-                class="far fa-lg fa-plus-square"></i>  Añadir Nivel</button>
-        <table class="table table-bordered" id="table{{$dimension->id}}">
-            <tbody>
-                <tr class="bg-secondary">
+                wire:click="storeNivel({{$dimension->id}})" class="far fa-lg fa-plus-square"></i>  Añadir Nivel</button>
+        <button type="button" class="btn btn-md btn-sec add-row" onclick="deleteDimension({{$dimension->id}})" style="color:red">
+                <i class="fas fa-lg fa-times"></i>  Eliminar Dimensión</button>
+        
+        <table class="table table-responsive-md table-bordered" id="table{{$dimension->id}}">
+            <thead class="bg-secondary">
+                <tr >
+                    
                     @livewire('dimension-component',['dimension' => $dimension],key($dimension->id))
-                    <!-- <th class="col-4"><input type="text" class="form-control" value="{{$dimension->nombre}}"></th> -->
+                    
                     @foreach($dimension->nivelesDesempeno as $nivel)
                         @livewire('nivel-desempeno-component',['nivel' => $nivel], key($nivel->id))
-                        <!-- <th><input type="text" class="form-control" value="{{$nivel->nombre}}"></th> -->
                     @endforeach
                 </tr>  
-                @foreach($dimension->aspectos as $aspecto)
-                    @livewire('aspecto-component',['aspecto' => $aspecto],key($aspecto->key))
-                    <!-- <tr>
-                        <th class='col-4'><input type='text' class='form-control' value="{{$aspecto->nombre}}"></th>
-                        @foreach($aspecto->criterios as $criterio)
-                            <th><input type='text' class='form-control' value="{{$criterio->descripcion}}"></th>
-                        @endforeach
-                    </tr> -->
-                @endforeach
+            </thead>
+            <tbody>
                 
-                <!-- @livewire('aspecto-component',['dimension' => $dimension],key($dimension->key)) -->
+                @foreach($dimension->aspectos as $aspecto)
+                    @livewire('aspecto-component',['aspecto' => $aspecto],key($loop->index))
+                   
+                @endforeach
+            </tbody>
         </table>
         <br>
     @endforeach
-    
+    <!-- Modal Eliminar dimension -->
+    <div wire:ignore.self class="modal fade" id="deleteDimension" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Dimensión</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de eliminar esta dimension?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" wire:click="deleteDimension()">Eliminar Dimension</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+ 
 <script>
+                
     window.setTimeout(function() {
         $(".alert").fadeTo(500, 0).slideUp(500, function() {
             $(this).remove();
         });
     }, 4000);
 </script>
+
 <script>
-$(document).ready(function(){
-        $(".add-dim").click(function(){
-            var markup = "<button type='button'  class='btn btn-md btn-sec add-row'><i "+
-                "class='far fa-lg fa-plus-square'></i>  Añadir Aspecto</button>"+
-            "<button type='button' class='btn btn-md btn-sec'><i "+
-                "class='far fa-lg fa-plus-square'></i>  Añadir Nivel</button>"+
-            "<table class='table table-bordered' id='table{{$dimension->id}}'>"+
-                "<tbody>"+
-                    "<tr class='bg-secondary'>"+
-                        "<th class='col-4'><input type='text' class='form-control' placeholder='Nombre Dimensión'></th>"+
-                        "<th><input type='text' class='form-control' placeholder='Nivel 1'></th>"+
-                        "<th><input type='text' class='form-control' placeholder='Nivel 2'></th>"+
-                        "<th><input type='text' class='form-control' placeholder='Nivel 3'></th>"+
-                    "</tr>"+  
-                    "<tr>"+
-                        "<th class='col-4'><input type='text' class='form-control' placeholder='Aspecto '></th>"+
-                        "<th><input type='text' class='form-control' placeholder='Criterio'></th>"+
-                        "<th><input type='text' class='form-control' placeholder='Criterio'></th>"+
-                        "<th><input type='text' class='form-control' placeholder='Criterio'></th>"+
-                    "</tr>"+
-                    "<tr>"+
-                        "<th class='col-4'><input type='text' class='form-control' placeholder='Aspecto '></th>"+
-                        "<th><input type='text' class='form-control' placeholder='Criterio'></th>"+
-                        "<th><input type='text' class='form-control' placeholder='Criterio'></th>"+
-                        "<th><input type='text' class='form-control' placeholder='Criterio'></th>"+
-                    "</tr>"+    
-                "</tbody>"+
-            "</table>"+
-            "<br>";
-        $("#contenedor").append(markup);
-        });
-    });
-function anadirAspecto(i){
-    var markup = "<tr><th class='col-4'><input type='text' class='form-control' placeholder='Aspecto '></th>"+
-                "<th><input type='text' class='form-control' placeholder='Criterio'></th>"+
-                "<th><input type='text' class='form-control' placeholder='Criterio'></th>"+
-                "<th><input type='text' class='form-control' placeholder='Criterio'></th>";
-    $("#table"+i+" > tbody").append(markup);
-}
+    function anadirAspecto(i){
+        var markup = "<tr><th class='col-4'><input type='text' class='form-control' placeholder='Aspecto '></th>"+
+                    "<th><input type='text' class='form-control' placeholder='Criterio'></th>"+
+                    "<th><input type='text' class='form-control' placeholder='Criterio'></th>"+
+                    "<th><input type='text' class='form-control' placeholder='Criterio'></th>";
+        $("#table"+i+" > tbody").append(markup);
+    }
+    function emitir(){
+        
+        Livewire.emit('update')
+        var contenedor = document.getElementById('contenedor_carga');
+
+        contenedor.style.visibility = 'visible';
+        contenedor.style.opacity = '0.9';
+    }
+    function anadirAspecto(id){
+        var contenedor = document.getElementById('contenedor_carga');
+
+        contenedor.style.visibility = 'visible';
+        contenedor.style.opacity = '0.9';
+        Livewire.emit('storeAspecto',id)
+        
+    }
+    function anadirDimension(id){
+        var contenedor = document.getElementById('contenedor_carga');
+
+        contenedor.style.visibility = 'visible';
+        contenedor.style.opacity = '0.9';
+        Livewire.emit('storeDimension')
+        
+    }
+    function deleteDimension(id){
+        var opcion = confirm("¿Está Seguro?")
+        if(opcion == true){
+            var contenedor = document.getElementById('contenedor_carga');
+
+            contenedor.style.visibility = 'visible';
+            contenedor.style.opacity = '0.9';
+            Livewire.emit('deleteDimension',id)
+        }
+        
+        
+    }
 </script>

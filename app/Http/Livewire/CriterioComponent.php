@@ -10,15 +10,17 @@ class CriterioComponent extends Component
 
     public Criterio $criterio;
     public $descripcion;
-    protected $listeners = ['update'];
+    public $id_criterio;
+    protected $listeners = ['refrescar'=>'$refresh'];
 
     protected $rules = [
-        'criterio.descripcion' => 'required',
+        'criterio.descripcion' => 'required|string',
     ];
 
     public function mount(Criterio $criterio){
         $this->criterio = $criterio;
         $this->descripcion = $criterio->descripcion;
+        $this->id_criterio = $criterio->id;
         /* $this->nombre = $dimension->nombre;
         $this->id_dim = $dimension->id; */
     }
@@ -27,7 +29,18 @@ class CriterioComponent extends Component
     {
         return view('livewire.criterio-component');
     }
-    public function update(){
+    /**
+     * Metodo para guardar cambios del criterio.
+     */
+    /* public function update()
+    {  
+        $this->validate();
+        $this->criterio->save();
+      
+    } */
+    public function updated()
+    {
+        $this->validate();
         $this->criterio->save();
     }
 }

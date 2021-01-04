@@ -39,10 +39,15 @@
                                     <div class="form-group">
                                         <select class="form-control" name="id_evaluacion" wire:model="id_evaluacion">
                                             <option hidden selected>Selecciona una opción</option>
-                                            @foreach($evaluaciones as $evaluacion)
-                                            <option value="{{$evaluacion->id}}">{{$evaluacion->nombre}} -
-                                                {{$evaluacion->modulo->nombre}}</option>
+                                            @foreach(Auth::user()->modulos as $modulo)
+                                                @foreach($modulo->evaluacion as $evaluacion)
+                                                    @if(!$evaluacion->rubrica)
+                                                        <option value="{{$evaluacion->id}}">{{$evaluacion->nombre}} -
+                                                        {{$evaluacion->modulo->nombre}}</option>
+                                                    @endif
+                                                @endforeach
                                             @endforeach
+                                            
                                         </select>
                                         @error('id_evaluacion') <span class="error text-danger">{{ $message }}</span>
                                         @enderror

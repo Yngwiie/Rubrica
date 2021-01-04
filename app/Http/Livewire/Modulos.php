@@ -24,6 +24,7 @@ class Modulos extends Component
     {   
         $searchTerm = '%'.$this->searchTerm.'%';
         $modulos = Modulo::where('nombre','LIKE',$searchTerm)
+                        ->where('id_usuario','=',auth()->user()->id)
                         ->orderBy('id','DESC')->paginate(5);
         return view('livewire.modulos',['modulos' => $modulos]);
     }

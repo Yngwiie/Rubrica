@@ -14,7 +14,7 @@ class ShowRubricas extends Component
 
     public function render()
     {
-        $rubricas = Rubrica::paginate(6);
+        $rubricas = Rubrica::orderBy('id','DESC')->paginate(6);
         return view('livewire.show-rubricas',['rubricas' => $rubricas]);
     }
 

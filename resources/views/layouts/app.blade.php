@@ -33,10 +33,14 @@
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
         <link rel="stylesheet" href="{{ asset('css/custom.scss') }}">
         <link rel="stylesheet" href="{{ asset('css/bd-wizard.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/pantallacarga.css') }}">
 
     </head>
 
     <body class="sb-nav-fixed">
+        <div id="contenedor_carga">
+            <div id="carga"></div>
+        </div> 
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand" href="{{route('dashboard')}}"><span class="text-2xl font-extrabold pl-2 text-gray-300"><span class="text-2xl font-extrabold pl-2 text-white">Rubric</span>App</span></a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
@@ -74,6 +78,10 @@
                                     <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
                                     Módulos
                                 </a>
+                                <a class="nav-link" href="{{route('rubric.index')}}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-wrench"></i></div>
+                                    Constructor de Rúbricas
+                                </a>
                                 <a class="nav-link" href="{{route('misrubricas')}}">
                                     <div class="sb-nav-link-icon"><i class="far fa-list-alt"></i></div>
                                     Mis Rúbricas
@@ -81,10 +89,6 @@
                                 <a class="nav-link" href="#2">
                                     <div class="sb-nav-link-icon"><i class="far fa-list-alt"></i></div>
                                     Rúbricas asociadas
-                                </a>
-                                <a class="nav-link" href="{{route('rubric.index')}}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-wrench"></i></div>
-                                    Constructor de Rúbricas
                                 </a>
                         </div>
                     </div>
@@ -123,6 +127,9 @@
             
             window.Livewire.on('rubricaEliminada',()=>{
                 $('#deleteRubrica').modal('hide');
+            })
+            window.Livewire.on('aspectoEliminado',()=>{
+                $('#deleteAspecto').modal('hide');
             })
         </script>
 
@@ -165,7 +172,15 @@
             $("#wrapper").toggleClass("toggled");
             });
         </script>
+        <script>
+        window.onload = function(){
+            var contenedor = document.getElementById('contenedor_carga');
 
+            contenedor.style.visibility = 'hidden';
+            contenedor.style.opacity = '0';
+        }
+        
+        </script>
 
 </body>
 

@@ -1,2 +1,2 @@
-<th><input type="text" name="nombre" class="form-control" wire:model="nombre"></th>
+<th><input type="text" name="nombre" class="input" wire:model="nombre"></th>
 

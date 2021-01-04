@@ -1,10 +1,17 @@
 @if(session()->has('success'))
-<div id="successAlert"class="alert alert-success alert-block animated shake" >
-    <button type="button" class="close" data-dismiss="alert">×</button>    
+<div id="successAlert" class="alert alert-success alert-block animated shake" >
+
+    <button type="button" class="close" data-dismiss="alert">×</button>
     <h5>{{session('success')}}</h5>
 </div>
 @endif
-  
+@if(session()->has('successMini'))
+<div id="successAlert" class="alert alert-success alert-block animated shake" >
+
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <small><i class="fas fa-xs fa-check"></i> {{session('successMini')}}</small>
+</div>
+@endif
 @if(session()->has('error'))
 <div class="alert alert-danger alert-block animated shake">
     <button type="button" class="close" data-dismiss="alert">×</button>    

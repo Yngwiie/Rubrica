@@ -11,7 +11,7 @@ class DimensionComponent extends Component
     public $nombre;
     public $id_dim;
 
-    protected $listeners = ['update'];
+    protected $listeners = ['refrescar'=>'$refresh'];
 
     public function mount(Dimension $dimension){
         $this->dimension = $dimension;
@@ -23,12 +23,18 @@ class DimensionComponent extends Component
     {
         return view('livewire.dimension-component');
     }
-
-    public function update(){
-
+    /**
+     * Metodo para guardar cambios de la dimension.
+     */
+    /* public function update(){
         $dimension = dimension::find($this->dimension->id);
         $dimension->nombre = $this->nombre;
         $dimension->save();
-
+    } */
+    public function updated(){
+        $dimension = dimension::find($this->dimension->id);
+        $dimension->nombre = $this->nombre;
+        $dimension->save();
+       
     }
 }

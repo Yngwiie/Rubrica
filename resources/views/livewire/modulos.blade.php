@@ -1,6 +1,7 @@
 <div class="container">
     
     @include('mensajes-flash')
+    
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
 
         <div class="card shadow-lg">
@@ -22,7 +23,7 @@
                 </div>
 
 
-                <table style="margin-top:10px" class="table table-striped table-hover">
+                <table style="margin-top:10px" class="table table-responsive-md table-striped table-hover">
                     <thead class="thead-secondary">
                         <tr>
                             <th scope="col">Nombre</th>
@@ -48,16 +49,17 @@
                 </table>
                 {{ $modulos->onEachSide(1)->links('vendor.pagination.tailwind') }}
             </div>
-
+            <script>
+                
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                        $(this).remove();
+                    });
+                }, 4000);
+        </script>
         </div>
         
-        <script>
-        window.setTimeout(function() {
-            $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                $(this).remove();
-            });
-        }, 4000);
-        </script>
+        
     </div>
 
     <!-- Modal agregar  -->

@@ -16,6 +16,7 @@ class RubricaMakerDesdeCero extends Component
 
     public function render()
     {
+        
         $evaluaciones = Evaluacion::doesntHave('rubrica')->get();
         return view('livewire.rubrica-makerDesdeCero',['evaluaciones' => $evaluaciones]);
     }

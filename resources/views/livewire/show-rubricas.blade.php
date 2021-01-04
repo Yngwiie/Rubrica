@@ -23,29 +23,33 @@
                 </div>
 
 
-                <table style="margin-top:10px" class="table table-striped table-hover">
+                <table style="margin-top:10px" class="table table-responsive-md table-striped table-hover">
                     <thead class="thead-secondary">
                         <tr>
-                            <th scope="col">Titulo</th>
+                            <th scope="col">Título</th>
                             <th scope="col">Evaluación</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($rubricas as $rubrica)
-                        <tr>
-                            <td><i class="far fa-lg fa-list-alt"></i> {{$rubrica->titulo}}</td>
-                            <td>{{$rubrica->evaluacion->nombre}} - {{$rubrica->evaluacion->modulo->nombre}}</td>
-                            <td><a class="btn btn-sm btn-sec" 
-                                   href="{{route('rubric.edit',$rubrica->id)}}"><i class="far fa-lg fa-edit"></i></a>
-                                <button class="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteRubrica"
-                                    wire:click="delete({{$rubrica->id}})"><i style="color:red "
-                                        class="far fa-lg fa-trash-alt"></i></button>
-                            </td>
+                        @foreach(Auth::user()->modulos as $modulo)
+                            @foreach($modulo->evaluacion as $evaluacion)
+                                @if($evaluacion->rubrica)
+                                    <tr>
+                                        <td><i class="far fa-lg fa-list-alt"></i> {{$evaluacion->rubrica->titulo}}</td>
+                                        <td>{{$evaluacion->nombre}} - {{$evaluacion->modulo->nombre}}</td>
+                                        <td><a class="btn btn-sm btn-sec" 
+                                            href="{{route('rubric.edit',$evaluacion->rubrica->id)}}"><i class="far fa-lg fa-edit"></i></a>
+                                            <button class="btn btn-sm btn-sec"><i class="fas fa-lg fa-file-download"></i></button>
+                                            <button class="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteRubrica"
+                                                wire:click="delete({{$evaluacion->rubrica->id}})"><i style="color:red "
+                                                    class="far fa-lg fa-trash-alt"></i></button>
+                                        </td>
 
-                        </tr>
+                                    </tr>
+                                @endif
+                            @endforeach
                         @endforeach
-
                     </tbody>
                 </table>
                 {{ $rubricas->onEachSide(1)->links('vendor.pagination.tailwind') }}
@@ -73,7 +77,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>¿Esta seguro de eliminar esta rúbrica?</p>
+                    <p>¿Está seguro de eliminar esta rúbrica?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

@@ -10,11 +10,17 @@ class AspectoComponent extends Component
 {
     public Aspecto $aspecto;
     public $nombre;
-    protected $listeners = ['update'];
+    public $id_aspecto;
+    protected $listeners = ['refrescar'=>'$refresh'];
+
+    protected $rules = [
+        'aspecto.nombre' => 'required|string',
+    ];
 
     public function mount(Aspecto $aspecto){
         $this->aspecto = $aspecto;
         $this->nombre = $aspecto->nombre;
+        $this->id_aspecto = $aspecto->id;
     }
 
     public function render()
@@ -22,12 +28,14 @@ class AspectoComponent extends Component
         return view('livewire.aspecto-component');
     }
     
-
-    public function update(){
-        $aspecto = Aspecto::find($this->aspecto->id);
-        $aspecto->nombre = $this->nombre;
-        $aspecto->save();
+   /*  public function update(){
+        $this->validate();
+        $this->aspecto->save();
         
+    } */
+    public function updated()
+    {
+        $this->validate();
+        $this->aspecto->save();
     }
-
 }

@@ -10,7 +10,7 @@ class NivelDesempenoComponent extends Component
 
     public NivelDesempeno $nivel;
     public $nombre;
-    protected $listeners = ['update'];
+    protected $listeners = ['refrescar'=>'$refresh'];
 
 
     public function mount(NivelDesempeno $nivel){
@@ -22,7 +22,14 @@ class NivelDesempenoComponent extends Component
         return view('livewire.nivel-desempeno-component');
     }
 
-    public function update(){
+    /* public function update(){
+
+        $nivel = NivelDesempeno::find($this->nivel->id);
+        $nivel->nombre = $this->nombre;
+        $nivel->save();
+
+    } */
+    public function updated(){
 
         $nivel = NivelDesempeno::find($this->nivel->id);
         $nivel->nombre = $this->nombre;
