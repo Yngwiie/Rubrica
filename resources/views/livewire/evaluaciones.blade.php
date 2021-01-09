@@ -1,3 +1,4 @@
+@include('mensajes-flash')
 <div class="d-flex justify-content-between my-4">
     <div class="col-md-4">
         <button class="btn btn-md btn-sec" data-toggle="modal" data-target="#addEvaluacion"><i
@@ -34,7 +35,7 @@
 
     </tbody>
 </table>
-{{--$evaluaciones->onEachSide(1)->links('vendor.pagination.tailwind') --}}
+{{$evaluaciones->onEachSide(1)->links('vendor.pagination.tailwind') }}
 
 <!-- Modal agregar  -->
 <div wire:ignore.self class="modal fade" id="addEvaluacion" tabindex="-1" role="dialog"
@@ -126,3 +127,6 @@
         </div>
     </div>
 </div>
+<script>
+        
+        </script>   

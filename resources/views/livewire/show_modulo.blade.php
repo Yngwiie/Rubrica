@@ -1,5 +1,5 @@
 <div class="container">
-    @include('mensajes-flash')
+    
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         <div class="card shadow-lg">
 
@@ -21,7 +21,7 @@
                         @include('livewire.evaluaciones')
                     </div>
                     <div class="tab-pane " id="estudiantes" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        Aquí se gestionaran estudiantes
+                        @livewire('estudiantes',['id_modulo' => $modulo->id])
                     </div>
                 </div>
 
@@ -30,11 +30,6 @@
 
         </div>
 
-        <script>
-        window.setTimeout(function() {
-            $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                $(this).remove();
-            });
-        }, 4000);
-        </script>
+    
+        
     </div>

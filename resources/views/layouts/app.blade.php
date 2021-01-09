@@ -115,14 +115,21 @@
             window.Livewire.on('moduloEliminado',()=>{
                 $('#deleteModulo').modal('hide');
             })
-            window.Livewire.on('evaluacionAgregada',()=>{
-                $('#addEvaluacion').modal('hide');
-            })
             window.Livewire.on('evaluacionEliminada',()=>{
                 $('#deleteEvaluacion').modal('hide');
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                        $(this).remove();
+                    });
+                }, 4000);
             })
             window.Livewire.on('evaluacionEditada',()=>{
                 $('#editEvaluacion').modal('hide');
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                        $(this).remove();
+                    });
+                }, 4000);
             })
             
             window.Livewire.on('rubricaEliminada',()=>{
@@ -130,6 +137,38 @@
             })
             window.Livewire.on('aspectoEliminado',()=>{
                 $('#deleteAspecto').modal('hide');
+            })
+            window.Livewire.on('estudianteAgregado',()=>{
+                $('#addEstudiante').modal('hide');
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                        $(this).remove();
+                    });
+                }, 4000);
+            })
+            window.Livewire.on('evaluacionAgregada',()=>{
+                $('#addEvaluacion').modal('hide');
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                        $(this).remove();
+                    });
+                }, 4000);
+            })
+            window.Livewire.on('estudianteEliminado',()=>{
+                $('#deleteEstudiante').modal('hide');
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                        $(this).remove();
+                    });
+                }, 4000);
+            })
+            window.Livewire.on('estudianteUpdate',()=>{
+                $('#editEstudiante').modal('hide');
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                        $(this).remove();
+                    });
+                }, 4000);
             })
         </script>
 
@@ -181,6 +220,7 @@
         }
         
         </script>
+        
 
 </body>
 

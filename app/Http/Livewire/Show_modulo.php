@@ -5,6 +5,9 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Evaluacion;
 use App\Models\Modulo;
+use App\Models\Estudiante;
+use App\Models\modulo_estudiante;
+
 use Illuminate\Pagination\Paginator;
 
 class Show_modulo extends Component
@@ -28,8 +31,14 @@ class Show_modulo extends Component
         $modulo = Modulo::find($this->id_modulo);
         $evaluaciones = Evaluacion::where('nombre','LIKE',$searchTerm)
                         ->where('id_modulo','=',$this->id_modulo)
-                        ->orderBy('id','DESC')->paginate(5);
-        return view('livewire.show_modulo',['evaluaciones' => $evaluaciones, 'modulo' => $modulo]);
+                        ->orderBy('id','DESC')->paginate(6);
+        $estudiantes = Modulo_estudiante::where('id_modulo','=',$this->id)
+                                        ->orderBy('id','DESC')->paginate(10);
+        return view('livewire.show_modulo',
+                [
+                    'evaluaciones' => $evaluaciones, 
+                    'modulo' => $modulo,
+                ]);
     }
 
     public function mount($id_modulo){
