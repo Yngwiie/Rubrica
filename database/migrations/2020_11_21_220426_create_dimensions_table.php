@@ -17,6 +17,7 @@ class CreateDimensionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nombre',60);
+            $table->integer('porcentaje');
             $table->unsignedBigInteger('id_rubrica')->notnull();
             $table->foreign('id_rubrica')->references('id')->on('rubricas')->onDelete('cascade');
         });

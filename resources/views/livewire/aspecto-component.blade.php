@@ -1,4 +1,4 @@
-<tr>
+<tr style="background-color: #c9c9c9">
 
     <th>
         <div class="row">
@@ -6,7 +6,7 @@
                 onclick="deleteAspecto({{$id_aspecto}})"><i class="fas fa-times"></i></button>
             <div class="col-sm-8">
                 <input type='text' class='input' wire:model="aspecto.nombre">
-                @include('mensajes-flash')
+                <input type="number" class="input col-sm-5"wire:model="aspecto.porcentaje">%
                 
             </div>
             <div>

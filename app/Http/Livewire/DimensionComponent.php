@@ -10,13 +10,14 @@ class DimensionComponent extends Component
     public Dimension $dimension;
     public $nombre;
     public $id_dim;
-
+    public $porcentaje;
     protected $listeners = ['refrescar'=>'$refresh'];
 
     public function mount(Dimension $dimension){
         $this->dimension = $dimension;
         $this->nombre = $dimension->nombre;
         $this->id_dim = $dimension->id;
+        $this->porcentaje = $dimension->porcentaje;
     }
 
     public function render()
@@ -34,6 +35,7 @@ class DimensionComponent extends Component
     public function updated(){
         $dimension = dimension::find($this->dimension->id);
         $dimension->nombre = $this->nombre;
+        $dimension->porcentaje = $this->porcentaje;
         $dimension->save();
        
     }

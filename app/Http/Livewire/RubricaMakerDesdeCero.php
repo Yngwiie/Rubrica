@@ -45,6 +45,7 @@ class RubricaMakerDesdeCero extends Component
         $dimension = Dimension::create([
             'nombre' => 'Dimension 1',
             'id_rubrica' => $rubrica->id,
+            'porcentaje' => 0,
         ]);
         for($i = 1; $i <= 3; $i++){
             NivelDesempeno::create([

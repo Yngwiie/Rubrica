@@ -31,7 +31,7 @@ class NivelDesempenoComponent extends Component
     } */
     public function updated(){
 
-        $nivel = NivelDesempeno::find($this->nivel->id);
+        $nivel = NivelDesempeno::find($this->nivel->id, ['id', 'nombre']);
         $nivel->nombre = $this->nombre;
         $nivel->save();
 

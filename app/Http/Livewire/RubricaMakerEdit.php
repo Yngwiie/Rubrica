@@ -56,6 +56,7 @@ class RubricaMakerEdit extends Component
             'nombre' => 'aspecto',
             'porcentaje' => '100',
             'id_dimension' => $dimension->id,
+            'porcentaje' => 0,
         ]);
         $num_niveles = NivelDesempeno::where('id_dimension','=',$id_dimension)->count();
         for ($i=0; $i < $num_niveles; $i++) { 
@@ -91,10 +92,10 @@ class RubricaMakerEdit extends Component
      * Metodo para crear una nueva dimensión
      */
     public function storeDimension(){
-        $this->validate();
         $this->rubrica->save();
         $dimension = Dimension::create([
             'nombre' => 'Nueva Dimensión',
+            'porcentaje' => 0,
             'id_rubrica' => $this->rubrica->id,
         ]);
         for($i = 1; $i <= 3; $i++){

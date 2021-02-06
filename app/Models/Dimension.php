@@ -12,7 +12,7 @@ class Dimension extends Model
     protected $table = 'dimensiones';
 
     protected $fillable = [
-        'nombre','id_rubrica',
+        'nombre','id_rubrica','porcentaje',
     ];
 
     public function rubrica(){

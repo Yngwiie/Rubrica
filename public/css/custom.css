@@ -58,3 +58,7 @@
     border:1px solid #56b4ef;
     box-shadow: 0px 0px 3px 1px #c8def0;
 }
+.input::placeholder{
+    color:#777f88;
+    opacity: 1; /* Firefox */
+}

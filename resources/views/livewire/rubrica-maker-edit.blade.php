@@ -41,7 +41,7 @@
                     
                     @livewire('dimension-component',['dimension' => $dimension],key($dimension->id))
                     
-                    @foreach($dimension->nivelesDesempeno as $nivel)
+                    @foreach($dimension->nivelesDesempeno as $nivel)    
                         @livewire('nivel-desempeno-component',['nivel' => $nivel], key($nivel->id))
                     @endforeach
                 </tr>  

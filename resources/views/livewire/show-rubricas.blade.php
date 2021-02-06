@@ -39,10 +39,11 @@
                                         <td><i class="far fa-lg fa-list-alt"></i> {{$evaluacion->rubrica->titulo}}</td>
                                         <td>{{$evaluacion->nombre}} - {{$evaluacion->modulo->nombre}}</td>
                                         <td><a class="btn btn-sm btn-sec" 
-                                            href="{{route('rubric.edit',$evaluacion->rubrica->id)}}"><i class="far fa-lg fa-edit"></i></a>
-                                            <button class="btn btn-sm btn-sec"><i class="fas fa-lg fa-file-download"></i></button>
-                                            <button class="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteRubrica"
-                                                wire:click="delete({{$evaluacion->rubrica->id}})"><i style="color:red "
+                                            href="{{route('rubric.edit',$evaluacion->rubrica->id)}}" title="Editar Rúbrica"><i class="far fa-lg fa-edit"></i></a>
+                                            <button class="btn btn-sm btn-sec" title="Exportar Rúbrica"><i class="fas fa-lg fa-file-download"></i></button>
+                                            <button class="btn btn-sm btn-sec" title="Copiar Rúbrica"><i class="far fa-lg fa-copy"></i></button>
+                                            <button tclass="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteRubrica"
+                                                wire:click="delete({{$evaluacion->rubrica->id}})" title="Eliminar Rúbrica"><i style="color:red "
                                                     class="far fa-lg fa-trash-alt"></i></button>
                                         </td>
 
