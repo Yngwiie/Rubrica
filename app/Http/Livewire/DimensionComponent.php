@@ -33,6 +33,10 @@ class DimensionComponent extends Component
         $dimension->save();
     } */
     public function updated(){
+        $this->validate([
+            'porcentaje' => 'required|integer|min:1|max:100',
+            'nombre' => 'required'
+        ]);
         $dimension = dimension::find($this->dimension->id);
         $dimension->nombre = $this->nombre;
         $dimension->porcentaje = $this->porcentaje;

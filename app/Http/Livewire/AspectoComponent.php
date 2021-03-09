@@ -16,7 +16,7 @@ class AspectoComponent extends Component
 
     protected $rules = [
         'aspecto.nombre' => 'required|string',
-        'aspecto.porcentaje' => 'integer'
+        'aspecto.porcentaje' => 'required|integer|min:0|max:100'
     ];
 
     public function mount(Aspecto $aspecto){

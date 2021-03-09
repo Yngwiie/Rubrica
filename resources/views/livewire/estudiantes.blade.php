@@ -7,6 +7,10 @@
                     class="far fa-lg fa-plus-square"></i> Nuevo estudiante</button>
         </div>
         <div class="col-md-4">
+            <button class="btn btn-md btn-sec" data-toggle="modal" data-target="#importEstudiantes"><i
+                    class="fas fa-lg fa-upload"></i> Importar estudiantes</button>
+        </div>
+        <div class="col-md-4">
             <input type="text" class="form-control" placeholder="Buscar..." wire:model="searchTerm" />
         </div>
     </div>
@@ -45,7 +49,7 @@
         <div class="modal-dialog modal-md modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir Evaluación</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir Estudiante</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -73,6 +77,44 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" wire:click="store()">Agregar Estudiante</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Importar  -->
+    <div wire:ignore.self class="modal fade" id="importEstudiantes" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Importar Estudiantes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form wire:submit.prevent="import">
+                        <label class="form-label" for="customFile">Seleccione su archivo excel</label>
+                        <input type="file"  id="customFile" wire:model="fileImport"/>
+                        @error('fileImport') <span class="error text-danger">{{ $message }}</span> @enderror
+                    </form>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @if($loop->index == 3)
+                                        @break
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" wire:click="import()">Importar Estudiantes</button>
 
                 </div>
             </div>

@@ -2,13 +2,17 @@
 
 namespace App\Http\Livewire;
 
+use App\Imports\StudentsImport;
 use Livewire\Component;
 use App\Models\Modulo_estudiante;
 use App\Models\Estudiante;
 use Illuminate\Pagination\Paginator;
+use Maatwebsite\Excel\Facades\Excel;
+use Livewire\WithFileUploads;
 
 class Estudiantes extends Component
 {
+    use WithFileUploads;
 
     public $id_modulo;
     public $nombre;
@@ -17,6 +21,7 @@ class Estudiantes extends Component
     public $email;
     public $id_estudiante;
     public $currentPage = 1;
+    public $fileImport;
 
 
     public function mount($id_modulo){
@@ -130,5 +135,18 @@ class Estudiantes extends Component
         Paginator::currentPageResolver(function(){
             return $this->currentPage;
         });
+    }
+
+    public function import()
+    {
+        $this->validate([
+            'fileImport' => 'required|mimes:xlsx, xls'
+        ]);
+
+        Excel::import(new StudentsImport($this->id_modulo), $this->fileImport);
+
+        session()->flash('success','Estudiante importados con éxito.');
+        $this->resetInputFields();
+        $this->emit('estudiantesImportados');
     }
 }

@@ -6,8 +6,9 @@
                 onclick="deleteAspecto({{$id_aspecto}})"><i class="fas fa-times"></i></button>
             <div class="col-sm-8">
                 <input type='text' class='input' wire:model="aspecto.nombre">
-                <input type="number" class="input col-sm-5"wire:model="aspecto.porcentaje">%
-                
+                <input type="number" class="input col-sm-3 col-md-3"wire:model="aspecto.porcentaje">
+                <label for="" >%</label>
+                @error('aspecto.porcentaje') <span class="error ">{{ $message }}</span> @enderror
             </div>
             <div>
                 @error('aspecto.nombre') <small class="error text-danger">{{ $message }}</small> @enderror
