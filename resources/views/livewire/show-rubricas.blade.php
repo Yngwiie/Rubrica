@@ -17,7 +17,7 @@
                         <!-- <button class="btn btn-md btn-sec" data-toggle="modal" data-target="#addModulo"><i
                                 class="far fa-lg fa-plus-square"></i> Nuevo Módulo</button> -->
                     </div>
-                   <!--  <div class="col-md-4">
+                    <!--  <div class="col-md-4">
                         <input type="text" class="form-control" placeholder="Buscar..." wire:model="searchTerm" />
                     </div> -->
                 </div>
@@ -38,13 +38,12 @@
                                     <tr>
                                         <td><i class="far fa-lg fa-list-alt"></i> {{$evaluacion->rubrica->titulo}}</td>
                                         <td>{{$evaluacion->nombre}} - {{$evaluacion->modulo->nombre}}</td>
-                                        <td><a class="btn btn-sm btn-sec" 
-                                            href="{{route('rubric.edit',$evaluacion->rubrica->id)}}" title="Editar Rúbrica"><i class="far fa-lg fa-edit"></i></a>
-                                            <button class="btn btn-sm btn-sec" title="Exportar Rúbrica"><i class="fas fa-lg fa-file-download"></i></button>
+                                        <td><a class="btn btn-sm btn-sec" href="{{route('rubric.edit',$evaluacion->rubrica->id)}}" title="Editar Rúbrica"><i class="far fa-lg fa-edit"></i></a>
+                                            <button class="btn btn-sm btn-sec" title="Exportar Rúbrica" data-toggle="modal" data-target="#exportRubrica">
+                                                <i class="fas fa-lg fa-file-download"></i></button>
                                             <button class="btn btn-sm btn-sec" title="Copiar Rúbrica"><i class="far fa-lg fa-copy"></i></button>
-                                            <button tclass="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteRubrica"
-                                                wire:click="delete({{$evaluacion->rubrica->id}})" title="Eliminar Rúbrica"><i style="color:red "
-                                                    class="far fa-lg fa-trash-alt"></i></button>
+                                            <button tclass="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteRubrica" wire:click="delete({{$evaluacion->rubrica->id}})" 
+                                            title="Eliminar Rúbrica"><i style="color:red " class="far fa-lg fa-trash-alt"></i></button>
                                         </td>
 
                                     </tr>
@@ -59,16 +58,15 @@
         </div>
 
         <script>
-        window.setTimeout(function() {
-            $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                $(this).remove();
-            });
-        }, 4000);
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 4000);
         </script>
     </div>
     <!-- Modal Eliminar  -->
-    <div wire:ignore.self class="modal fade" id="deleteRubrica" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="deleteRubrica" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -84,6 +82,37 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-danger" wire:click="destroy()">Eliminar Rúbrica</button>
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Exportar  -->
+    <div wire:ignore.self class="modal fade" id="exportRubrica" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Exportar Rúbrica</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Formato</p>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <button class="btn btn-danger"><i class="far fa-lg fa-file-pdf"></i> PDF</button>
+                        </div>
+                        <div class="form-group col-sm">
+                            <button class="btn btn-success"><i class="far fa-lg fa-file-excel"></i> CSV</button>
+                        </div>
+                        <div class="form-group col-sm">
+                            <button class="btn btn-primary"><i class="far fa-lg fa-file-word"></i> WORD</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
