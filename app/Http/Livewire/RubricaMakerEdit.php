@@ -15,6 +15,9 @@ class RubricaMakerEdit extends Component
     public Rubrica $rubrica;
     public $id_dim;
     public $id_aspecto;
+    public $sub_criterios = [];
+    public $text_sub_criterio ;
+    public $nombre_aspecto;
 
     protected $rules = [
         'rubrica.descripcion' => 'required|string',
@@ -33,6 +36,46 @@ class RubricaMakerEdit extends Component
     {
         $this->rubrica = Rubrica::find($id_rubrica);
         $this->id_rubrica = $id_rubrica;
+        /* dd($this->sub_criterios); */
+    }
+    /**
+     * add new sub criteria
+     */
+    public function addText()
+    {   
+        array_push($this->sub_criterios, $this->text_sub_criterio);
+        $this->text_sub_criterio = "";
+    }
+    /**
+     * Remove sub criteria
+     */
+    public function removeText($index)
+    {
+        unset($this->sub_criterios[$index]);
+        $this->sub_criterios = array_values($this->sub_criterios);
+
+    }
+    /**
+     * store an aspect with criteria associated
+     */
+    public function addAdvancedAspect()
+    {
+        $this->validate();
+        $this->rubrica->save();
+        $dimension = Dimension::findOrFail($id_dimension);
+        $aspecto = Aspecto::create([
+            'nombre' => 'aspecto',
+            'porcentaje' => '100',
+            'id_dimension' => $dimension->id,
+            'porcentaje' => 0,
+        ]);
+        $num_niveles = NivelDesempeno::where('id_dimension','=',$id_dimension)->count();
+        for ($i=0; $i < $num_niveles; $i++) { 
+            Criterio::create([
+                'descripcion' => 'Criterio',
+                'id_aspecto' => $aspecto->id,
+            ]);
+        }
     }
 
     public function updateAll()
@@ -70,7 +113,33 @@ class RubricaMakerEdit extends Component
         return redirect()->route('rubric.edit', $this->id_rubrica); 
     }
     /**
-     * Método para eliminar un aspecto.
+     * store an aspect with criteria associated
+     */
+    public function storeAspectoAvanzado($id_dimension)
+    {
+        $this->validate();
+        $this->rubrica->save();
+        $dimension = Dimension::findOrFail($id_dimension);
+        $aspecto = Aspecto::create([
+            'nombre' => 'aspecto',
+            'porcentaje' => '100',
+            'id_dimension' => $dimension->id,
+            'porcentaje' => 0,
+        ]);
+        $num_niveles = NivelDesempeno::where('id_dimension','=',$id_dimension)->count();
+        for ($i=0; $i < $num_niveles; $i++) { 
+            Criterio::create([
+                'descripcion' => 'Criterio',
+                'id_aspecto' => $aspecto->id,
+            ]);
+        }
+        
+        session()->flash('success','Aspecto agregado con éxito.'); 
+        return redirect()->route('rubric.edit', $this->id_rubrica); 
+    }
+
+    /**
+     * Delete specific aspect.
      */
     public function deleteAspecto($id_aspecto)
     {
@@ -89,7 +158,7 @@ class RubricaMakerEdit extends Component
       
     }
     /**
-     * Metodo para crear una nueva dimensión
+     * Create a new dimension
      */
     public function storeDimension(){
         $this->rubrica->save();
