@@ -8,6 +8,7 @@ use App\Models\Dimension;
 use App\Models\Aspecto;
 use App\Models\NivelDesempeno;
 use App\Models\Criterio;
+use App\Models\User;
 
 class RubricaMakerEdit extends Component
 {
@@ -16,7 +17,7 @@ class RubricaMakerEdit extends Component
     public $id_dim;
     public $id_aspecto;
     public $sub_criterios = [];
-    public $text_sub_criterio ;
+    public $sub_criterio ;
     public $nombre_aspecto;
 
     protected $rules = [
@@ -24,7 +25,7 @@ class RubricaMakerEdit extends Component
         'rubrica.titulo' => 'required|string',
     ];
 
-    protected $listeners = ['update','deleteAspecto','storeAspecto','storeDimension','deleteDimension'];
+    protected $listeners = ['update','deleteAspecto','storeAspecto','storeDimension','deleteDimension','storeAspectoAvanzado'];
 
     public function render()
     {
@@ -43,8 +44,8 @@ class RubricaMakerEdit extends Component
      */
     public function addText()
     {   
-        array_push($this->sub_criterios, $this->text_sub_criterio);
-        $this->text_sub_criterio = "";
+        array_push($this->sub_criterios, $this->sub_criterio);
+        $this->sub_criterio = "";
     }
     /**
      * Remove sub criteria
@@ -55,28 +56,6 @@ class RubricaMakerEdit extends Component
         $this->sub_criterios = array_values($this->sub_criterios);
 
     }
-    /**
-     * store an aspect with criteria associated
-     */
-    public function addAdvancedAspect()
-    {
-        $this->validate();
-        $this->rubrica->save();
-        $dimension = Dimension::findOrFail($id_dimension);
-        $aspecto = Aspecto::create([
-            'nombre' => 'aspecto',
-            'porcentaje' => '100',
-            'id_dimension' => $dimension->id,
-            'porcentaje' => 0,
-        ]);
-        $num_niveles = NivelDesempeno::where('id_dimension','=',$id_dimension)->count();
-        for ($i=0; $i < $num_niveles; $i++) { 
-            Criterio::create([
-                'descripcion' => 'Criterio',
-                'id_aspecto' => $aspecto->id,
-            ]);
-        }
-    }
 
     public function updateAll()
     {
@@ -86,6 +65,23 @@ class RubricaMakerEdit extends Component
     {
         $this->validate();
         $this->rubrica->save();
+        $porcentaje_total = 0;
+        $dimensiones = Dimension::where('id_rubrica',$this->rubrica->id)->get();
+        $message = "";
+        foreach ($dimensiones as $dimension) {  
+            $porcentaje_total = 0;
+            foreach ($dimension->aspectos as $aspecto) {
+                $porcentaje_total += $aspecto->porcentaje;
+            }
+            if($porcentaje_total>100){
+                $message .= '¡Cuidado!, Los aspectos de la dimension "'.$dimension->nombre.'" sobrepasa el 100% <br>';
+            }elseif($porcentaje_total<100){
+                $message .= '¡Cuidado!, Los aspectos de la dimension "'.$dimension->nombre.'" no suman el 100% <br>';
+            }
+        }
+        if($message != ""){
+            session()->flash('warning',$message); 
+        }
         session()->flash('success','Salvado.'); 
         return redirect()->route('rubric.edit', $this->id_rubrica); 
         
@@ -97,9 +93,8 @@ class RubricaMakerEdit extends Component
         $dimension = Dimension::findOrFail($id_dimension);
         $aspecto = Aspecto::create([
             'nombre' => 'aspecto',
-            'porcentaje' => '100',
             'id_dimension' => $dimension->id,
-            'porcentaje' => 0,
+            'porcentaje' => 1,
         ]);
         $num_niveles = NivelDesempeno::where('id_dimension','=',$id_dimension)->count();
         for ($i=0; $i < $num_niveles; $i++) { 
@@ -115,18 +110,17 @@ class RubricaMakerEdit extends Component
     /**
      * store an aspect with criteria associated
      */
-    public function storeAspectoAvanzado($id_dimension)
+    public function storeAspectoAvanzado()
     {
         $this->validate();
         $this->rubrica->save();
-        $dimension = Dimension::findOrFail($id_dimension);
+        $dimension = Dimension::findOrFail($this->id_dim);
         $aspecto = Aspecto::create([
-            'nombre' => 'aspecto',
-            'porcentaje' => '100',
+            'nombre' => $this->nombre_aspecto,
             'id_dimension' => $dimension->id,
-            'porcentaje' => 0,
+            'porcentaje' => 1,
         ]);
-        $num_niveles = NivelDesempeno::where('id_dimension','=',$id_dimension)->count();
+        $num_niveles = NivelDesempeno::where('id_dimension','=',$this->id_dim)->count();
         for ($i=0; $i < $num_niveles; $i++) { 
             Criterio::create([
                 'descripcion' => 'Criterio',

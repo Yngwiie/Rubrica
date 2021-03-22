@@ -32,7 +32,7 @@
         <button type="button" class="btn btn-md btn-sec add-row"><i wire:click="storeNivel({{$dimension->id}})" class="far fa-lg fa-plus-square"></i> Añadir Nivel</button>
         <button type="button" class="btn btn-md btn-sec add-row" onclick="deleteDimension({{$dimension->id}})" style="color:red">
             <i class="fas fa-lg fa-times"></i> Eliminar Dimensión</button>
-        <button type="button" class="btn btn-md btn-sec add-row" data-toggle="modal" data-target="#addAspectoCriterios"><i class="far fa-lg fa-plus-square"></i> Añadir Aspecto Avanzado</button>
+        <button type="button" class="btn btn-md btn-sec add-row" data-toggle="modal" data-target="#addAspectoCriterios" wire:click="setDimension({{$dimension->id}})"><i class="far fa-lg fa-plus-square"></i> Añadir Aspecto Avanzado</button>
         <table class="table table-responsive-md shadow" id="table{{$dimension->id}}">
             <thead class="bg-secondary">
                 <tr>
@@ -98,7 +98,7 @@
                     </div>
 
                     <div class="input-group mb-1">
-                        <input type="text" class="form-control" placeholder="Descripcion sub criterios" wire:model.lazy="text_sub_criterio">
+                        <input type="text" class="form-control" placeholder="Descripción sub criterio" wire:model.lazy="sub_criterio">
                         <div class="input-group-append">
                             <button class="btn btn-sec" wire:click="addText()"><i class="far fa-lg fa-plus-square"></i> Añadir sub criterio</button>
                         </div>
@@ -119,7 +119,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" wire:click="addAdvancedAspect()">Crear Aspecto</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="storeAspectoAvanzado()">Crear Aspecto</button>
 
                 </div>
             </div>
@@ -137,6 +137,13 @@
 </script>
 
 <script>
+    function storeAspectoAvanzado(){
+        var contenedor = document.getElementById('contenedor_carga');
+
+        contenedor.style.visibility = 'visible';
+        contenedor.style.opacity = '0.9';
+        Livewire.emit('storeAspectoAvanzado')
+    }
     function emitir() {
 
         Livewire.emit('update')

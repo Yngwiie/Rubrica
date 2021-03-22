@@ -22,7 +22,7 @@
 @if(session()->has('warning'))
 <div class="alert alert-warning alert-block animated shake">
     <button type="button" class="close" data-dismiss="alert">×</button>    
-    <strong>{{session('warning')}}</strong>
+    <strong>{!!session('warning')!!}</strong>
 </div>
 @endif
    
