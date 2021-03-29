@@ -53,6 +53,7 @@
     border: 1px solid #ccc;
     outline:none;
     padding: 6px;
+    width: 230px;
 }
 .input:focus{
     border:1px solid #56b4ef;
@@ -64,4 +65,11 @@
 }
 .text-warning-custom{
     color: rgb(251, 255, 0);
+}
+.table.table-bordered > tbody > tr > th{
+  border:1px solid rgb(169, 169, 172);
+}
+.table{
+    width: 100%;
+    overflow-x: auto;
 }

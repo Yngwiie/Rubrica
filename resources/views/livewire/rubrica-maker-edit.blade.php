@@ -3,7 +3,7 @@
     @include('mensajes-flash')
     <form>
         <div class="form-group row">
-            <label for="titulo" class="col-sm-2 col-form-label"><strong>Titulo</strong></label>
+            <label for="titulo" class="col-sm-2 col-form-label"><strong>Título</strong></label>
             <div class="col-sm-5">
                 <input type="text" class="form-control" id="titulo" wire:model.defer="rubrica.titulo" placeholder="Titulo">
             </div>
@@ -28,31 +28,39 @@
     <hr class="bg-dark">
     <div wire:key="foo">
     @foreach ($rubrica->dimensiones as $dimension)
+        <button type="button" class="btn btn-sec" data-toggle="tooltip" data-html="true" title="Existen dos opciones para crear un aspecto.
+        El primero de ellos creara un aspecto sin ninguna configuración previa, en cambio el añadir aspecto avanzado se podran asignar los subcriterios
+        del aspecto, los cuales se clonaran en cada uno de los niveles.">
+            <i class="far fa-lg fa-question-circle"></i>
+        </button>
         <button type="button" onclick="anadirAspecto({{$dimension->id}})" class="btn btn-md btn-sec add-row"><i class="far fa-lg fa-plus-square"></i> Añadir Aspecto</button>
-        <button type="button" class="btn btn-md btn-sec add-row"><i wire:click="storeNivel({{$dimension->id}})" class="far fa-lg fa-plus-square"></i> Añadir Nivel</button>
+        <button type="button" class="btn btn-md btn-sec add-row" data-toggle="modal" data-target="#addAspectoCriterios" wire:click="setDimension({{$dimension->id}})"><i class="far fa-lg fa-plus-square"></i> Añadir Aspecto Avanzado</button>
+        <button type="button" class="btn btn-md btn-sec add-row" wire:click="storeNivel({{$dimension->id}})"><i class="far fa-lg fa-plus-square"></i> Añadir Nivel</button>
         <button type="button" class="btn btn-md btn-sec add-row" onclick="deleteDimension({{$dimension->id}})" style="color:red">
             <i class="fas fa-lg fa-times"></i> Eliminar Dimensión</button>
-        <button type="button" class="btn btn-md btn-sec add-row" data-toggle="modal" data-target="#addAspectoCriterios" wire:click="setDimension({{$dimension->id}})"><i class="far fa-lg fa-plus-square"></i> Añadir Aspecto Avanzado</button>
-        <table class="table table-responsive-md shadow" id="table{{$dimension->id}}">
-            <thead class="bg-secondary">
-                <tr>
-                    <livewire:dimension-component :dimension="$dimension" :key="time().$loop->index">
-                    <!-- @livewire('dimension-component',['dimension' => $dimension],key($loop->index)) -->
+        
+        <div style="overflow-x:auto;">
+            <table class="table shadow" id="table{{$dimension->id}}">
+                <thead class="bg-secondary">
+                    <tr>
+                        <livewire:dimension-component :dimension="$dimension" :key="time().$loop->index">
+                        <!-- @livewire('dimension-component',['dimension' => $dimension],key($loop->index)) -->
 
-                    @foreach($dimension->nivelesDesempeno as $nivel)
-                        <livewire:nivel-desempeno-component :nivel="$nivel" :key="time().$loop->index">
-                        <!-- @livewire('nivel-desempeno-component',['nivel' => $nivel], key($loop->index)) -->
+                        @foreach($dimension->nivelesDesempeno as $nivel)
+                            <livewire:nivel-desempeno-component :nivel="$nivel" :key="time().$loop->index">
+                            <!-- @livewire('nivel-desempeno-component',['nivel' => $nivel], key($loop->index)) -->
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach($dimension->aspectos as $aspecto)
+                        <livewire:aspecto-component :aspecto="$aspecto" :key="time().$loop->index">
+
                     @endforeach
-                </tr>
-            </thead>
-            <tbody>
-
-                @foreach($dimension->aspectos as $aspecto)
-                    <livewire:aspecto-component :aspecto="$aspecto" :key="time().$loop->index">
-
-                @endforeach
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
         <br>
     @endforeach
     </div>
@@ -92,23 +100,57 @@
                     <div class="form-group row">
                         <label for="aspectonombre" class="col-sm-2 col-form-label">Nombre Aspecto</label>
                         <div class="col-sm-10">
-                        
-                            <input type="text" class="form-control" id="nombre_aspecto" wire:model.lazy="nombre_aspecto" placeholder="Nombre">
+                            <input type="text" class="form-control" id="nombre_aspecto" wire:model.defer="nombre_aspecto" placeholder="Nombre">
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <input type="text" class="form-control" placeholder="Descripción sub criterio" wire:model.defer="sub_criterio">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <select class="custom-select" required wire:model.defer="magnitud_subcriterio">
+                                <option wire:ignore hidden value="">Seleccione Nivel Magnitud</option>
+                                <option wire:ignore value="porcentaje1">Porcentajes [30%,60%,80%,etc.]</option>
+                                <!-- <option wire:ignore value="2">Porcentajes [100%,60%,30%,etc.]</option> -->
+                                <option wire:ignore value="none">Sin magnitud</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col col-lg-2">
+                            <div class="input-group mb-3">
+                                <input type="number" class="form-control" placeholder="1" data-toggle="tooltip" data-placement="top"
+                                title="Porcentaje del subcriterio" wire:model.defer="porcentaje_subcriterio">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <label class="col-auto col-form-label" for="porcentaje">%</label> -->
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-sec" wire:click="addText()"><i class="far fa-lg fa-plus-square"></i> Añadir sub criterio</button>
+                        </div>
 
-                    <div class="input-group mb-1">
+                    </div>
+                    <!-- <div class="input-group mb-1">
                         <input type="text" class="form-control" placeholder="Descripción sub criterio" wire:model.lazy="sub_criterio">
                         <div class="input-group-append">
                             <button class="btn btn-sec" wire:click="addText()"><i class="far fa-lg fa-plus-square"></i> Añadir sub criterio</button>
                         </div>
-                    </div>
+                    </div> -->
                     <hr class="bg-dark">
                     <ul class="list-group">
                         @foreach($sub_criterios as $item)
                             <li class="list-group-item" wire:key="{{$loop->index}}">
                             <div class="input-group mb-1">
-                                <input class="form-control" wire:model.lazy="sub_criterios.{{$loop->index}}" type="text"/>
+                                <input class="form-control" wire:model.lazy="sub_criterios.{{$loop->index}}.text" type="text"/>
+                                <select class="custom-select" required wire:model.defer="sub_criterios.{{$loop->index}}.magnitud">
+                                    <option wire:ignore hidden value="">Seleccione Nivel Magnitud</option>
+                                    <option wire:ignore value="porcentaje1">Porcentajes [30%,60%,80%,etc.]</option>
+                                    <!-- <option wire:ignore value="2">Porcentajes [100%,60%,30%,etc.]</option> -->
+                                    <option wire:ignore value="none">Sin magnitud</option>
+                                </select>
+                                <input type="number" class="form-control" placeholder="%" data-toggle="tooltip" data-placement="top"
+                                title="Porcentaje del subcriterio" wire:model.defer="sub_criterios.{{$loop->index}}.porcentaje">
                                 <div class="input-group-append">
                                     <button class="btn btn-danger" wire:click="removeText({{$loop->index}})"><i class="fas fa-lg fa-times"></i> Eliminar</button>
                                 </div>
@@ -120,7 +162,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="storeAspectoAvanzado()">Crear Aspecto</button>
-
                 </div>
             </div>
         </div>
@@ -133,10 +174,12 @@
         $(".alert").fadeTo(500, 0).slideUp(500, function() {
             $(this).remove();
         });
-    }, 4000);
+    }, 5000);
+    
 </script>
 
 <script>
+
     function storeAspectoAvanzado(){
         var contenedor = document.getElementById('contenedor_carga');
 

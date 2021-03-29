@@ -17,7 +17,9 @@ class RubricaMakerEdit extends Component
     public $id_dim;
     public $id_aspecto;
     public $sub_criterios = [];
-    public $sub_criterio ;
+    public $sub_criterio;
+    public $magnitud_subcriterio;
+    public $porcentaje_subcriterio;
     public $nombre_aspecto;
 
     protected $rules = [
@@ -29,7 +31,6 @@ class RubricaMakerEdit extends Component
 
     public function render()
     {
-        
         return view('livewire.rubrica-maker-edit');
     }
 
@@ -44,8 +45,14 @@ class RubricaMakerEdit extends Component
      */
     public function addText()
     {   
-        array_push($this->sub_criterios, $this->sub_criterio);
+        if($this->magnitud_subcriterio=="porcentaje1"){
+            array_push($this->sub_criterios, ['text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>$this->porcentaje_subcriterio]);
+        }else{
+            array_push($this->sub_criterios, ['text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje'=>$this->porcentaje_subcriterio]);
+        }
         $this->sub_criterio = "";
+        $this->magnitud_subcriterio = "";
+        /* dd($this->sub_criterios); */
     }
     /**
      * Remove sub criteria
@@ -108,10 +115,11 @@ class RubricaMakerEdit extends Component
         return redirect()->route('rubric.edit', $this->id_rubrica); 
     }
     /**
-     * store an aspect with criteria associated
+     * store an aspect with criteria associated(Advanced version)
      */
     public function storeAspectoAvanzado()
     {
+        
         $this->validate();
         $this->rubrica->save();
         $dimension = Dimension::findOrFail($this->id_dim);
@@ -121,9 +129,21 @@ class RubricaMakerEdit extends Component
             'porcentaje' => 1,
         ]);
         $num_niveles = NivelDesempeno::where('id_dimension','=',$this->id_dim)->count();
-        for ($i=0; $i < $num_niveles; $i++) { 
+        $array = [40,70,100];
+        
+        for ($i=0; $i < $num_niveles; $i++) {
+            $z = 0;
+            foreach($this->sub_criterios as $subs){
+                
+                if($subs["magnitud"] == "porcentaje1"){
+                    $subs["porcentaje_magnitud"] = $array[$i];
+                    $this->sub_criterios[$z] = $subs;
+                }
+                $z+=1;
+            }
+            $json = json_encode($this->sub_criterios);
             Criterio::create([
-                'descripcion' => 'Criterio',
+                'descripcion_avanzada' => $json,
                 'id_aspecto' => $aspecto->id,
             ]);
         }
@@ -149,16 +169,40 @@ class RubricaMakerEdit extends Component
      * 
      */
     public function storeNivel($id_dimension){
-      
+
+        $cantidad_niveles = NivelDesempeno::where('id_dimension',$id_dimension)->count();
+        
+        $nivel = NivelDesempeno::create([
+            'nombre' => 'nivel '.($cantidad_niveles+1),
+            'ordenJerarquico' =>  ($cantidad_niveles+1),
+            'id_dimension' => $id_dimension,
+        ]);
+
+        $dimension = Dimension::find($id_dimension);
+
+        $aspectos = Aspecto::where('id_dimension',$id_dimension)->get();
+
+        foreach($aspectos as $aspecto){
+            $ultimo_criterio = Criterio::where('id_aspecto',$aspecto->id)->orderBy('id','DESC')->first();
+            $criterio = Criterio::create([
+                'descripcion' => $ultimo_criterio->descripcion,
+                'descripcion_avanzada' => $ultimo_criterio->descripcion_avanzada,
+                'id_aspecto' => $aspecto->id,
+            ]);
+            
+        }
+        
+        session()->flash('success','Nivel agregado.');
+        return redirect()->route('rubric.edit', $this->id_rubrica);
     }
     /**
      * Create a new dimension
      */
     public function storeDimension(){
         $this->rubrica->save();
-        $dimension = Dimension::create([
+        $dimension = Dimension::create([ 
             'nombre' => 'Nueva Dimensión',
-            'porcentaje' => 0,
+            'porcentaje' => 1,
             'id_rubrica' => $this->rubrica->id,
         ]);
         for($i = 1; $i <= 3; $i++){

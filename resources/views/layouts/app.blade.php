@@ -108,6 +108,9 @@
 
 
         <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
             window.Livewire.on('moduloAgregado',()=>{
                 $('#addModulo').modal('hide');
                 $('#editModulo').modal('hide'); 
@@ -121,7 +124,7 @@
                     $(".alert").fadeTo(500, 0).slideUp(500, function() {
                         $(this).remove();
                     });
-                }, 4000);
+                }, 5000);
             })
             window.Livewire.on('evaluacionEditada',()=>{
                 $('#editEvaluacion').modal('hide');
@@ -129,7 +132,7 @@
                     $(".alert").fadeTo(500, 0).slideUp(500, function() {
                         $(this).remove();
                     });
-                }, 4000);
+                }, 5000);
             })
             
             window.Livewire.on('rubricaEliminada',()=>{
@@ -144,7 +147,7 @@
                     $(".alert").fadeTo(500, 0).slideUp(500, function() {
                         $(this).remove();
                     });
-                }, 4000);
+                }, 5000);
             })
             window.Livewire.on('evaluacionAgregada',()=>{
                 $('#addEvaluacion').modal('hide');
@@ -152,7 +155,7 @@
                     $(".alert").fadeTo(500, 0).slideUp(500, function() {
                         $(this).remove();
                     });
-                }, 4000);
+                }, 5000);
             })
             window.Livewire.on('estudianteEliminado',()=>{
                 $('#deleteEstudiante').modal('hide');
@@ -160,7 +163,7 @@
                     $(".alert").fadeTo(500, 0).slideUp(500, function() {
                         $(this).remove();
                     });
-                }, 4000);
+                }, 5000);
             })
             window.Livewire.on('estudianteUpdate',()=>{
                 $('#editEstudiante').modal('hide');
@@ -168,7 +171,7 @@
                     $(".alert").fadeTo(500, 0).slideUp(500, function() {
                         $(this).remove();
                     });
-                }, 4000);
+                }, 5000);
             })
             window.Livewire.on('estudiantesImportados',()=>{
                 $('#importEstudiantes').modal('hide');
@@ -176,7 +179,7 @@
                     $(".alert").fadeTo(500, 0).slideUp(500, function() {
                         $(this).remove();
                     });
-                }, 4000);
+                }, 5000);
             })
         </script>
 
