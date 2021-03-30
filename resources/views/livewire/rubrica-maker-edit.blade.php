@@ -33,13 +33,16 @@
         del aspecto, los cuales se clonaran en cada uno de los niveles.">
             <i class="far fa-lg fa-question-circle"></i>
         </button>
-        <button type="button" onclick="anadirAspecto({{$dimension->id}})" class="btn btn-md btn-sec add-row"><i class="far fa-lg fa-plus-square"></i> Añadir Aspecto</button>
+        <button type="button" onclick="anadirAspecto({{$dimension->id}})" class="btn btn-md btn-sec add-row"><i class="far fa-lg fa-plus-square"></i> Añadir Aspecto Normal</button>
         <button type="button" class="btn btn-md btn-sec add-row" data-toggle="modal" data-target="#addAspectoCriterios" wire:click="setDimension({{$dimension->id}})"><i class="far fa-lg fa-plus-square"></i> Añadir Aspecto Avanzado</button>
-        <button type="button" class="btn btn-md btn-sec add-row" wire:click="storeNivel({{$dimension->id}})"><i class="far fa-lg fa-plus-square"></i> Añadir Nivel</button>
+        @if($dimension->nivelesDesempeno->count()<=7)
+            <button type="button" class="btn btn-md btn-sec add-row" onclick="storeNivel({{$dimension->id}})"><i class="far fa-lg fa-plus-square"></i> Añadir Nivel</button>
+        @else
+            <button type="button" disabled class="btn btn-md btn-sec add-row"><i class="far fa-lg fa-plus-square"></i> Añadir Nivel</button>
+        @endif
         <button type="button" class="btn btn-md btn-sec add-row" onclick="deleteDimension({{$dimension->id}})" style="color:red">
             <i class="fas fa-lg fa-times"></i> Eliminar Dimensión</button>
-        
-        <div style="overflow-x:auto;">
+        <div  class="double-scroll shadow" style="overflow-x:auto;">
             <table class="table shadow" id="table{{$dimension->id}}">
                 <thead class="bg-secondary">
                     <tr>
@@ -166,20 +169,108 @@
             </div>
         </div>
     </div>
+     <!-- Modal Añadir Subcriterio -->
+     <div wire:ignore.self class="modal fade" id="addSubcriterio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Añadir Subcriterio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <input type="text" class="form-control" placeholder="Descripción sub criterio" wire:model.defer="sub_criterio">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <select class="custom-select" required wire:model.defer="magnitud_subcriterio">
+                                <option wire:ignore hidden value="">Seleccione Nivel Magnitud</option>
+                                <option wire:ignore value="porcentaje1">Porcentajes [30%,60%,80%,etc.]</option>
+                                <!-- <option wire:ignore value="2">Porcentajes [100%,60%,30%,etc.]</option> -->
+                                <option wire:ignore value="none">Sin magnitud</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col col-lg-2">
+                            <div class="input-group mb-3">
+                                <input type="number" class="form-control" placeholder="1" data-toggle="tooltip" data-placement="top"
+                                title="Porcentaje del subcriterio" wire:model.defer="porcentaje_subcriterio">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <label class="col-auto col-form-label" for="porcentaje">%</label> -->
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-sec" wire:click="addText()"><i class="far fa-lg fa-plus-square"></i> Añadir sub criterio</button>
+                        </div>
 
+                    </div>
+                    <hr class="bg-dark">
+                    <ul class="list-group">
+                        @foreach($sub_criterios as $item)
+                            <li class="list-group-item" wire:key="{{$loop->index}}">
+                            <div class="input-group mb-1">
+                                <input class="form-control" wire:model.lazy="sub_criterios.{{$loop->index}}.text" type="text"/>
+                                <select class="custom-select" required wire:model.defer="sub_criterios.{{$loop->index}}.magnitud">
+                                    <option wire:ignore hidden value="">Seleccione Nivel Magnitud</option>
+                                    <option wire:ignore value="porcentaje1">Porcentajes [30%,60%,80%,etc.]</option>
+                                    <!-- <option wire:ignore value="2">Porcentajes [100%,60%,30%,etc.]</option> -->
+                                    <option wire:ignore value="none">Sin magnitud</option>
+                                </select>
+                                <input type="number" class="form-control" placeholder="%" data-toggle="tooltip" data-placement="top"
+                                title="Porcentaje del subcriterio" wire:model.defer="sub_criterios.{{$loop->index}}.porcentaje">
+                                <div class="input-group-append">
+                                    <button class="btn btn-danger" wire:click="removeText({{$loop->index}})"><i class="fas fa-lg fa-times"></i> Eliminar</button>
+                                </div>
+                            </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="storeSubcriterios()">Crear subcriterio(s)</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
+<!-- @push('scripts')
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        $(document).ready(function() {
+            $('.double-scroll').doubleScroll();
+            /* $('#sample2').doubleScroll({resetOnWindowResize: true}); */
+            });
+    })
+</script>
+@endpush -->
 <script>
     window.setTimeout(function() {
         $(".alert").fadeTo(500, 0).slideUp(500, function() {
             $(this).remove();
         });
     }, 5000);
-    
 </script>
 
 <script>
+    function storeSubcriterios(){
+        var contenedor = document.getElementById('contenedor_carga');
 
+        contenedor.style.visibility = 'visible';
+        contenedor.style.opacity = '0.9';
+        Livewire.emit('addSubcriterios')
+    }
+    function storeNivel(id){
+        var contenedor = document.getElementById('contenedor_carga');
+
+        contenedor.style.visibility = 'visible';
+        contenedor.style.opacity = '0.9';
+        Livewire.emit('storeNivel',id)
+    }
     function storeAspectoAvanzado(){
         var contenedor = document.getElementById('contenedor_carga');
 

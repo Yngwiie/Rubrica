@@ -22,7 +22,7 @@
                 </div>
                 
                 <div class="form-row">
-                    <div class="col-5">
+                    <div class="col-6">
                         <div class="input-group mb-1">
                             <input style="font-size:small" class="form-control" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje" type="number"/>
                             <div class="input-group-append">
@@ -35,13 +35,15 @@
                         <button class="btn btn-sm btn-danger" wire:loading.attr="disabled" wire:click="removeSubCriteria({{$loop->index}})"><i class="fas fa-md fa-times"></i></button>
                     </div>
                 </div>
-                <hr class="bg-dark">
+                @if($loop->index != (count($descripcion_avanzada)-1))
+                    <hr class="bg-dark">
+                @endif
                 </li>
             @endforeach
         </ul>
-        <div class="d-flex justify-content-center" >
+        <!-- <div class="d-flex justify-content-center" >
             <button wire:loading.attr="disabled" type="button" class="btn btn-sec" wire:click="addSubcriteria()"><i class="far fa-lg fa-plus-square"></i></button>
-        </div>
+        </div> -->
         <!-- <div wire:loading wire:target="addSubcriteria">
             <div class="spinner-border text-secondary" role="status">
             <span class="visually-hidden">Loading...</span>

@@ -22,6 +22,12 @@
                 @error('aspecto.porcentaje') <small class="error text-danger">{{ $message }}</small> @enderror  
             </div>
         </div>
+        @if($aspecto->criterios->first()->descripcion_avanzada!=null)
+            <div class="d-flex justify-content-center" >
+                <button wire:loading.attr="disabled" data-toggle="modal" data-target="#addSubcriterio"  onclick="setIdAspecto({{$id_aspecto}})"type="button" class="btn btn-sec" ><i class="far fa-lg fa-plus-square"></i><small> Subcriterio(s)</small></button>
+            </div>
+        @endif
+        
 
     </th>
 
@@ -31,6 +37,9 @@
     @endforeach
 
     <script>
+    function setIdAspecto(id){
+        Livewire.emit('setIdAspecto', id)
+    }
     function deleteAspecto(id) {
         var opcion = confirm("¿Está seguro?");
         if (opcion) {

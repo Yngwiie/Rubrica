@@ -22,6 +22,8 @@ class CreateCriteriosTable extends Migration
             $table->foreign('id_nivelDesempeno')->references('id')->on('nivel_desempenos')->onDelete('cascade'); */
             $table->unsignedBigInteger('id_aspecto')->notnull();
             $table->foreign('id_aspecto')->references('id')->on('aspectos')->onDelete('cascade');
+            $table->unsignedBigInteger('id_nivel')->notnull();
+            $table->foreign('id_nivel')->references('id')->on('nivel_desempenos')->onDelete('cascade');
         });
     }
 

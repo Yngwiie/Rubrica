@@ -1,7 +1,7 @@
 <div class="container pt-8">
     @include('mensajes-flash')
 
-    <div class="p-4 pt-8" style="background-color: white">
+    <div class="p-4 pt-8 shadow" style="background-color: white">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#infoPanel" role="tab" id="adsBack">Info.

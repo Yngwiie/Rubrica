@@ -18,9 +18,8 @@ class NivelDesempeno extends Model
     public function dimension(){
         return $this->belongsTo('App\Models\Dimension','id_dimension');
     }
-
-    /* public function criterios(){
-        return $this->hasMany('App\Models\Criterio','id_nivelDesempeno');
-    } */
+    public function criterios(){
+        return $this->hasMany('App\Models\Criterio','id_nivel');
+    }
 
 }

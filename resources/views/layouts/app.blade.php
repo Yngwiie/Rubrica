@@ -29,13 +29,21 @@
         @livewireScripts
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script src="{{ asset('js/scripts-sidebar.js') }}" defer></script>
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
         <link rel="stylesheet" href="{{ asset('css/custom.scss') }}">
         <link rel="stylesheet" href="{{ asset('css/bd-wizard.css') }}">
         <link rel="stylesheet" href="{{ asset('css/pantallacarga.css') }}">
+        <script src="{{ asset('js/jquery.doubleScroll.js') }}" defer></script>
 
+        <script type="text/javascript">
+            $(document).ready(function() {
+            /* $('.double-scroll').doubleScroll(); */
+            $('.double-scroll').doubleScroll({resetOnWindowResize: true});
+            });
+        </script>
     </head>
 
     <body class="sb-nav-fixed">
@@ -105,7 +113,7 @@
         </div>
 
         @stack('modals')
-
+        @stack('scripts')
 
         <script>
             $(document).ready(function () {

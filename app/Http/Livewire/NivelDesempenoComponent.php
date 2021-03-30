@@ -10,12 +10,13 @@ class NivelDesempenoComponent extends Component
 
     public NivelDesempeno $nivel;
     public $nombre;
-    protected $listeners = ['refrescar'=>'$refresh'];
+    public $id_nivel;
 
 
     public function mount(NivelDesempeno $nivel){
         $this->nivel = $nivel;
         $this->nombre = $nivel->nombre;
+        $this->id_nivel = $nivel->id;
     }
     public function render()
     {
@@ -29,11 +30,10 @@ class NivelDesempenoComponent extends Component
         $nivel->save();
 
     } */
-    public function updated(){
-
+    public function updated()
+    {
         $nivel = NivelDesempeno::find($this->nivel->id, ['id', 'nombre']);
         $nivel->nombre = $this->nombre;
         $nivel->save();
-
     }
 }
