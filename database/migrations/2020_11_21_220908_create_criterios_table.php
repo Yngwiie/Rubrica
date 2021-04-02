@@ -18,8 +18,7 @@ class CreateCriteriosTable extends Migration
             $table->timestamps();
             $table->string('descripcion',2000)->nullable();
             $table->string('descripcion_avanzada',2000)->nullable();
-            /* $table->unsignedBigInteger('id_nivelDesempeno')->notnull();
-            $table->foreign('id_nivelDesempeno')->references('id')->on('nivel_desempenos')->onDelete('cascade'); */
+            $table->boolean('deshabilitado')->default(FALSE);
             $table->unsignedBigInteger('id_aspecto')->notnull();
             $table->foreign('id_aspecto')->references('id')->on('aspectos')->onDelete('cascade');
             $table->unsignedBigInteger('id_nivel')->notnull();

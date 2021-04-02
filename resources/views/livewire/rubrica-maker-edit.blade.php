@@ -238,16 +238,7 @@
         </div>
     </div>
 </div>
-<!-- @push('scripts')
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        $(document).ready(function() {
-            $('.double-scroll').doubleScroll();
-            /* $('#sample2').doubleScroll({resetOnWindowResize: true}); */
-            });
-    })
-</script>
-@endpush -->
+
 <script>
     window.setTimeout(function() {
         $(".alert").fadeTo(500, 0).slideUp(500, function() {

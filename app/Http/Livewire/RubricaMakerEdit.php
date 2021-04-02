@@ -208,15 +208,14 @@ class RubricaMakerEdit extends Component
     public function storeNivel($id_dimension){
 
         $cantidad_niveles = NivelDesempeno::where('id_dimension',$id_dimension)->count();
-        
+        $last_nivel = NivelDesempeno::where('id_dimension',$id_dimension)->orderBy('id','DESC')->first();
+        $puntaje = (($last_nivel->puntaje)+1);
         $nivel = NivelDesempeno::create([
             'nombre' => 'nivel '.($cantidad_niveles+1),
+            'puntaje' => $puntaje,
             'ordenJerarquico' =>  ($cantidad_niveles+1),
             'id_dimension' => $id_dimension,
         ]);
-
-        $dimension = Dimension::find($id_dimension);
-
         $aspectos = Aspecto::where('id_dimension',$id_dimension)->get();
 
         foreach($aspectos as $aspecto){

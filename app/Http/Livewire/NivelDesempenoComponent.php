@@ -18,6 +18,9 @@ class NivelDesempenoComponent extends Component
         $this->nombre = $nivel->nombre;
         $this->id_nivel = $nivel->id;
     }
+    protected $rules = [
+        'nivel.puntaje' => 'required',
+    ];
     public function render()
     {
         return view('livewire.nivel-desempeno-component');
@@ -32,8 +35,8 @@ class NivelDesempenoComponent extends Component
     } */
     public function updated()
     {
-        $nivel = NivelDesempeno::find($this->nivel->id, ['id', 'nombre']);
-        $nivel->nombre = $this->nombre;
-        $nivel->save();
+        $this->validate();
+        $this->nivel->nombre = $this->nombre;
+        $this->nivel->save();
     }
 }

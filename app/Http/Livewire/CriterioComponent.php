@@ -15,6 +15,7 @@ class CriterioComponent extends Component
     public $id_criterio;
     protected $listeners = ['refrescar'=>'$refresh'];
     public $criterio_avanzado;
+    public $deshabilitado;
 
     protected $rules = [
         'criterio.descripcion' => 'required|string',
@@ -24,6 +25,7 @@ class CriterioComponent extends Component
         $this->criterio = $criterio;
         $this->descripcion = $criterio->descripcion;
         $this->id_criterio = $criterio->id;
+        $this->deshabilitado = $criterio->deshabilitado;
         $this->descripcion_avanzada = json_decode($criterio->descripcion_avanzada);
         if($criterio->descripcion==null){
             $this->criterio_avanzado = TRUE;
@@ -72,10 +74,11 @@ class CriterioComponent extends Component
     {
         if(!$this->criterio_avanzado){
             $this->validate();
-        }else
-        
-        $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-        $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+        }else{
+            $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+            $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+        }
+        $this->criterio->deshabilitado = $this->deshabilitado;
         $this->criterio->save();
     }
 }

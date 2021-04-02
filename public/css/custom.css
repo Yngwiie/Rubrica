@@ -73,3 +73,7 @@
     width: 100%;
     overflow-x: auto;
 }
+input:disabled {
+    background: #e9ecef;
+    opacity: 1;
+  }
