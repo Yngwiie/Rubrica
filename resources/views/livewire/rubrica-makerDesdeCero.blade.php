@@ -1,6 +1,6 @@
-<div class="container pt-8">
+<div class="container pt-9">
     @include('mensajes-flash')
-
+    {{ Breadcrumbs::render('cero') }}
     <div class="p-4 pt-8 shadow" style="background-color: white">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">

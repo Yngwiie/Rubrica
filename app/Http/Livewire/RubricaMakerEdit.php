@@ -37,9 +37,9 @@ class RubricaMakerEdit extends Component
 
     public function mount($id_rubrica)
     {
-        $this->rubrica = Rubrica::find($id_rubrica);
+        $rubrica = Rubrica::find($id_rubrica);
+        $this->rubrica = $rubrica;
         $this->id_rubrica = $id_rubrica;
-        /* dd($this->sub_criterios); */
     }
     /**
      * add new sub criteria

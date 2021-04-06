@@ -2,6 +2,7 @@
     <div class="container">
         @include('mensajes-flash')
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        {{ Breadcrumbs::render('constructor') }}
             <div class="card-deck">
                 <div class="card shadow-lg">
                     <img class="card-img-top" src="{{asset('images/cero.png')}}" alt="Card image cap">
@@ -24,7 +25,7 @@
                         </p>
                     </div>
                     <div class="card-footer text-right">
-                        <a href="" class="btn btn-md btn-secondary">Continuar</a>
+                        <a href="{{route('plantillas')}}" class="btn btn-md btn-secondary">Continuar</a>
                     </div>
                 </div>
                 

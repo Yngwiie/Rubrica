@@ -18,8 +18,11 @@ class CreateRubricasTable extends Migration
             $table->timestamps();
             $table->string('titulo',100);
             $table->string('descripcion',2000);
-            $table->unsignedBigInteger('id_evaluacion')->notnull();
+            $table->boolean('plantilla')->default(FALSE);
+            $table->unsignedBigInteger('id_evaluacion')->nullable();
             $table->foreign('id_evaluacion')->references('id')->on('evaluaciones')->onDelete('cascade');
+            $table->unsignedBigInteger('id_usuario')->nullable();
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

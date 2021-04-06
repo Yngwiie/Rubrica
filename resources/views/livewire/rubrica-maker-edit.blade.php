@@ -5,20 +5,22 @@
         <div class="form-group row">
             <label for="titulo" class="col-sm-2 col-form-label"><strong>Título</strong></label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="titulo" wire:model.defer="rubrica.titulo" placeholder="Titulo">
+                <input type="text" style="font-size:small" class="form-control" id="titulo" wire:model.defer="rubrica.titulo" placeholder="Titulo">
             </div>
         </div>
         <div class="form-group row">
             <label for="Descripcion" class="col-sm-2 col-form-label"><strong>Descripción</strong></label>
             <div class="col-sm-5">
-                <textarea type="text" class="form-control" id="Descripcion" wire:model.defer="rubrica.descripcion" placeholder="Descripción"></textarea>
+                <textarea type="text" style="font-size:small" class="form-control" id="Descripcion" wire:model.defer="rubrica.descripcion" placeholder="Descripción" rows="6"></textarea>
             </div>
         </div>
         <div class="form-group row">
             <label for="Descripcion" class="col-sm-2 col-form-label"><strong>Evaluación Asociada</strong></label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" id="Descripcion" disabled placeholder="Evaluación" value="{{$rubrica->evaluacion->nombre}} - {{$rubrica->evaluacion->modulo->nombre}}">
-            </div>
+            @if($rubrica->plantilla != 1)
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="Descripcion" disabled placeholder="Evaluación" value="{{$rubrica->evaluacion->nombre}} - {{$rubrica->evaluacion->modulo->nombre}}">
+                </div>
+            @endif
         </div>
     </form>
     <div class="mb-2">

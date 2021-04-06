@@ -17,9 +17,9 @@
                         <!-- <button class="btn btn-md btn-sec" data-toggle="modal" data-target="#addModulo"><i
                                 class="far fa-lg fa-plus-square"></i> Nuevo Módulo</button> -->
                     </div>
-                    <!--  <div class="col-md-4">
+                     <div class="col-md-4">
                         <input type="text" class="form-control" placeholder="Buscar..." wire:model="searchTerm" />
-                    </div> -->
+                    </div>
                 </div>
 
 
@@ -32,24 +32,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(Auth::user()->modulos as $modulo)
-                            @foreach($modulo->evaluacion as $evaluacion)
-                                @if($evaluacion->rubrica)
-                                    <tr>
-                                        <td><i class="far fa-lg fa-list-alt"></i> {{$evaluacion->rubrica->titulo}}</td>
-                                        <td>{{$evaluacion->nombre}} - {{$evaluacion->modulo->nombre}}</td>
-                                        <td><a class="btn btn-sm btn-sec" href="{{route('rubric.edit',$evaluacion->rubrica->id)}}" title="Editar Rúbrica"><i class="far fa-lg fa-edit"></i></a>
-                                            <button class="btn btn-sm btn-sec" title="Exportar Rúbrica" data-toggle="modal" data-target="#exportRubrica">
-                                                <i class="fas fa-lg fa-file-download"></i></button>
-                                            <button class="btn btn-sm btn-sec" title="Copiar Rúbrica"><i class="far fa-lg fa-copy"></i></button>
-                                            <button tclass="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteRubrica" wire:click="delete({{$evaluacion->rubrica->id}})" 
-                                            title="Eliminar Rúbrica"><i style="color:red " class="far fa-lg fa-trash-alt"></i></button>
-                                        </td>
-
-                                    </tr>
-                                @endif
+                            @foreach($rubricas as $rubrica)
+                                <tr>
+                                    <td><i class="far fa-lg fa-list-alt"></i> {{$rubrica->titulo}}</td>
+                                    <td>{{$rubrica->evaluacion->nombre}} - {{$rubrica->evaluacion->modulo->nombre}}</td>
+                                    <td><a class="btn btn-sm btn-sec" href="{{route('rubric.edit',$rubrica->id)}}" title="Editar Rúbrica"><i class="far fa-lg fa-edit"></i></a>
+                                        <button class="btn btn-sm btn-sec" title="Exportar Rúbrica" data-toggle="modal" data-target="#exportRubrica">
+                                            <i class="fas fa-lg fa-file-download"></i></button>
+                                        <button class="btn btn-sm btn-sec" title="Copiar Rúbrica"><i class="far fa-lg fa-copy"></i></button>
+                                        <button tclass="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteRubrica" wire:click="delete({{$rubrica->id}})" 
+                                        title="Eliminar Rúbrica"><i style="color:red " class="far fa-lg fa-trash-alt"></i></button>
+                                    </td>
+                                </tr>
                             @endforeach
-                        @endforeach
                     </tbody>
                 </table>
                 {{ $rubricas->onEachSide(1)->links('vendor.pagination.tailwind') }}

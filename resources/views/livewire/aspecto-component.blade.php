@@ -5,8 +5,8 @@
             <button class="btn btn-sm" style="color:red" data-toggle="modal" data-target="#deleteAspecto"
                 onclick="deleteAspecto({{$id_aspecto}})"><i class="fas fa-times"></i></button>
             <div class="col-sm-8">
-                <input style="font-size:small" type='text' class='form-control shadow-md' wire:model="aspecto.nombre">
-                
+                <textarea style="font-size:small" type='text' class='form-control shadow-md' placeholder="Nombre Aspecto" 
+                wire:model="aspecto.nombre" rows="3" cols="8"></textarea> 
             </div>
 
         </div>

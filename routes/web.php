@@ -7,6 +7,8 @@ use App\http\LiveWire\RubricaMakerDesdeCero;
 use App\http\LiveWire\ShowRubricas;
 use App\http\LiveWire\RubricaMakerEdit;
 use App\Http\Controllers\ControladorRubricas;
+use App\Http\Livewire\Plantilla;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,7 +29,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', Modulos::clas
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::get('/show_modulo/{id_modulo}', Show_modulo::class)->name('show.modulo');
     Route::get('/makerindex', [ControladorRubricas::class,'index'])->name('rubric.index');
+    Route::get('/plantillas', [ControladorRubricas::class,'plantillas'])->name('rubric.plantillas');
     Route::get('/makerindex/cero', RubricaMakerDesdeCero::class)->name('rubric.cero');
     Route::get('/misrubricas', ShowRubricas::class)->name('misrubricas');
+    Route::get('/plantillas', Plantilla::class)->name('plantillas');
     Route::get('/makeredit/{id_rubrica}', RubricaMakerEdit::class)->name('rubric.edit');
 });

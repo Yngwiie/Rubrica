@@ -12,7 +12,7 @@ class Rubrica extends Model
     protected $table = 'rubricas';
 
     protected $fillable = [
-        'titulo','descripcion','id_evaluacion'
+        'titulo','descripcion','id_evaluacion','plantilla','id_usuario'
     ];
 
     public function evaluacion(){
@@ -20,5 +20,8 @@ class Rubrica extends Model
     }
     public function dimensiones(){
         return $this->hasMany('App\Models\Dimension','id_rubrica');
+    }
+    public function usuario(){
+        return $this->belongsTo('App\Models\User','id_usuario');
     }
 }

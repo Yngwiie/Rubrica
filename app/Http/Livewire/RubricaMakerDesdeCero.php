@@ -7,12 +7,24 @@ use App\Models\Evaluacion;
 use App\Models\Rubrica;
 use App\Models\Dimension;
 use App\Models\NivelDesempeno;
+use Illuminate\Support\Facades\Auth;
 
 class RubricaMakerDesdeCero extends Component
 {
     public $titulo;
     public $descripcion;
     public $id_evaluacion;
+
+    protected $rules = [
+        'titulo' => 'required|string|max:200',
+        'descripcion' => 'required',
+        'id_evaluacion' => 'required', 
+    ];
+
+    protected $messages = [
+        'titulo.required' => 'El título es obligatorio.',
+        'id_evaluacion.required' => 'La evaluación es obligatoria.',
+    ];
 
     public function render()
     {
@@ -31,17 +43,14 @@ class RubricaMakerDesdeCero extends Component
     public function store()
     {
         
-        $validateData = $this->validate([
-            'titulo' => 'required|string|max:200',
-            'descripcion' => 'required',
-            'id_evaluacion' => 'required',
-        ]);
+        $validateData = $this->validate();
        
         $rubrica = Rubrica::create([
             'id_evaluacion' => $this->id_evaluacion,
             'titulo' => $validateData['titulo'],
             'descripcion' => $validateData['descripcion'],
-        ]);
+            'id_usuario' => Auth::user()->id,
+        ]); 
         $dimension = Dimension::create([
             'nombre' => 'Dimension 1',
             'id_rubrica' => $rubrica->id,
