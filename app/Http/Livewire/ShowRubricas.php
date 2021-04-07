@@ -2,10 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\RubricExport;
 use Livewire\Component;
 use App\Models\Rubrica;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class ShowRubricas extends Component
 {
@@ -35,7 +38,7 @@ class ShowRubricas extends Component
      */
     public function delete($id)
     {
-        $data =   Rubrica::findOrFail($id);
+        $data = Rubrica::findOrFail($id);
 
         $this->rubrica_id = $id;
     }
@@ -62,5 +65,23 @@ class ShowRubricas extends Component
     public function copyRubric()
     {
 
+    }
+    
+    public function setIdRubrica($rubrica_id)
+    {
+        $this->rubrica_id = $rubrica_id;
+    }
+
+    public function exportPDF()
+    {
+        $rubrica = Rubrica::find($this->rubrica_id);
+        $pdf = PDF::setPaper('A3', 'landscape')->loadView('export.rubricaPDF',['rubrica' => $rubrica])->output();;
+        
+        
+        return response()->streamDownload(
+            fn () => print($pdf),
+            "rubrica.pdf"
+       );
+        /* return (new RubricExport($this->rubrica_id))->download('rubrica.pdf', \Maatwebsite\Excel\Excel::DOMPDF); */
     }
 }

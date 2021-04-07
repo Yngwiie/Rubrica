@@ -37,7 +37,7 @@
                                     <td><i class="far fa-lg fa-list-alt"></i> {{$rubrica->titulo}}</td>
                                     <td>{{$rubrica->evaluacion->nombre}} - {{$rubrica->evaluacion->modulo->nombre}}</td>
                                     <td><a class="btn btn-sm btn-sec" href="{{route('rubric.edit',$rubrica->id)}}" title="Editar Rúbrica"><i class="far fa-lg fa-edit"></i></a>
-                                        <button class="btn btn-sm btn-sec" title="Exportar Rúbrica" data-toggle="modal" data-target="#exportRubrica">
+                                        <button class="btn btn-sm btn-sec" title="Exportar Rúbrica" data-toggle="modal" data-target="#exportRubrica" wire:click="setIdRubrica({{$rubrica->id}})">
                                             <i class="fas fa-lg fa-file-download"></i></button>
                                         <button class="btn btn-sm btn-sec" title="Copiar Rúbrica"><i class="far fa-lg fa-copy"></i></button>
                                         <button tclass="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteRubrica" wire:click="delete({{$rubrica->id}})" 
@@ -96,7 +96,7 @@
 
                     <div class="form-row">
                         <div class="form-group col-sm">
-                            <button class="btn btn-danger"><i class="far fa-lg fa-file-pdf"></i> PDF</button>
+                            <button class="btn btn-danger" wire:click="exportPDF()"><i class="far fa-lg fa-file-pdf"></i> PDF</button>
                         </div>
                         <div class="form-group col-sm">
                             <button class="btn btn-success"><i class="far fa-lg fa-file-excel"></i> CSV</button>

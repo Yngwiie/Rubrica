@@ -71,6 +71,7 @@ class Plantilla extends Component
                     'nombre' => $nivel->nombre,
                     'ordenJerarquico' => $nivel->ordenJerarquico,
                     'id_dimension' => $dim->id,
+                    'puntaje' => $nivel->puntaje,
                 ]);
                 array_push($niveles_aux,$niv->id);
             }
