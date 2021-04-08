@@ -83,7 +83,7 @@
     </div>
     <!-- Modal Exportar  -->
     <div wire:ignore.self class="modal fade" id="exportRubrica" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Exportar Rúbrica</h5>
@@ -99,10 +99,7 @@
                             <button class="btn btn-danger" wire:click="exportPDF()"><i class="far fa-lg fa-file-pdf"></i> PDF</button>
                         </div>
                         <div class="form-group col-sm">
-                            <button class="btn btn-success"><i class="far fa-lg fa-file-excel"></i> CSV</button>
-                        </div>
-                        <div class="form-group col-sm">
-                            <button class="btn btn-primary"><i class="far fa-lg fa-file-word"></i> WORD</button>
+                            <button class="btn btn-success" wire:click="exportEXCEL()"><i class="far fa-lg fa-file-excel"></i> EXCEL</button>
                         </div>
                     </div>
                 </div>

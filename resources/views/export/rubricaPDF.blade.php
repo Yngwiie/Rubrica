@@ -18,7 +18,7 @@
 <body style="font-family: 'Nunito', sans-serif;">
         <form>
             <div class="form-group justify-content-center row">
-                    <h1>{{$rubrica->titulo}}</h1>
+                <h1>{{$rubrica->titulo}}</h1>
             </div>
             <div class="form-group justify-content-center row">
                 <p>{{$rubrica->descripcion}}</p>
@@ -45,10 +45,10 @@
             <thead class="bg-secondary">
                 <tr>
                     <th >
-                        <p style="color:white">{{$dimension->nombre}}</p>
+                        <p style="color:white"><u>{{$dimension->nombre}}</u></p>
                         <div class="row">
                             <div class="col-sm-8" style="margin-top:4px">
-                                <small style="color:white">{{$dimension->porcentaje}} %</small>
+                                <small style="color:white"><i>{{$dimension->porcentaje}} %</i></small>
                             </div>
                         </div>
                     </th>
@@ -79,66 +79,65 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-8" style="margin-top: 6px">
-                                   <small>{{$aspecto->porcentaje}}%</small>
+                                   <small><i>{{$aspecto->porcentaje}}%</i></small>
                                 </div>
 
                             </div>
                         </th>
 
                         @foreach($aspecto->criterios as $criterio)
-                            <!-- <livewire:criterio-component :criterio="$criterio" :key="time().$loop->index"> -->
                             <th >
                                 @if($criterio->deshabilitado==0)
                                     <div >
-                                        @if($criterio->criterio_avanzado == true)
-                                            <ul>
-                                                @foreach($descripcion_avanzada as $desc)
-                                                    <li wire:key="{{$loop->index}}">
+                                        @if(empty($criterio->descripcion))
+                                            <!-- <ul class="list-group ml-3" >
+                                                @foreach(json_decode($criterio->descripcion_avanzada) as $desc)
+                                                    <li >
                                                     <div class="form-row mb-1">
                                                         @if($desc->magnitud == "porcentaje1")
                                                             <div class="w-41">
-                                                                <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text" title="descripcion_avanzada.{{$loop->index}}.text"></textarea>
-                                                            </div>
-                                                            
-                                                            <div class="col-3">
-                                                                <input style="font-size:small;margin-left:-5px" class="input col-12" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
-                                                                <!-- <small >%</small>  -->
-                                                            </div>
-                                                            <div class="w-3" style="margin-left:-7px" >
-                                                                <small>%</small> 
+                                                                <small>{{$desc->text}} [Magnitud:{{$desc->porcentaje_magnitud}}%]</small>
                                                             </div>
                                                         @else
-                                                            <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text" title="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                                            <small>{{$desc->text}}</small>
                                                         @endif
                                                     </div>
                                                     
                                                     <div class="form-row">
                                                         <div class="col-6">
-                                                            <div class="input-group mb-1">
-                                                                <input style="font-size:small" class="form-control" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje" type="number"/>
-                                                                <div class="input-group-append">
-                                                                    <span style="font-size:small" class="input-group-text">%</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="col-3" style="font-size:small">
-                                                            <button class="btn btn-sm btn-danger" wire:loading.attr="disabled" wire:click="removeSubCriteria({{$loop->index}})"><i class="fas fa-md fa-times"></i></button>
+                                                            <small><i>[Peso:{{$desc->porcentaje}}%]</i></small>
                                                         </div>
                                                     </div>
-                                                    @if($loop->index != (count($descripcion_avanzada)-1))
-                                                        <hr class="bg-dark">
-                                                    @endif
                                                     </li>
                                                 @endforeach
-                                            </ul>
+                                            </ul> -->
+                                            @foreach(json_decode($criterio->descripcion_avanzada) as $desc)
+                                                    <div class="form-row mb-1">
+                                                        @if($desc->magnitud == "porcentaje1")
+                                                            <div class="col">
+                                                                <small>- {{$desc->text}} [Magnitud:{{$desc->porcentaje_magnitud}}%]</small>
+                                                            </div>
+                                                        @else
+                                                            <div class="col">
+                                                                <small>- {{$desc->text}}</small>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                    
+                                                    <div class="form-row">
+                                                        <div class="col">
+                                                            <small><i>[Peso:{{$desc->porcentaje}}%]</i></small>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+
                                         @else
                                             <small style="white-space: pre-line;">{{$criterio->descripcion}}</small>
                                         @endif
                                     </div>
                                 @else
-                                    <div class="justify-content-center">
-                                        -
+                                    <div class="row justify-content-center">
+                                        
                                     </div>
                                 @endif
                                 <div>

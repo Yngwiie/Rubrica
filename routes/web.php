@@ -36,4 +36,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::get('/plantillas', Plantilla::class)->name('plantillas');
     Route::get('/makeredit/{id_rubrica}', RubricaMakerEdit::class)->name('rubric.edit');
     Route::view('/rubricview', 'export.rubricaPDF', ['rubrica' => Rubrica::find(12)]);
+    Route::view('/rubricexcel', 'export.rubricaEXCEL', ['rubrica' => Rubrica::find(12)]);
 });

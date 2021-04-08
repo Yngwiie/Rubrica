@@ -84,4 +84,9 @@ class ShowRubricas extends Component
        );
         /* return (new RubricExport($this->rubrica_id))->download('rubrica.pdf', \Maatwebsite\Excel\Excel::DOMPDF); */
     }
+    public function exportEXCEL()
+    {
+        return Excel::download(new RubricExport($this->rubrica_id), 'rubrica.tsv');
+        /* return (new RubricExport($this->rubrica_id))->download('rubrica.pdf', \Maatwebsite\Excel\Excel::DOMPDF); */
+    }
 }

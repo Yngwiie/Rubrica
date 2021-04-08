@@ -246,6 +246,7 @@ class RubricaMakerEdit extends Component
                 'nombre' => 'nivel '.$i,
                 'ordenJerarquico' => $i,
                 'id_dimension' => $dimension->id,
+                'puntaje' => $i,
             ]);
         }
         session()->flash('success','Dimension agregada.');
