@@ -4,11 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Imports\StudentsImport;
 use Livewire\Component;
-use App\Models\Modulo_estudiante;
 use App\Models\Estudiante;
+use App\Models\Modulo_estudiante;
+use App\Models\Modulo;
 use Illuminate\Pagination\Paginator;
 use Maatwebsite\Excel\Facades\Excel;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Auth;
 
 class Estudiantes extends Component
 {
@@ -26,6 +28,11 @@ class Estudiantes extends Component
 
     public function mount($id_modulo){
         $this->id_modulo = $id_modulo;
+        $modulo = Modulo::find($id_modulo);
+        if($modulo->id_usuario != Auth::user()->id ){//Evitar que puedan acceder a modulos de otros usuarios
+            $this->id_modulo = "";
+            abort(401);
+        }
     }
     public function render()
     {

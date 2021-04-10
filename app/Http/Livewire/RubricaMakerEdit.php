@@ -9,6 +9,7 @@ use App\Models\Aspecto;
 use App\Models\NivelDesempeno;
 use App\Models\Criterio;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class RubricaMakerEdit extends Component
 {
@@ -32,12 +33,17 @@ class RubricaMakerEdit extends Component
 
     public function render()
     {
+
         return view('livewire.rubrica-maker-edit');
     }
 
     public function mount($id_rubrica)
     {
+        
         $rubrica = Rubrica::find($id_rubrica);
+        if($rubrica->id_usuario != Auth::user()->id && $rubrica->plantilla == false){//evitar acceder a rubricas de otros usuarios
+            abort(401);
+        }
         $this->rubrica = $rubrica;
         $this->id_rubrica = $id_rubrica;
     }

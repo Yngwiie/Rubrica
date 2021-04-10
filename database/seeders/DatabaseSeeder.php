@@ -563,50 +563,146 @@ class DatabaseSeeder extends Seeder
             'id_nivel' => $nivel4->id,
         ]);
 
+        /**
+         * Rúbrica 4
+         * 
+         * Participación en clases
+         */
+        $rubrica1 = Rubrica::create([
+            'titulo' => "Participación en clases",
+            'descripcion' => "La participación en clase es una estrategia para fomentar el aprendizaje activo y reflexivo por parte de los estudiantes.",
+            'plantilla' => TRUE,
+        ]);
+        $dimension1 = Dimension::create([
+            'nombre' => 'Participación en clases',
+            'id_rubrica' => $rubrica1->id,
+            'porcentaje' => 100,
+        ]);
+        $nivel1 = NivelDesempeno::create([
+            'nombre' => 'Problemas serios',
+            'ordenJerarquico' => 1,
+            'id_dimension' => $dimension1->id,
+            'puntaje' => 1,
+        ]);
+        $nivel2 = NivelDesempeno::create([
+            'nombre' => 'Bajo de las expectativas',
+            'ordenJerarquico' => 2,
+            'id_dimension' => $dimension1->id,
+            'puntaje' => 2,
+        ]);
+        $nivel3 = NivelDesempeno::create([
+            'nombre' => 'Suficiente',
+            'ordenJerarquico' => 3,
+            'id_dimension' => $dimension1->id,
+            'puntaje' => 3,
+        ]);
+        $nivel4 = NivelDesempeno::create([
+            'nombre' => 'Superior al promedio',
+            'ordenJerarquico' => 4,
+            'id_dimension' => $dimension1->id,
+            'puntaje' => 4,
+        ]);
+        $aspecto1 = Aspecto::create([
+            'nombre' => 'Participación Activa',
+            'id_dimension' => $dimension1->id,
+            'porcentaje' => 25,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Ausente, no contribuye.',
+            'id_aspecto' => $aspecto1->id,
+            'id_nivel' => $nivel1->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Pocas contribuciones; rara vez se ofrece como voluntario, pero responde a las consultas directas.',
+            'id_aspecto' => $aspecto1->id,
+            'id_nivel' => $nivel2->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Contribuye voluntariamente al debate sin que se le solicite.',
+            'id_aspecto' => $aspecto1->id,
+            'id_nivel' => $nivel3->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Contribuye de forma activa y regular al debate; inicia el debate sobre cuestiones relacionadas con el tema de la clase.',
+            'id_aspecto' => $aspecto1->id,
+            'id_nivel' => $nivel4->id,
+        ]);
+        $aspecto2 = Aspecto::create([
+            'nombre' => 'Relevancia de la participación en el tema que se debate.',
+            'id_dimension' => $dimension1->id,
+            'porcentaje' => 25,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Las contribuciones se salen del tema o distraen a la clase del debate.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel1->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Las contribuciones a veces se salen del tema o distraen.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel2->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Las contribuciones son siempre relevantes para el debate.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel3->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Las contribuciones son relevantes y promueven el análisis en profundidad del material.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel4->id,
+        ]);
+        $aspecto2 = Aspecto::create([
+            'nombre' => 'Evidencias del nivel de preparación',
+            'id_dimension' => $dimension1->id,
+            'porcentaje' => 25,
+        ]);
+        Criterio::create([
+            'descripcion' => 'No se ha preparado adecuadamente; no parece haber leído el material antes de la clase.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel1->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Parece haber leído el material, pero no detenidamente o no ha leído todo el material.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel2->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Leer y reflexionar claramente sobre el material antes de la clase.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel3->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Se prepara con regularidad; investiga y comparte material relevante no asignado explícitamente.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel4->id,
+        ]);
 
-        
-        Rubrica::create([
-            'titulo' => "plantilla",
-            'descripcion' => "descripcion",
-            'plantilla' => TRUE,
-            'id_usuario' => $usuario->id,
+        $aspecto2 = Aspecto::create([
+            'nombre' => 'Escucha/Cooperación.',
+            'id_dimension' => $dimension1->id,
+            'porcentaje' => 25,
         ]);
-        Rubrica::create([
-            'titulo' => "plantilla",
-            'descripcion' => "descripcion",
-            'plantilla' => TRUE,
-            'id_usuario' => $usuario->id,
+        Criterio::create([
+            'descripcion' => 'No está atento o hace comentarios inapropiados o perturbadores.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel1->id,
         ]);
-        Rubrica::create([
-            'titulo' => "plantilla",
-            'descripcion' => "descripcion",
-            'plantilla' => TRUE,
-            'id_usuario' => $usuario->id,
+        Criterio::create([
+            'descripcion' => 'Participa ocasionalmente; no responde a las contribuciones de los demás.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel2->id,
         ]);
-        Rubrica::create([
-            'titulo' => "plantilla",
-            'descripcion' => "descripcion",
-            'plantilla' => TRUE,
-            'id_usuario' => $usuario->id,
+        Criterio::create([
+            'descripcion' => 'Participa regularmente sin monopolizar; escucha y responde a las contribuciones de los demás.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel3->id,
         ]);
-        Rubrica::create([
-            'titulo' => "plantilla",
-            'descripcion' => "descripcion",
-            'plantilla' => TRUE,
-            'id_usuario' => $usuario->id,
+        Criterio::create([
+            'descripcion' => 'Es un modelo de buen comportamiento en el aula. Escucha sin interrumpir. Responde adecuadamente a los demás. Promueve la participación activa de los demás.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel4->id,
         ]);
-        Rubrica::create([
-            'titulo' => "plantilla",
-            'descripcion' => "descripcion",
-            'plantilla' => TRUE,
-            'id_usuario' => $usuario->id,
-        ]);
-        Rubrica::create([
-            'titulo' => "plantilla",
-            'descripcion' => "descripcion",
-            'plantilla' => TRUE,
-            'id_usuario' => $usuario->id,
-        ]);
-        
+       
     }
 }

@@ -7,7 +7,7 @@ use App\Models\Evaluacion;
 use App\Models\Modulo;
 use App\Models\Estudiante;
 use App\Models\modulo_estudiante;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
 
 class Show_modulo extends Component
@@ -43,6 +43,11 @@ class Show_modulo extends Component
 
     public function mount($id_modulo){
         $this->id_modulo = $id_modulo;
+        $modulo = Modulo::find($id_modulo);
+        if($modulo->id_usuario != Auth::user()->id ){//Evitar que puedan acceder a modulos de otros usuarios
+            $this->id_modulo = "";
+            abort(401);
+        }
     }
     /**
      * Guardar evaluacion
