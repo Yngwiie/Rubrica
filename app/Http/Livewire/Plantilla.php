@@ -24,6 +24,8 @@ class Plantilla extends Component
         'id_evaluacion.required' => 'La evaluación es obligatoria.',
     ];
 
+    protected $listeners = ['copyTemplate'];
+
     public function render()
     {
         $plantillas = Rubrica::where('plantilla',TRUE)->get();
@@ -44,7 +46,7 @@ class Plantilla extends Component
         $this->id_rubrica = "";
     }
 
-    public function copyRubric()
+    public function copyTemplate()
     {
         $this->validate();
 

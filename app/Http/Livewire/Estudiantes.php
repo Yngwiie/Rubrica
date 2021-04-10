@@ -140,7 +140,7 @@ class Estudiantes extends Component
     public function import()
     {
         $this->validate([
-            'fileImport' => 'required|mimes:xlsx, xls'
+            'fileImport' => 'required|mimes:xlsx,xls'
         ]);
 
         Excel::import(new StudentsImport($this->id_modulo), $this->fileImport);

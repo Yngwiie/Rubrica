@@ -256,6 +256,7 @@ class RubricaMakerEdit extends Component
     public function setDimension($id_dimension)
     {      
         $this->id_dim = $id_dimension;
+        $this->emit('addScroll');
     }
 
     public function deleteDimension($id_dimension)
@@ -272,6 +273,7 @@ class RubricaMakerEdit extends Component
     public function setIdAspecto($id_aspecto)
     {
         $this->id_aspecto = $id_aspecto;
+        $this->emit('addScroll');
     }
 
     public function addSubcriterios()

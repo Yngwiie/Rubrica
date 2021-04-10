@@ -1,143 +1,107 @@
-<style>
-/* tr > td {
-    border: 1px solid #000000;
-    border-collapse: collapse;
-} */
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 <table>
     <tbody>
-        <tr>
-            <td>{{ $rubrica->titulo }}</td>
+        <tr >
+            <td colspan="2" align="center"><strong>{{ $rubrica->titulo }}</strong></td>
         </tr>
-        <tr>
-            <th><strong>Descripción: </strong></th>
-            <td >{{ $rubrica->descripcion }}</td>
+        <tr >
+            <th style="border:1px solid #000000" ><strong>Descripción: </strong></th>
+            <td style="border:1px solid #000000">{{ $rubrica->descripcion }}</td>
         </tr>
-        <tr>
-            <th><strong>Evaluación: </strong></th>
-            <td>{{ $rubrica->evaluacion->nombre }}</td>
+        <tr >
+            <th style="border:1px solid #000000"><strong>Evaluación: </strong></th>
+            <td style="border:1px solid #000000">{{ $rubrica->evaluacion->nombre }}</td>
         </tr>
-        <tr>
-            <th><strong>Módulo: </strong></th>
-            <td>{{ $rubrica->evaluacion->modulo->nombre }}</td>
+        <tr style="border:1px solid #000000">
+            <th style="border:1px solid #000000"><strong>Módulo: </strong></th>
+            <td style="border:1px solid #000000">{{ $rubrica->evaluacion->modulo->nombre }}</td>
         </tr>
     </tbody>
 </table>
 <br>
 @foreach ($rubrica->dimensiones as $dimension)
-        <table style="border: 1px dashed #CCC" id="table{{$dimension->id}}">
-            <thead class="bg-secondary">
+    <table style="border: 1px dashed #CCC" id="table{{$dimension->id}}">
+        <thead class="bg-secondary">
+            <tr>
+                <th style="border:1px solid #000000;font-size:16">
+                    <div class="row">
+                        <p> <strong>{!!nl2br($dimension->nombre."\n".$dimension->porcentaje)!!}% </strong></p>
+                    </div>
+                </th>
+
+                @foreach($dimension->nivelesDesempeno as $nivel)
+                <th style="border:1px solid #000000;font-size:16" >
+                    <p ><strong>{!!nl2br($nivel->nombre."\n")!!}</strong></p>
+                    <div class="row">
+                        <div class="col-sm-6" style="margin-top:4px">
+                            <small >Puntaje: {{$nivel->puntaje}}</small>
+                        </div>
+                    </div> 
+                </th>
+
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach($dimension->aspectos as $aspecto)
                 <tr>
-                    <th >
-                        <p >{{$dimension->nombre}}</p>
+                    <th valign="top" style="border:1px solid #000000" >
                         <div class="row">
-                            <div class="col-sm-8" style="margin-top:4px">
-                                <small >{{$dimension->porcentaje}} %</small>
+                            <div class="col-12">
+                                <small>{!!nl2br($aspecto->nombre."\n")!!}</small>
                             </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8" style="margin-top: 6px">
+                                <small>{{$aspecto->porcentaje}}%</small>
+                            </div>
+
                         </div>
                     </th>
 
-                    @foreach($dimension->nivelesDesempeno as $nivel)
-                    <th >
-                        <p >{{$nivel->nombre}}</p>
-                        <div class="row">
-                            <div class="col-sm-6" style="margin-top:4px">
-                                <small >Puntaje: {{$nivel->puntaje}}</small>
-                            </div>
-                        </div> 
-                    </th>
-
-                    @endforeach
-                </tr>
-            </thead>
-            <tbody>
-
-                @foreach($dimension->aspectos as $aspecto)
-                    <tr>
-                        <th >
-                            <div class="row">
-                                <div class="col-12">
-                                    <small>{{$aspecto->nombre}}</small>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8" style="margin-top: 6px">
-                                   <small>{{$aspecto->porcentaje}}%</small>
-                                </div>
-
-                            </div>
-                        </th>
-
-                        @foreach($aspecto->criterios as $criterio)
-                            <!-- <livewire:criterio-component :criterio="$criterio" :key="time().$loop->index"> -->
-                            <th >
-                                @if($criterio->deshabilitado==0)
-                                    <div >
-                                        @if($criterio->criterio_avanzado == true)
-                                            <ul>
-                                                @foreach($descripcion_avanzada as $desc)
-                                                    <li wire:key="{{$loop->index}}">
+                    @foreach($aspecto->criterios as $criterio)
+                        <th valign="top" style="border:1px solid #000000" >
+                            @if($criterio->deshabilitado==0)
+                                <div >
+                                @if(empty($criterio->descripcion))
+                                            @foreach(json_decode($criterio->descripcion_avanzada) as $desc)
                                                     <div class="form-row mb-1">
                                                         @if($desc->magnitud == "porcentaje1")
-                                                            <div class="w-41">
-                                                                <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text" title="descripcion_avanzada.{{$loop->index}}.text"></textarea>
-                                                            </div>
-                                                            
-                                                            <div class="col-3">
-                                                                <input style="font-size:small;margin-left:-5px" class="input col-12" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
-                                                                <!-- <small >%</small>  -->
-                                                            </div>
-                                                            <div class="w-3" style="margin-left:-7px" >
-                                                                <small>%</small> 
+                                                            <div class="col">
+                                                                <small>- {!!nl2br($desc->text)!!} [Magnitud:{{$desc->porcentaje_magnitud}}%]{!!nl2br("\n")!!}</small>
                                                             </div>
                                                         @else
-                                                            <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text" title="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                                            <div class="col">
+                                                                <small>- {!!nl2br($desc->text."\n")!!}</small>
+                                                            </div>
                                                         @endif
                                                     </div>
                                                     
                                                     <div class="form-row">
-                                                        <div class="col-6">
-                                                            <div class="input-group mb-1">
-                                                                <input style="font-size:small" class="form-control" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje" type="number"/>
-                                                                <div class="input-group-append">
-                                                                    <span style="font-size:small" class="input-group-text">%</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="col-3" style="font-size:small">
-                                                            <button class="btn btn-sm btn-danger" wire:loading.attr="disabled" wire:click="removeSubCriteria({{$loop->index}})"><i class="fas fa-md fa-times"></i></button>
+                                                        <div class="col">
+                                                            <small><i>[Peso:{{$desc->porcentaje}}%]{!!nl2br("\n")!!}</i></small>
                                                         </div>
                                                     </div>
-                                                    @if($loop->index != (count($descripcion_avanzada)-1))
-                                                        <hr class="bg-dark">
-                                                    @endif
-                                                    </li>
                                                 @endforeach
-                                            </ul>
-                                        @else
-                                            <small style="white-space: pre-line;">{{$criterio->descripcion}}</small>
-                                        @endif
-                                    </div>
-                                @else
-                                    <div class="justify-content-center">
-                                        -
-                                    </div>
-                                @endif
-                                <div>
-                                    @error('criterio.descripcion') <small class="error text-danger">{{ $message }}</small> @enderror
-                                </div>
-                            </th>
 
-                        @endforeach
-                    </tr>
-                @endforeach
-            </tbody>
-            </table>
-        <br>
-    @endforeach
+                                        @else
+                                        <small style="white-space: pre-line;">{!!nl2br($criterio->descripcion)!!}</small>
+                                    @endif
+                                </div>
+                            @else
+                                <div class="justify-content-center">
+                                    
+                                </div>
+                            @endif
+                        </th>
+
+                    @endforeach
+                </tr>
+            @endforeach
+        </tbody>
+        </table>
+    <br>
+@endforeach

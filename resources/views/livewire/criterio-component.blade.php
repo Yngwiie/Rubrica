@@ -8,7 +8,7 @@
                         <div class="form-row mb-1">
                             @if($desc->magnitud == "porcentaje1")
                                 <div class="w-41">
-                                    <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text" title="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                    <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
                                 
                                 <div class="col-3">
@@ -19,7 +19,7 @@
                                     <small>%</small> 
                                 </div>
                             @else
-                                <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text" title="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                             @endif
                         </div>
                         
@@ -56,7 +56,7 @@
                         <div class="form-row mb-1">
                             @if($desc->magnitud == "porcentaje1")
                                 <div class="w-41">
-                                    <textarea disabled style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text" title="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                    <textarea disabled style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text" ></textarea>
                                 </div>
                                 
                                 <div class="col-3">
@@ -67,7 +67,7 @@
                                     <small>%</small> 
                                 </div>
                             @else
-                                <textarea disabled style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text" title="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                <textarea disabled style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                             @endif
                         </div>
                         

@@ -564,7 +564,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-
+        
         Rubrica::create([
             'titulo' => "plantilla",
             'descripcion' => "descripcion",

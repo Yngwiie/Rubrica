@@ -90,27 +90,6 @@
                                 @if($criterio->deshabilitado==0)
                                     <div >
                                         @if(empty($criterio->descripcion))
-                                            <!-- <ul class="list-group ml-3" >
-                                                @foreach(json_decode($criterio->descripcion_avanzada) as $desc)
-                                                    <li >
-                                                    <div class="form-row mb-1">
-                                                        @if($desc->magnitud == "porcentaje1")
-                                                            <div class="w-41">
-                                                                <small>{{$desc->text}} [Magnitud:{{$desc->porcentaje_magnitud}}%]</small>
-                                                            </div>
-                                                        @else
-                                                            <small>{{$desc->text}}</small>
-                                                        @endif
-                                                    </div>
-                                                    
-                                                    <div class="form-row">
-                                                        <div class="col-6">
-                                                            <small><i>[Peso:{{$desc->porcentaje}}%]</i></small>
-                                                        </div>
-                                                    </div>
-                                                    </li>
-                                                @endforeach
-                                            </ul> -->
                                             @foreach(json_decode($criterio->descripcion_avanzada) as $desc)
                                                     <div class="form-row mb-1">
                                                         @if($desc->magnitud == "porcentaje1")

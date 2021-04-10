@@ -96,7 +96,13 @@
                 <div class="modal-body">
                     <form wire:submit.prevent="import">
                         <label class="form-label" for="customFile">Seleccione su archivo excel</label>
-                        <input type="file"  id="customFile" wire:model="fileImport"/>
+                        <div class="flex flex-items-center">
+                            <div wire:loading wire:target="fileImport" class="mr-3">
+                                <x-loading/>
+                            </div>
+                            <input type="file"  id="customFile" wire:model="fileImport"/>
+                        </div>
+                        
                         @error('fileImport') <span class="error text-danger">{{ $message }}</span> @enderror
                     </form>
                     @if ($errors->any())
@@ -114,7 +120,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" wire:click="import()">Importar Estudiantes</button>
+                    <button type="button" class="btn btn-primary" wire:target="fileImport" wire:loading.attr="disabled" wire:click="import()">Importar Estudiantes</button>
 
                 </div>
             </div>

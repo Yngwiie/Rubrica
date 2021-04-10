@@ -53,10 +53,18 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary"  wire:click="copyRubric()">Seleccionar</button>
+                <button type="button" class="btn btn-primary"  onclick="copyTemplate()" data-dismiss="modal">Seleccionar</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function copyTemplate(){
+        var contenedor = document.getElementById('contenedor_carga');
 
+        contenedor.style.visibility = 'visible';
+        contenedor.style.opacity = '0.9';
+        Livewire.emit('copyTemplate')
+    }
+</script>
 </div>

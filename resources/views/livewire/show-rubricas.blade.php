@@ -36,11 +36,13 @@
                                 <tr>
                                     <td><i class="far fa-lg fa-list-alt"></i> {{$rubrica->titulo}}</td>
                                     <td>{{$rubrica->evaluacion->nombre}} - {{$rubrica->evaluacion->modulo->nombre}}</td>
-                                    <td><a class="btn btn-sm btn-sec" href="{{route('rubric.edit',$rubrica->id)}}" title="Editar Rúbrica"><i class="far fa-lg fa-edit"></i></a>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary">Aplicar</button>
+                                        <a class="btn btn-sm btn-sec" href="{{route('rubric.edit',$rubrica->id)}}" title="Editar Rúbrica"><i class="far fa-lg fa-edit"></i></a>
                                         <button class="btn btn-sm btn-sec" title="Exportar Rúbrica" data-toggle="modal" data-target="#exportRubrica" wire:click="setIdRubrica({{$rubrica->id}})">
                                             <i class="fas fa-lg fa-file-download"></i></button>
-                                        <button class="btn btn-sm btn-sec" title="Copiar Rúbrica"><i class="far fa-lg fa-copy"></i></button>
-                                        <button tclass="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteRubrica" wire:click="delete({{$rubrica->id}})" 
+                                        <button class="btn btn-sm btn-sec" id="res" title="Copiar Rúbrica" data-tooltip="tooltip" data-toggle="modal" onclick="closeT()" data-target="#copyRubrica" wire:click="setIdRubrica({{$rubrica->id}})"><i class="far fa-lg fa-copy"></i></button>
+                                        <button tclass="btn btn-sm btn-sec" data-toggle="modal" onclick="closeT()" data-target="#deleteRubrica" wire:click="delete({{$rubrica->id}})" 
                                         title="Eliminar Rúbrica"><i style="color:red " class="far fa-lg fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
@@ -102,6 +104,9 @@
                             <button class="btn btn-success" wire:click="exportEXCEL()"><i class="far fa-lg fa-file-excel"></i> EXCEL</button>
                         </div>
                     </div>
+                    <div wire:loading wire:target="exportPDF">
+                        La descarga comenzará pronto...
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -109,4 +114,47 @@
             </div>
         </div>
     </div>
+    <!-- Modal agregar evaluacion -->
+    <div wire:ignore.self class="modal fade" id="copyRubrica" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Clonar Rúbrica</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <select class="form-control" name="id_evaluacion" wire:model="id_evaluacion">
+                        <option hidden selected>Seleccione la evaluación</option>
+                        @foreach($evaluaciones as $evaluacion)
+                                <option value="{{$evaluacion->id}}">{{$evaluacion->nombre}} -
+                                {{$evaluacion->modulo->nombre}}</option>
+                        @endforeach
+                    </select>
+                    @error('id_evaluacion') 
+                            <span class="error text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary"  onclick="copyRubric()" data-dismiss="modal">Seleccionar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    function closeT(){
+        $('button').focus(function() {
+            this.blur();
+        });
+    }
+    function copyRubric(){
+        var contenedor = document.getElementById('contenedor_carga');
+
+        contenedor.style.visibility = 'visible';
+        contenedor.style.opacity = '0.9';
+        Livewire.emit('copyRubric')
+    }
+</script>
 </div>

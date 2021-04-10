@@ -30,14 +30,14 @@
     <hr class="bg-dark">
     <div wire:key="foo">
     @foreach ($rubrica->dimensiones as $dimension)
-        <button type="button" class="btn btn-sec" data-toggle="tooltip" data-html="true" title="Existen dos opciones para crear un aspecto.
-        El primero de ellos creara un aspecto sin ninguna configuración previa, en cambio el añadir aspecto avanzado se podran asignar los subcriterios
+        <button type="button" class="btn btn-sec" data-tooltip="tooltip" data-html="true" title="Existen dos opciones para crear un aspecto.
+        El primero de ellos creará un aspecto sin ninguna configuración previa, en cambio el añadir aspecto avanzado se podran asignar los subcriterios
         del aspecto, los cuales se clonaran en cada uno de los niveles.">
             <i class="far fa-lg fa-question-circle"></i>
         </button>
         <button type="button" onclick="anadirAspecto({{$dimension->id}})" class="btn btn-md btn-sec add-row"><i class="far fa-lg fa-plus-square"></i> Añadir Aspecto Normal</button>
         <button type="button" class="btn btn-md btn-sec add-row" data-toggle="modal" data-target="#addAspectoCriterios" wire:click="setDimension({{$dimension->id}})"><i class="far fa-lg fa-plus-square"></i> Añadir Aspecto Avanzado</button>
-        @if($dimension->nivelesDesempeno->count()<=7)
+        @if($dimension->nivelesDesempeno->count() < 7)
             <button type="button" class="btn btn-md btn-sec add-row" onclick="storeNivel({{$dimension->id}})"><i class="far fa-lg fa-plus-square"></i> Añadir Nivel</button>
         @else
             <button type="button" disabled class="btn btn-md btn-sec add-row"><i class="far fa-lg fa-plus-square"></i> Añadir Nivel</button>

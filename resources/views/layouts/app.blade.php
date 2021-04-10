@@ -9,7 +9,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-        
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <!-- Styles -->
         
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
@@ -37,11 +37,10 @@
         <link rel="stylesheet" href="{{ asset('css/bd-wizard.css') }}">
         <link rel="stylesheet" href="{{ asset('css/pantallacarga.css') }}">
         <script src="{{ asset('js/jquery.doubleScroll.js') }}" defer></script>
-
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
-            /* $('.double-scroll').doubleScroll(); */
-            $('.double-scroll').doubleScroll({resetOnWindowResize: true});
+                $('.double-scroll').doubleScroll({resetOnWindowResize: true});
             });
         </script>
     </head>
@@ -116,15 +115,26 @@
         @stack('scripts')
 
         <script>
-            $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            })
+/*             $(function () {
+                $('[data-tooltip="tooltip"]').tooltip()
+            }) */
+            $( function() {
+                $( document ).tooltip({
+                position: {
+                    my: "center bottom", 
+                    at: "center top", 
+                }
+                });
+            } );
             window.Livewire.on('moduloAgregado',()=>{
                 $('#addModulo').modal('hide');
                 $('#editModulo').modal('hide'); 
             })
             window.Livewire.on('moduloEliminado',()=>{
                 $('#deleteModulo').modal('hide');
+            })
+            window.Livewire.on('addScroll',()=>{
+                $('.double-scroll').doubleScroll({resetOnWindowResize: true});
             })
             window.Livewire.on('evaluacionEliminada',()=>{
                 $('#deleteEvaluacion').modal('hide');
