@@ -26,6 +26,8 @@ class RubricaMakerEdit extends Component
     protected $rules = [
         'rubrica.descripcion' => 'required|string',
         'rubrica.titulo' => 'required|string',
+        'rubrica.escala_notas' => 'required',
+        'rubrica.tipo_puntaje' => 'required',
     ];
 
     protected $listeners = ['update','deleteAspecto','storeAspecto','storeDimension','deleteDimension',
@@ -39,7 +41,6 @@ class RubricaMakerEdit extends Component
 
     public function mount($id_rubrica)
     {
-        
         $rubrica = Rubrica::find($id_rubrica);
         if($rubrica->id_usuario != Auth::user()->id && $rubrica->plantilla == false){//evitar acceder a rubricas de otros usuarios
             abort(401);
@@ -50,21 +51,47 @@ class RubricaMakerEdit extends Component
     /**
      * add new sub criteria
      */
-    public function addText()
+    public function addSubcriterio()
     {   
+        $suma_porcentajes = 0;
+        foreach($this->sub_criterios as $subcriterio){
+            $suma_porcentajes += intval($subcriterio["porcentaje"]);
+        }
+        $suma_porcentajes += intval($this->porcentaje_subcriterio);
+        if($this->porcentaje_subcriterio==""){
+            $this->addError('subcriterio_porcentaje', 'Porcentaje del subcriterio es obligatorio.');
+        }
+        if($suma_porcentajes>100){
+            $this->addError('subcriterio_porcentaje', 'La suma de los porcentajes es mayor a 100%.');
+        }
+        if($this->sub_criterio==""){
+            $this->addError('subcriterio_descripcion', 'La descripción es obligatoria.');
+        }
+        if($this->magnitud_subcriterio==""){
+            $this->addError('subcriterio_magnitud', 'El tipo de magnitud es obligatorio.');
+        }
+        if($this->getErrorBag()->isNotEmpty()){
+            return;
+        }
+        $this->resetErrorBag();
         if($this->magnitud_subcriterio=="porcentaje1"){
-            array_push($this->sub_criterios, ['text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>$this->porcentaje_subcriterio]);
-        }else{
-            array_push($this->sub_criterios, ['text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje'=>$this->porcentaje_subcriterio]);
+            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>intval($this->porcentaje_subcriterio)]);
+        }elseif($this->magnitud_subcriterio=="escala"){
+            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'escala_magnitud'=>0,'porcentaje'=>intval($this->porcentaje_subcriterio)]);
+        }elseif($this->magnitud_subcriterio=="porcentaje2"){
+            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>intval($this->porcentaje_subcriterio)]);
+        }
+        else{
+            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje'=>intval($this->porcentaje_subcriterio)]);
         }
         $this->sub_criterio = "";
         $this->magnitud_subcriterio = "";
-        $this->porcentaje_subcriterio = 0;
+        $this->porcentaje_subcriterio = "";
     }
     /**
      * Remove sub criteria
      */
-    public function removeText($index)
+    public function removeSubcriterio($index)
     {
         unset($this->sub_criterios[$index]);
         $this->sub_criterios = array_values($this->sub_criterios);
@@ -75,6 +102,11 @@ class RubricaMakerEdit extends Component
     {
         $this->emit('update');
     }
+    public function updated()
+    {
+        $this->rubrica->save();
+    }
+
     public function update()
     {
         $this->validate();
@@ -97,13 +129,14 @@ class RubricaMakerEdit extends Component
             session()->flash('warning',$message); 
         }
         session()->flash('success','Salvado.'); 
-        return redirect()->route('rubric.edit', $this->id_rubrica); 
+        $this->emit("salvado");
+        /* return redirect()->route('rubric.edit', $this->id_rubrica);  */
         
     }
     public function storeAspecto($id_dimension)
     {
-        $this->validate();
-        $this->rubrica->save();
+        /* $this->validate();
+        $this->rubrica->save(); */
         $dimension = Dimension::findOrFail($id_dimension);
         $aspecto = Aspecto::create([
             'nombre' => 'aspecto',
@@ -118,13 +151,6 @@ class RubricaMakerEdit extends Component
                 'id_nivel' => $nivel->id,
             ]);
         }
-        /* for ($i=0; $i < $num_niveles; $i++) { 
-            Criterio::create([
-                'descripcion' => 'Criterio',
-                'id_aspecto' => $aspecto->id,
-            ]);
-        } */
-        
         session()->flash('success','Aspecto agregado con éxito.'); 
         return redirect()->route('rubric.edit', $this->id_rubrica); 
     }
@@ -133,7 +159,6 @@ class RubricaMakerEdit extends Component
      */
     public function storeAspectoAvanzado()
     {
-        
         $this->validate();
         $this->rubrica->save();
         $dimension = Dimension::findOrFail($this->id_dim);
@@ -150,11 +175,23 @@ class RubricaMakerEdit extends Component
         $array_3 = [20,40,60,80,100];
         $array_4 = [10,30,50,70,90,100];
         $array_5 = [0,15,30,45,70,85,100];
+
+        $array_escala_1 = [1,2,3];
+        $array_escala_2 = [1,2,3,4];
+        $array_escala_3 = [1,2,3,4,5];
+        $array_escala_4 = [1,2,3,4,5,6];
+        $array_escala_5 = [1,2,3,4,5,6,7];
+
+        $array_descendiente_1 = [100,70,40];
+        $array_descendiente_2 = [100,70,50,20];
+        $array_descendiente_3 = [100,80,60,40,20];
+        $array_descendiente_4 = [100,90,70,50,30,10];
+        $array_descendiente_5 = [100,85,70,45,30,15,0];
         $i = 0;
         foreach ($niveles as $nivel) {
             $z = 0;
             foreach($this->sub_criterios as $subs){
-                
+                $subs['id']=$z;
                 if($subs["magnitud"] == "porcentaje1"){
                     if($num_niveles==3){
                         $subs["porcentaje_magnitud"] = $array_1[$i];
@@ -169,6 +206,34 @@ class RubricaMakerEdit extends Component
                     }
                     $this->sub_criterios[$z] = $subs;
                 }
+                if($subs["magnitud"] == "escala"){
+                    if($num_niveles==3){
+                        $subs["porcentaje_magnitud"] = $array_escala_1[$i];
+                    }elseif($num_niveles==4){
+                        $subs["porcentaje_magnitud"] = $array_escala_2[$i];
+                    }elseif($num_niveles==5){
+                        $subs["porcentaje_magnitud"] = $array_escala_3[$i];
+                    }elseif($num_niveles==6){
+                        $subs["porcentaje_magnitud"] = $array_escala_4[$i];
+                    }elseif($num_niveles==7){
+                        $subs["porcentaje_magnitud"] = $array_escala_5[$i];
+                    }
+                    $this->sub_criterios[$z] = $subs;
+                }
+                if($subs["magnitud"] == "porcentaje2"){
+                    if($num_niveles==3){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_1[$i];
+                    }elseif($num_niveles==4){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_2[$i];
+                    }elseif($num_niveles==5){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_3[$i];
+                    }elseif($num_niveles==6){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_4[$i];
+                    }elseif($num_niveles==7){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_5[$i];
+                    }
+                    $this->sub_criterios[$z] = $subs;
+                }
                 $z+=1;
             }
             $json = json_encode($this->sub_criterios);
@@ -176,6 +241,7 @@ class RubricaMakerEdit extends Component
                 'descripcion_avanzada' => $json,
                 'id_aspecto' => $aspecto->id,
                 'id_nivel' => $nivel->id,
+                'last_id_subcriterio' => ($z-1),
             ]);
             $i++;
         }
@@ -265,11 +331,10 @@ class RubricaMakerEdit extends Component
         $this->emit('addScroll');
     }
 
-    public function deleteDimension($id_dimension)
+    public function deleteDimension()
     {
-        $this->validate();
         $this->rubrica->save();
-        $dimension = Dimension::find($id_dimension);
+        $dimension = Dimension::find($this->id_dim);
         $dimension->delete();
         
         session()->flash('success','Dimensión eliminada con éxito.');
@@ -288,20 +353,32 @@ class RubricaMakerEdit extends Component
         $aspecto = Aspecto::find($this->id_aspecto);
         
         $num_niveles = NivelDesempeno::where('id_dimension','=',$aspecto->dimension->id)->count();
-        $niveles = NivelDesempeno::where('id_dimension','=',$aspecto->dimension->id)->get();
 
         $array_1 = [40,70,100];
         $array_2 = [20,50,70,100];
         $array_3 = [20,40,60,80,100];
         $array_4 = [10,30,50,70,90,100];
         $array_5 = [0,15,30,45,70,85,100];
+        
+        $array_escala_1 = [1,2,3];
+        $array_escala_2 = [1,2,3,4];
+        $array_escala_3 = [1,2,3,4,5];
+        $array_escala_4 = [1,2,3,4,5,6];
+        $array_escala_5 = [1,2,3,4,5,6,7];
+
+        $array_descendiente_1 = [100,70,40];
+        $array_descendiente_2 = [100,70,50,20];
+        $array_descendiente_3 = [100,80,60,40,20];
+        $array_descendiente_4 = [100,90,70,50,30,10];
+        $array_descendiente_5 = [100,85,70,45,30,15,0];
         $i = 0;
         $criterios = Criterio::where('id_aspecto',$aspecto->id)->get();
         foreach ($criterios as $criterio) {
-            $z = 0;
             $desc_avanzada = json_decode($criterio->descripcion_avanzada);
+            $last_id = $criterio->last_id_subcriterio;
             foreach($this->sub_criterios as $subs){
-                
+                $last_id+=1;
+                $subs["id"] = $last_id;
                 if($subs["magnitud"] == "porcentaje1"){
                     if($num_niveles==3){
                         $subs["porcentaje_magnitud"] = $array_1[$i];
@@ -315,11 +392,36 @@ class RubricaMakerEdit extends Component
                         $subs["porcentaje_magnitud"] = $array_5[$i];
                     }
                     
-                   
+                }
+                if($subs["magnitud"] == "escala"){
+                    if($num_niveles==3){
+                        $subs["porcentaje_magnitud"] = $array_escala_1[$i];
+                    }elseif($num_niveles==4){
+                        $subs["porcentaje_magnitud"] = $array_escala_2[$i];
+                    }elseif($num_niveles==5){
+                        $subs["porcentaje_magnitud"] = $array_escala_3[$i];
+                    }elseif($num_niveles==6){
+                        $subs["porcentaje_magnitud"] = $array_escala_4[$i];
+                    }elseif($num_niveles==7){
+                        $subs["porcentaje_magnitud"] = $array_escala_5[$i];
+                    }
+                }
+                if($subs["magnitud"] == "porcentaje2"){
+                    if($num_niveles==3){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_1[$i];
+                    }elseif($num_niveles==4){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_2[$i];
+                    }elseif($num_niveles==5){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_3[$i];
+                    }elseif($num_niveles==6){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_4[$i];
+                    }elseif($num_niveles==7){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_5[$i];
+                    }
                 }
                 array_push($desc_avanzada, $subs);
-                $z+=1;
             }
+            $criterio->last_id_subcriterio = $last_id;
             $criterio->descripcion_avanzada = json_encode($desc_avanzada);
             $criterio->save();
            /*  $json = json_encode($this->sub_criterios); */

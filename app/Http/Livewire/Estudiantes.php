@@ -36,7 +36,6 @@ class Estudiantes extends Component
     }
     public function render()
     {
-        $searchTerm = '%'.$this->searchTerm.'%';
         $estudiantes = Modulo_estudiante::where('id_modulo','=',$this->id_modulo)
                                         ->whereHas('estudiante',function($q){
                                             $searchTerm = '%'.$this->searchTerm.'%';

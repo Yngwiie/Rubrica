@@ -12,7 +12,7 @@ class NivelDesempeno extends Model
     protected $table = 'nivel_desempenos';
 
     protected $fillable = [
-        'nombre','ordenJerarquico','id_dimension','puntaje',
+        'nombre','ordenJerarquico','id_dimension','puntaje','puntaje_minimo','puntaje_maximo'
     ];
 
     public function dimension(){

@@ -12,7 +12,7 @@ class Criterio extends Model
     protected $table = 'criterios';
 
     protected $fillable = [
-        'descripcion','id_aspecto','descripcion_avanzada','id_nivel','deshabilitado',
+        'descripcion','id_aspecto','descripcion_avanzada','id_nivel','deshabilitado','last_id_subcriterio',
     ];
 
     /* public function nivelDesempeno(){

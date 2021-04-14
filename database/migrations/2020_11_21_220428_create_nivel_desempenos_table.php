@@ -19,6 +19,8 @@ class CreateNivelDesempenosTable extends Migration
             $table->string('nombre',400);
             $table->integer('puntaje')->default(0);
             $table->integer('ordenJerarquico');
+            $table->float('puntaje_minimo',7,2)->default(0,0);
+            $table->float('puntaje_maximo',7,2)->default(0,0);
             $table->unsignedBigInteger('id_dimension')->notnull();
             $table->foreign('id_dimension')->references('id')->on('dimensiones')->onDelete('cascade');
         });

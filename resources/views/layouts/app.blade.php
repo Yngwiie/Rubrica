@@ -126,9 +126,24 @@
                 }
                 });
             } );
+            window.Livewire.on('salvado',()=>{
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                        $(this).remove();
+                    });
+                }, 5000);
+                $('.double-scroll').doubleScroll({resetOnWindowResize: true});
+            })
             window.Livewire.on('moduloAgregado',()=>{
                 $('#addModulo').modal('hide');
                 $('#editModulo').modal('hide'); 
+            })
+            window.Livewire.on('pantallaCarga',()=>{
+                console.log("hola")
+                var contenedor = document.getElementById('contenedor_carga');
+
+                contenedor.style.visibility = 'visible';
+                contenedor.style.opacity = '0.9';
             })
             window.Livewire.on('moduloEliminado',()=>{
                 $('#deleteModulo').modal('hide');

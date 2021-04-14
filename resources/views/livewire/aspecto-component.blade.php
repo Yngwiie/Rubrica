@@ -1,4 +1,4 @@
-<tr style="background-color: #c9c9c9">
+<tr style="background-color: #c9c9c9;">
 
     <th >
         <div class="row">
@@ -24,7 +24,7 @@
         </div>
         @if($aspecto->criterios->first()->descripcion_avanzada!=null)
             <div class="d-flex justify-content-center" >
-                <button wire:loading.attr="disabled" data-toggle="modal" data-target="#addSubcriterio"  onclick="setIdAspecto({{$id_aspecto}})"type="button" class="btn btn-sec" ><i class="far fa-lg fa-plus-square"></i><small> Subcriterio(s)</small></button>
+                <button data-toggle="modal" data-target="#addSubcriterio" onclick="setIdAspecto({{$id_aspecto}})"type="button" class="btn btn-sec" ><i class="far fa-lg fa-plus-square"></i><small> Subcriterio(s)</small></button>
             </div>
         @endif
         

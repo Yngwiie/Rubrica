@@ -8,7 +8,9 @@ use App\Models\Rubrica;
 use App\Models\Dimension;
 use App\Models\NivelDesempeno;
 use App\Models\Aspecto;
+use App\Models\Modulo;
 use App\Models\Criterio;
+use App\Models\Evaluacion;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -26,6 +28,16 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make("12345678"),
         ]);
         
+        $modulo = Modulo::create([
+            'nombre' => "memoria",
+            'id_usuario' => $usuario->id,
+        ]);
+
+        Evaluacion::create([
+            'nombre' => "Prueba 1",
+            'fecha' => now(),
+            'id_modulo' => $modulo->id,
+        ]);
         /**
          * Rubrica 1 - plantilla trabajo en equipo
          * 
