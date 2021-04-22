@@ -90,7 +90,7 @@ class Plantilla extends Component
                     Criterio::create([
                         'descripcion' => $criterio->descripcion,
                         'descripcion_avanzada' => $criterio->descripcion_avanzada,
-                        'deshabiltiado' => $criterio->deshabilitado,
+                        'deshabilitado' => $criterio->deshabilitado,
                         'id_aspecto' => $asp->id,
                         'id_nivel' => $niveles_aux[$i],
                     ]);

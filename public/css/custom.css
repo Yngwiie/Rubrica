@@ -53,7 +53,7 @@
     border: 1px solid #ccc;
     outline:none;
     padding: 6px;
-    width: 230px;
+    width: 250px;
 }
 .input:focus{
     border:1px solid #56b4ef;

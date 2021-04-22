@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Evaluacion;
 use App\Models\Modulo;
 use App\Models\Estudiante;
+use App\Models\estudiante_evaluacion;
 use App\Models\modulo_estudiante;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
@@ -32,8 +33,6 @@ class Show_modulo extends Component
         $evaluaciones = Evaluacion::where('nombre','LIKE',$searchTerm)
                         ->where('id_modulo','=',$this->id_modulo)
                         ->orderBy('id','DESC')->paginate(6);
-        $estudiantes = Modulo_estudiante::where('id_modulo','=',$this->id)
-                                        ->orderBy('id','DESC')->paginate(10);
         return view('livewire.show_modulo',
                 [
                     'evaluaciones' => $evaluaciones, 
@@ -59,11 +58,23 @@ class Show_modulo extends Component
             'fecha' => 'required',
         ]);
         
-        Evaluacion::create([
+        $evaluacion = Evaluacion::create([
             'id_modulo' => $this->id_modulo,
             'nombre' => $validateData['nombre'],
             'fecha' => $validateData['fecha'],
         ]);
+        
+        $modulo = Modulo::find($this->id_modulo);
+        $estudiantes = $modulo->estudiantes;
+        /* $estudiantes = Estudiante::where('id_modulo',$this->id_modulo)->get(); */
+
+        foreach($estudiantes as $estudiante){
+            estudiante_evaluacion::create([
+                'id_evaluacion' => $evaluacion->id,
+                'id_estudiante' => $estudiante->id,
+            ]);
+        }
+
         session()->flash('success','Evaluación creada con éxito.');
         $this->resetInputFields();
         $this->emit('evaluacionAgregada');

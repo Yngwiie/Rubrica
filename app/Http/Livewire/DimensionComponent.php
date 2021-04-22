@@ -33,6 +33,7 @@ class DimensionComponent extends Component
         $dimension->nombre = $this->nombre;
         $dimension->porcentaje = $this->porcentaje;
         $dimension->save();
+        $this->emit('newversion');
        
     }
 }

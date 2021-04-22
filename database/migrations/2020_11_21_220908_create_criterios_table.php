@@ -19,6 +19,7 @@ class CreateCriteriosTable extends Migration
             $table->string('descripcion',2000)->nullable();
             $table->string('descripcion_avanzada',2000)->nullable();
             $table->boolean('deshabilitado')->default(FALSE);
+            $table->boolean('aplicado')->default(FALSE);
             $table->integer('last_id_subcriterio')->default(0);
             $table->unsignedBigInteger('id_aspecto')->notnull();
             $table->foreign('id_aspecto')->references('id')->on('aspectos')->onDelete('cascade');

@@ -27,12 +27,12 @@
         <tbody>
             @foreach($estudiantes as $estudiante)
             <tr>
-                <td><i class="fas fa-lg fa-user-graduate"></i> {{$estudiante->estudiante->nombre}}</td>
+                <td><i class="fas fa-lg fa-user-graduate"></i> {{$estudiante->estudiante->nombre}} {{$estudiante->estudiante->apellido}}</td>
                 <td>{{$estudiante->estudiante->email}}</td>
                 <td><button class="btn  btn-sm btn-sec" data-toggle="modal" data-target="#editEstudiante"
-                        wire:click="edit({{$estudiante->id_estudiante}})"><i class="far fa-lg fa-edit"></i></button>
+                        wire:click="edit({{$estudiante->estudiante->id}})"><i class="far fa-lg fa-edit"></i></button>
                     <button class="btn btn-sm btn-sec" data-toggle="modal" data-target="#deleteEstudiante"
-                        wire:click="delete({{$estudiante->id_estudiante}})"><i style="color:red "
+                        wire:click="delete({{$estudiante->estudiante->id}})"><i style="color:red "
                             class="far fa-lg fa-trash-alt"></i></button>
                 </td>
 
@@ -118,10 +118,19 @@
                         </div>
                     @endif
                 </div>
+                <div wire:loading wire:target="import">
+                        <div class="d-flex justify-content-center">
+                            <strong>Importando estudiantes...</strong>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            
+                            <x-loading-md></x-loading-md>
+                        </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" wire:target="fileImport" wire:loading.attr="disabled" wire:click="import()">Importar Estudiantes</button>
-
+                    
                 </div>
             </div>
         </div>
@@ -160,7 +169,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                form>
+                <form>
                         <div class="form-group">
                             <label for="Nombre">Nombre</label>
                             <input type="text" name="nombre" class="form-control" wire:model="nombre">

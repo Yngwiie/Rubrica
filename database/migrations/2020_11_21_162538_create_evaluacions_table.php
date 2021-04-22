@@ -20,7 +20,7 @@ class CreateEvaluacionsTable extends Migration
             $table->date('fecha')->nullable();
             $table->unsignedBigInteger('id_modulo')->notnull();
             $table->foreign('id_modulo')->references('id')->on('modulos')->onDelete('cascade');
-            
+        
         });
     }
 

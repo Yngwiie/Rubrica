@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use App\Imports\StudentsImport;
 use Livewire\Component;
 use App\Models\Estudiante;
+use App\Models\estudiante_evaluacion;
+use App\Models\Evaluacion;
 use App\Models\Modulo_estudiante;
 use App\Models\Modulo;
 use Illuminate\Pagination\Paginator;
@@ -18,6 +20,7 @@ class Estudiantes extends Component
 
     public $id_modulo;
     public $nombre;
+    public Modulo $modulo;
     public $apellido;
     public $searchTerm;
     public $email;
@@ -28,14 +31,19 @@ class Estudiantes extends Component
 
     public function mount($id_modulo){
         $this->id_modulo = $id_modulo;
-        $modulo = Modulo::find($id_modulo);
-        if($modulo->id_usuario != Auth::user()->id ){//Evitar que puedan acceder a modulos de otros usuarios
+        $this->modulo = Modulo::find($id_modulo);
+        if($this->modulo->id_usuario != Auth::user()->id ){//Evitar que puedan acceder a modulos de otros usuarios
             $this->id_modulo = "";
             abort(401);
         }
     }
     public function render()
     {
+        /* dd($this->modulo->estudiantes()); */
+        /* $searchTerm = '%'.$this->searchTerm.'%';
+        $estudiantes = $this->modulo->estudiantes()->where('nombre','LIKE',$searchTerm)
+                                                   ->paginate(10); */
+        
         $estudiantes = Modulo_estudiante::where('id_modulo','=',$this->id_modulo)
                                         ->whereHas('estudiante',function($q){
                                             $searchTerm = '%'.$this->searchTerm.'%';
@@ -74,6 +82,16 @@ class Estudiantes extends Component
             'id_modulo' => $this->id_modulo,
             'id_estudiante' => $estudiante->id,
         ]);
+
+        $evaluaciones_modulo = Evaluacion::where('id_modulo',$this->id_modulo)->get();
+
+        foreach($evaluaciones_modulo as $evaluacion){
+            estudiante_evaluacion::create([
+                'id_estudiante' => $estudiante->id,
+                'id_evaluacion' => $evaluacion->id,
+            ]);
+        }
+
         session()->flash('success','Estudiante agregado con éxito.');
         $this->resetInputFields();
         $this->emit('estudianteAgregado');

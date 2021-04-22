@@ -87,7 +87,7 @@
         @endif
         <button type="button" class="btn btn-md btn-sec add-row" data-toggle="modal" data-target="#deleteDimension" wire:click="setDimension({{$dimension->id}})" style="color:red">
             <i class="fas fa-lg fa-times"></i> Eliminar Dimensión</button>
-        <div  class="double-scroll shadow-lg" style="overflow-x:auto;">
+        <div  class="double-scroll shadow" style="overflow-x:auto;">
             <table class="table shadow " id="table{{$dimension->id}}">
                 <thead class="bg-secondary">
                     <tr>
@@ -128,7 +128,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-danger" onclick="pantallacarga()" data-dismiss="modal" wire:click="deleteDimension()" >Eliminar Dimension</button>
-
                 </div>
             </div>
         </div>
@@ -196,12 +195,6 @@
                         </div>
                     </div>
                     <hr class="bg-dark">
-                    <div class="form-row">
-                        <div class="col-md-3">
-                            <p>Porcentaje Restante: {{$porcentaje_restante}}</p>
-                        </div>
-                        
-                    </div>
                     <ul class="list-group">
                         @foreach($sub_criterios as $item)
                         <li class="list-group-item">
@@ -229,23 +222,17 @@
                                 </div>
 
                                 <div class="col">
-                                    <button class="btn btn-danger" wire:loading.attr="disabled" wire:target="" wire:click="removeSubcriterio({{$loop->index}})"><i class="fas fa-lg fa-times"></i> Eliminar</button>
+                                    <button class="btn btn-danger" wire:loading.attr="disabled" wire:click="removeSubcriterio({{$loop->index}})"><i class="fas fa-lg fa-times"></i> Eliminar</button>
                                 </div>
                                 
                             </div>
                         </li>
                         @endforeach
                     </ul>
-                    <div class="form-row">
-                        <div class="col-md-5">
-                            @error('porcentajes_subs') <small class="error text-danger">{{ $message }}</small> @enderror
-                        </div>
-                    </div>
                 </div>
-                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" onclick="storeAspectoAvanzado()">Crear Aspecto</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="storeAspectoAvanzado()">Crear Aspecto</button>
                 </div>
             </div>
         </div>
@@ -341,7 +328,6 @@
                         @endforeach
                     </ul>
                 </div>
-                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="storeSubcriterios()">Crear subcriterio(s)</button>

@@ -1,8 +1,8 @@
 <div class="container">
-
+    
     @include('mensajes-flash')
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-
+    {{ Breadcrumbs::render('misRubricas')}}
         <div class="card shadow-lg">
 
             <div class="card-header">
@@ -37,7 +37,7 @@
                                     <td><i class="far fa-lg fa-list-alt"></i> {{$rubrica->titulo}}</td>
                                     <td>{{$rubrica->evaluacion->nombre}} - {{$rubrica->evaluacion->modulo->nombre}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-outline-secondary">Aplicar</button>
+                                        <a type="button" class="btn btn-outline-secondary" href="{{route('apply.rubrica',$rubrica->id)}}">Aplicar</a>
                                         <a class="btn btn-sm btn-sec" href="{{route('rubric.edit',$rubrica->id)}}" title="Editar Rúbrica"><i class="far fa-lg fa-edit"></i></a>
                                         <button class="btn btn-sm btn-sec" title="Exportar Rúbrica" data-toggle="modal" data-target="#exportRubrica" wire:click="setIdRubrica({{$rubrica->id}})">
                                             <i class="fas fa-lg fa-file-download"></i></button>
@@ -105,7 +105,11 @@
                         </div>
                     </div>
                     <div wire:loading wire:target="exportPDF">
-                        La descarga comenzará pronto...
+                        La descarga comenzará pronto... 
+                        <div class="d-flex justify-content-center">
+                            <x-loading-md></x-loading-md>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="modal-footer">

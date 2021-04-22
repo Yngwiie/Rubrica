@@ -1,0 +1,124 @@
+<th >
+    @if($deshabilitado == 0)
+        <div>
+            @if($criterio_avanzado == true)
+                <ul >
+                    @foreach($descripcion_avanzada as $desc)
+                        <li wire:key="{{$loop->index}}">
+                        <small style="font-size:11px"> <b>ID#{{$desc->id}}</b></small>
+                        <div class="form-row mb-1">
+                            @if($desc->magnitud == "porcentaje1")
+                                <div class="w-41">
+                                    <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                </div>
+                                
+                                <div class="col-3">
+                                    <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
+                                    <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12 " min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
+                                    
+                                </div>
+                                <div class="w-3" style="margin-left:-7px" >
+                                    <small>%</small> 
+                                </div>
+                            @elseif($desc->magnitud == "escala")
+                                <div class="w-41">
+                                    <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                </div>
+                                
+                                <div class="col-3">
+                                    <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
+                                    <input title="Magnitud que se aplica el sub-criterio"  style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.escala_magnitud" type="number">
+                                    
+                                </div>
+                            @elseif($desc->magnitud == "porcentaje2")
+                                <div class="w-41">
+                                    <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                </div>
+                                
+                                <div class="col-3">
+                                    <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
+                                    <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
+                                    
+                                </div>
+                                <div class="w-3" style="margin-left:-7px" >
+                                    <small>%</small> 
+                                </div>
+                            @elseif($desc->magnitud == "rango_asc")
+                                <div class="w-41">
+                                    <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                </div>
+                                
+                                <div class="col-4" style="margin-top:-4px">
+                                    <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                            <small>mín.</small>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;padding: 1px;" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="form-control form-control-sm" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.valor_min" type="number">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row" style="margin-top:3px">
+                                        <div class="col-sm-1">
+                                            <small>máx.</small>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;padding: 1px;" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="form-control form-control-sm" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.valor_max" type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                            @endif
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="col-6">
+                                <div class="input-group mb-1">
+                                    <input title="Porcentaje de importancia del subcriterio." style="font-size:small" class="form-control" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje" type="number"/>
+                                    <div class="input-group-append">
+                                        <span style="font-size:small" class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-3" style="font-size:small">
+                                <button class="btn btn-sm btn-danger" wire:loading.attr="disabled" wire:click="removeSubCriteria({{$loop->index}})"><i class="fas fa-md fa-times"></i></button>
+                            </div>
+                        </div>
+                        
+                        @if($loop->index != (count($descripcion_avanzada)-1))
+                            <hr class="bg-dark">
+                        @endif
+                        </li>
+                        
+                    @endforeach
+                    <div>
+                        @error('subcriterio') <small class="error text-danger"><b>{{ $message }}</b></small> @enderror
+                    </div>
+                </ul>
+            @else
+                @if($aplicado==0)
+                    <div class="p-1" >
+                        <small >{{$criterio->descripcion}}</small>
+                   </div>
+                @else
+                    <div class="p-1" style="background-color:#D0FFD0">
+                        <small >{{$criterio->descripcion}}</small>
+                   </div>
+                @endif
+            @endif
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="aplicado" style="margin-top:6px">
+            <small ><strong>Aplicado</strong></small>
+            <div wire:loading wire:target="aplicado">
+                    <x-loading-small></x-loading-small>
+            </div>
+        </div>
+        @else
+
+    @endif
+    
+</th>

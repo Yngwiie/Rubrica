@@ -34,9 +34,15 @@
                 <th style="border:1px solid #000000;font-size:16" >
                     <p ><strong>{!!nl2br($nivel->nombre."\n")!!}</strong></p>
                     <div class="row">
-                        <div class="col-sm-6" style="margin-top:4px">
-                            <small >Puntaje: {{$nivel->puntaje}}</small>
-                        </div>
+                            @if($rubrica->tipo_puntaje=="rango")
+                                <div class="col-sm-6" style="margin-top:4px">
+                                    <small style="color:white">Puntaje: [{{$nivel->puntaje_minimo}} - {{$nivel->puntaje_maximo}}]</small>
+                                </div>
+                            @elseif($rubrica->tipo_puntaje=="unico")
+                                <div class="col-sm-6" style="margin-top:4px">
+                                    <small style="color:white">Puntaje: {{$nivel->puntaje}}</small>
+                                </div>
+                            @endif
                     </div> 
                 </th>
 
@@ -72,6 +78,18 @@
                                                         @if($desc->magnitud == "porcentaje1")
                                                             <div class="col">
                                                                 <small>- {!!nl2br($desc->text)!!} [Magnitud:{{$desc->porcentaje_magnitud}}%]{!!nl2br("\n")!!}</small>
+                                                            </div>
+                                                        @elseif($desc->magnitud == "porcentaje2")
+                                                            <div class="col">
+                                                                <small>- {!!nl2br($desc->text)!!} [Magnitud:{{$desc->porcentaje_magnitud}}%]{!!nl2br("\n")!!}</small>
+                                                            </div>
+                                                        @elseif($desc->magnitud == "escala")
+                                                            <div class="col">
+                                                                <small>- {!!nl2br($desc->text)!!} [Magnitud:#{{$desc->escala_magnitud}}]{!!nl2br("\n")!!}</small>
+                                                            </div>
+                                                        @elseif($desc->magnitud == "rango_asc")
+                                                            <div class="col">
+                                                                <small>- {!!nl2br($desc->text)!!} [Magnitud:{{$desc->valor_min}}-{{$desc->valor_max}}]{!!nl2br("\n")!!}</small>
                                                             </div>
                                                         @else
                                                             <div class="col">

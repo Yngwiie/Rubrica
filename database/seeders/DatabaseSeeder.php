@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             'name' => "Javier Aliaga",
             'email' => "reivaj_31@hotmail.com",
             'password' => Hash::make("12345678"),
+            'email_verified_at' => now(),
         ]);
         
         $modulo = Modulo::create([

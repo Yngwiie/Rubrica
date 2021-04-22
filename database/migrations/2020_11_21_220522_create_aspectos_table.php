@@ -18,6 +18,7 @@ class CreateAspectosTable extends Migration
             $table->timestamps();
             $table->string('nombre',70);
             $table->integer('porcentaje');
+            $table->string('comentario')->default("");
             $table->unsignedBigInteger('id_dimension')->notnull();
             $table->foreign('id_dimension')->references('id')->on('dimensiones')->onDelete('cascade');
         });

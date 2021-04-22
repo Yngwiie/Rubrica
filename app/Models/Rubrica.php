@@ -12,7 +12,7 @@ class Rubrica extends Model
     protected $table = 'rubricas';
 
     protected $fillable = [
-        'titulo','descripcion','id_evaluacion','plantilla','id_usuario','escala_notas','tipo_puntaje'
+        'titulo','descripcion','id_evaluacion','plantilla','id_usuario','escala_notas','tipo_puntaje','version'
     ];
 
     public function evaluacion(){

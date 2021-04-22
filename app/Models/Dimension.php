@@ -12,11 +12,14 @@ class Dimension extends Model
     protected $table = 'dimensiones';
 
     protected $fillable = [
-        'nombre','id_rubrica','porcentaje',
+        'nombre','id_rubrica','porcentaje','id_rubricaAplicada',
     ];
 
     public function rubrica(){
         return $this->belongsTo('App\Models\Rubrica','id_rubrica');
+    }
+    public function rubrica_aplicando(){
+        return $this->belongsTo('App\Models\RubricaAplicada','id_rubricaAplicada');
     }
     public function aspectos(){
         return $this->hasMany('App\Models\Aspecto','id_dimension');

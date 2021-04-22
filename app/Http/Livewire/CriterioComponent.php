@@ -14,7 +14,6 @@ class CriterioComponent extends Component
     public $descripcion;
     public $descripcion_avanzada = [];
     public $id_criterio;
-    protected $listeners = ['setIdSubcriterio'];
     public $criterio_avanzado;
     public $deshabilitado;
     public $id_subcriterio;
@@ -35,9 +34,11 @@ class CriterioComponent extends Component
         }else{
             $this->criterio_avanzado = FALSE;
         }
-    
     }
-
+    protected function getListeners()
+    {
+        return ['updated_2'.$this->criterio->id_aspecto => 'updated_2'];
+    }
     public function render()
     {
         return view('livewire.criterio-component');
@@ -58,7 +59,7 @@ class CriterioComponent extends Component
      */
     public function setIdSubcriterio($id)
     {
-        dd("hola");
+        
         $this->id_subcriterio = $id;
         
     
@@ -72,6 +73,136 @@ class CriterioComponent extends Component
         $this->updated();
     }
     public function updated()
+    {
+        /* dd($this->id_subcriterio); */
+        if(!$this->criterio_avanzado){
+            $this->validate();
+            $this->criterio->deshabilitado = $this->deshabilitado;
+            $this->criterio->save();
+        }else{
+            
+            $magnitud_inicial = 0;
+            $magnitud_inicial_mayor = 100;
+            $desc_antigua = $this->criterio->descripcion_avanzada;
+            $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+            $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+            
+            $this->criterio->deshabilitado = $this->deshabilitado;
+            $this->criterio->save();
+            $criterios = Criterio::where('id_aspecto',$this->criterio->id_aspecto)
+                                 ->where('deshabilitado',0)
+                                 ->get();;
+            foreach($criterios as $key => $criterio){
+                $desc_avanzada = json_decode($criterio->descripcion_avanzada);
+
+                foreach($desc_avanzada as $descripcion){
+                    if($descripcion->id == $this->id_subcriterio){
+                        if($descripcion->magnitud == "porcentaje1"){
+                            if($descripcion->porcentaje_magnitud == ""){
+                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                $this->addError('subcriterio', 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                            if($magnitud_inicial <= $descripcion->porcentaje_magnitud){
+                                $magnitud_inicial = $descripcion->porcentaje_magnitud;
+                            }else{//On error case I do a rollback.
+                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                $this->addError('subcriterio', 'Magnitudes de los subcriterios ID#'.$this->id_subcriterio.' no estan en orden.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                        }
+                        if($descripcion->magnitud == "escala"){
+                            if($descripcion->escala_magnitud == ""){
+                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                $this->addError('subcriterio', 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                            if($magnitud_inicial <= $descripcion->escala_magnitud){
+                                $magnitud_inicial = $descripcion->escala_magnitud;
+                            }else{//On error case I do a rollback.
+                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                $this->addError('subcriterio', 'Magnitudes de los subcriterios ID#'.$this->id_subcriterio.' no estan en orden.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                        }
+                        if($descripcion->magnitud == "porcentaje2"){
+                            if($descripcion->porcentaje_magnitud == ""){
+                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                $this->addError('subcriterio', 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                            if($magnitud_inicial_mayor >= $descripcion->porcentaje_magnitud){
+                                $magnitud_inicial_mayor = $descripcion->porcentaje_magnitud;
+                            }else{//On error case I do a rollback.
+                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                $this->addError('subcriterio', 'Magnitudes de los subcriterios ID#'.$this->id_subcriterio.' no estan en orden.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                        }
+                        if($descripcion->magnitud == "rango_asc"){
+                            if($descripcion->valor_min == "" or $descripcion->valor_max == ""){
+                                $this->addError('subcriterio', 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                            if($descripcion->valor_min > $descripcion->valor_max){
+                                /* $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada); */
+                                $this->addError('subcriterio', 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' no estan en orden. 
+                                                                El valor mín. no puede ser mayor a '.$descripcion->valor_max);
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+
+                            if($key == 0){
+                                $magnitud_inicial=$descripcion->valor_max;
+                            }elseif($magnitud_inicial <= $descripcion->valor_min){
+                                $magnitud_inicial = $descripcion->valor_max;
+                            }else{
+                                /* $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada); */
+
+                                
+                                $this->addError('subcriterio', 'Magnitudes de los subcriterios ID#'.$this->id_subcriterio.' no estan en orden.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                        }
+                        break;
+                    }
+                }
+            
+            }
+            
+            $this->emit('updated_2'.$criterio->id_aspecto);
+            $this->resetErrorBag();
+           
+        }
+        $this->emit('newversion');
+        
+    }
+    public function updated_2()
     {
         if(!$this->criterio_avanzado){
             $this->validate();
@@ -87,19 +218,24 @@ class CriterioComponent extends Component
 
             $this->criterio->deshabilitado = $this->deshabilitado;
             $this->criterio->save();
-            $criterios = Criterio::where('id_aspecto',$this->criterio->id_aspecto)->get();
+            $criterios = Criterio::where('id_aspecto',$this->criterio->id_aspecto)
+                                 ->where('deshabilitado',0)
+                                 ->get();
 
-            foreach($this->descripcion_avanzada as $descripcion){
-                if($descripcion->id == $this->id_subcriterio){
-
-                }
-            }
-            foreach($criterios as $criterio){
+            foreach($criterios as $key =>   $criterio){
                 $desc_avanzada = json_decode($criterio->descripcion_avanzada);
 
                 foreach($desc_avanzada as $descripcion){
                     if($descripcion->id == $this->id_subcriterio){
                         if($descripcion->magnitud == "porcentaje1"){
+                            if($descripcion->porcentaje_magnitud == ""){
+                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                $this->addError('subcriterio', 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
                             if($magnitud_inicial <= $descripcion->porcentaje_magnitud){
                                 $magnitud_inicial = $descripcion->porcentaje_magnitud;
                             }else{//On error case I do a rollback.
@@ -112,8 +248,16 @@ class CriterioComponent extends Component
                             }
                         }
                         if($descripcion->magnitud == "escala"){
-                            if($magnitud_inicial <= $descripcion->porcentaje_magnitud){
-                                $magnitud_inicial = $descripcion->porcentaje_magnitud;
+                            if($descripcion->escala_magnitud == ""){
+                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                $this->addError('subcriterio', 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                            if($magnitud_inicial <= $descripcion->escala_magnitud){
+                                $magnitud_inicial = $descripcion->escala_magnitud;
                             }else{//On error case I do a rollback.
                                 $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
                                 $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
@@ -124,11 +268,47 @@ class CriterioComponent extends Component
                             }
                         }
                         if($descripcion->magnitud == "porcentaje2"){
+                            if($descripcion->porcentaje_magnitud == ""){
+                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                $this->addError('subcriterio', 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
                             if($magnitud_inicial_mayor >= $descripcion->porcentaje_magnitud){
                                 $magnitud_inicial_mayor = $descripcion->porcentaje_magnitud;
                             }else{//On error case I do a rollback.
                                 $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
                                 $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                $this->addError('subcriterio', 'Magnitudes de los subcriterios ID#'.$this->id_subcriterio.' no estan en orden.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                        }
+                        if($descripcion->magnitud == "rango_asc"){
+                            if($descripcion->valor_min == "" or $descripcion->valor_max == ""){
+                                $this->addError('subcriterio', 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                            if($descripcion->valor_min > $descripcion->valor_max){
+                                $this->addError('subcriterio', 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' no estan en orden. 
+                                                                El valor mín. no puede ser mayor a '.$descripcion->valor_max);
+                                $this->criterio->descripcion_avanzada = $desc_antigua;
+                                $this->criterio->save();
+                                return;
+                            }
+                            
+                            if($key == 0){
+                                $magnitud_inicial=$descripcion->valor_max;
+                            }elseif($magnitud_inicial <= $descripcion->valor_min){
+                                $magnitud_inicial = $descripcion->valor_max;
+                            }else{
+                                /* $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada); */
                                 $this->addError('subcriterio', 'Magnitudes de los subcriterios ID#'.$this->id_subcriterio.' no estan en orden.');
                                 $this->criterio->descripcion_avanzada = $desc_antigua;
                                 $this->criterio->save();

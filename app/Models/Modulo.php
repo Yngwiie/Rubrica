@@ -22,6 +22,10 @@ class Modulo extends Model
     public function evaluacion(){
         return $this->hasMany('App\Models\Evaluacion','id_modulo');
     }
+    //ARREGLANDO..
+    public function estudiantes(){
+        return $this->belongsToMany(Estudiante::class,'modulo_estudiantes','id_modulo','id_estudiante');
+    }
     public function modulo_estudiante(){
         return $this->hasMany('App\Models\modulo_estudiante','id_modulo');
     }

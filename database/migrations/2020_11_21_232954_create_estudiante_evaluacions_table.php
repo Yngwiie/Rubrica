@@ -16,7 +16,7 @@ class CreateEstudianteEvaluacionsTable extends Migration
         Schema::create('estudiante_evaluaciones', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nota');
+            $table->float('nota',7,2)->default(-1);
             $table->unsignedBigInteger('id_estudiante')->notnull();
             $table->foreign('id_estudiante')->references('id')->on('estudiantes')->onDelete('cascade');
             $table->unsignedBigInteger('id_evaluacion')->notnull();

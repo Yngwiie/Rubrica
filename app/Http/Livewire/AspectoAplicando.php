@@ -2,11 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use App\Models\Dimension;
 use App\Models\Aspecto;
+use Livewire\Component;
 
-class AspectoComponent extends Component
+class AspectoAplicando extends Component
 {
     public Aspecto $aspecto;
     public $nombre;
@@ -16,6 +15,7 @@ class AspectoComponent extends Component
 
     protected $rules = [
         'aspecto.nombre' => 'required|string',
+        'aspecto.comentario' => 'string',
         'aspecto.porcentaje' => 'required|integer|min:0|max:100'
     ];
 
@@ -28,18 +28,13 @@ class AspectoComponent extends Component
 
     public function render()
     {
-        return view('livewire.aspecto-component');
+        return view('livewire.aspecto-aplicando');
     }
-    
-   /*  public function update(){
-        $this->validate();
-        $this->aspecto->save();
-        
-    } */
+
     public function updated()
     {
         $this->validate();
         $this->aspecto->save();
-        $this->emit('newversion');
     }
+
 }

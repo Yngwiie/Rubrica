@@ -36,8 +36,10 @@
         <link rel="stylesheet" href="{{ asset('css/custom.scss') }}">
         <link rel="stylesheet" href="{{ asset('css/bd-wizard.css') }}">
         <link rel="stylesheet" href="{{ asset('css/pantallacarga.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" />
         <script src="{{ asset('js/jquery.doubleScroll.js') }}" defer></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
         <script type="text/javascript">
             $(document).ready(function() {
                 $('.double-scroll').doubleScroll({resetOnWindowResize: true});
@@ -115,9 +117,6 @@
         @stack('scripts')
 
         <script>
-/*             $(function () {
-                $('[data-tooltip="tooltip"]').tooltip()
-            }) */
             $( function() {
                 $( document ).tooltip({
                 position: {
@@ -138,8 +137,31 @@
                 $('#addModulo').modal('hide');
                 $('#editModulo').modal('hide'); 
             })
+            window.Livewire.on('notaAplicada',()=>{
+                toastr.success('Rúbrica Aplicada');  
+            })
+            
+            window.Livewire.on('quitarLoading',()=>{
+                var contenedor = document.getElementById('contenedor_carga');
+
+                contenedor.style.display = 'none';
+                contenedor.style.opacity = '1';
+                contenedor.style.visibility = 'hidden';
+                contenedor.style.display = 'block'; 
+            })
+            window.Livewire.on('closeModalAspectosAvanzados',()=>{
+                $('#addAspectoCriterios').modal('hide');  
+            })
+            window.Livewire.on('alertaNuevaVersion',()=>{
+                var contenedor = document.getElementById('contenedor_carga');
+
+                contenedor.style.display = 'none';
+                contenedor.style.opacity = '1';
+                $('#confirmarNewVersion').modal('show');
+                contenedor.style.visibility = 'hidden';
+                contenedor.style.display = 'block';
+            })
             window.Livewire.on('pantallaCarga',()=>{
-                console.log("hola")
                 var contenedor = document.getElementById('contenedor_carga');
 
                 contenedor.style.visibility = 'visible';
@@ -270,5 +292,6 @@
 
 <script src="{{ asset('js/jquery.steps.min.js') }}"></script>
 <script src="{{ asset('js/bd-wizard.js') }}"></script>
+
 
 </html>

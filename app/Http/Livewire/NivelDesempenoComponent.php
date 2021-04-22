@@ -118,6 +118,7 @@ class NivelDesempenoComponent extends Component
                 }
             }
         }
+        $this->emit('newversion');
         $this->emit('nivel_updated');
         $this->resetErrorBag();
         

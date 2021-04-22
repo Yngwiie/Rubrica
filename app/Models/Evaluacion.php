@@ -12,7 +12,7 @@ class Evaluacion extends Model
     protected $table = 'evaluaciones';
 
     protected $fillable = [
-        'fecha','nombre','id_modulo',
+        'fecha','nombre','id_modulo','id_rubrica',
     ];
 
     public function modulo(){
@@ -21,5 +21,8 @@ class Evaluacion extends Model
 
     public function rubrica(){
         return $this->hasOne('App\Models\Rubrica','id_evaluacion');
+    }
+    public function estudiantes(){
+        return $this->belongsToMany(Estudiante::class,'estudiante_evaluaciones','id_evaluacion','id_estudiante')->withPivot('nota');
     }
 }

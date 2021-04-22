@@ -22,6 +22,7 @@ class RubricaMakerEdit extends Component
     public $magnitud_subcriterio;
     public $porcentaje_subcriterio;
     public $nombre_aspecto;
+    public $porcentaje_restante;
 
     protected $rules = [
         'rubrica.descripcion' => 'required|string',
@@ -31,7 +32,7 @@ class RubricaMakerEdit extends Component
     ];
 
     protected $listeners = ['update','deleteAspecto','storeAspecto','storeDimension','deleteDimension',
-                            'storeAspectoAvanzado','deleteLevel','storeNivel','setIdAspecto','addSubcriterios'];
+                            'storeAspectoAvanzado','deleteLevel','storeNivel','setIdAspecto','addSubcriterios','newversion'];
 
     public function render()
     {
@@ -47,6 +48,7 @@ class RubricaMakerEdit extends Component
         }
         $this->rubrica = $rubrica;
         $this->id_rubrica = $id_rubrica;
+        $this->porcentaje_restante = 100;
     }
     /**
      * add new sub criteria
@@ -75,18 +77,26 @@ class RubricaMakerEdit extends Component
         }
         $this->resetErrorBag();
         if($this->magnitud_subcriterio=="porcentaje1"){
-            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>intval($this->porcentaje_subcriterio)]);
+            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
         }elseif($this->magnitud_subcriterio=="escala"){
-            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'escala_magnitud'=>0,'porcentaje'=>intval($this->porcentaje_subcriterio)]);
+            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'escala_magnitud'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
         }elseif($this->magnitud_subcriterio=="porcentaje2"){
-            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>intval($this->porcentaje_subcriterio)]);
+            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
+        }elseif($this->magnitud_subcriterio=="rango_asc"){
+            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'valor_min'=>0,'valor_max'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
         }
         else{
-            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje'=>intval($this->porcentaje_subcriterio)]);
+            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
         }
+        $this->porcentaje_restante-=intval($this->redondeado($this->porcentaje_subcriterio,0));
         $this->sub_criterio = "";
         $this->magnitud_subcriterio = "";
         $this->porcentaje_subcriterio = "";
+    }
+    function redondeado ($numero, $decimales)
+    {
+        $factor = pow(10, $decimales);
+        return (round($numero*$factor)/$factor); 
     }
     /**
      * Remove sub criteria
@@ -104,6 +114,7 @@ class RubricaMakerEdit extends Component
     }
     public function updated()
     {
+        $this->rubrica->version+=0.001;
         $this->rubrica->save();
     }
 
@@ -129,6 +140,7 @@ class RubricaMakerEdit extends Component
             session()->flash('warning',$message); 
         }
         session()->flash('success','Salvado.'); 
+        $this->newversion();
         $this->emit("salvado");
         /* return redirect()->route('rubric.edit', $this->id_rubrica);  */
         
@@ -152,6 +164,7 @@ class RubricaMakerEdit extends Component
             ]);
         }
         session()->flash('success','Aspecto agregado con éxito.'); 
+        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica); 
     }
     /**
@@ -159,7 +172,19 @@ class RubricaMakerEdit extends Component
      */
     public function storeAspectoAvanzado()
     {
-        $this->validate();
+        $num_niveles = NivelDesempeno::where('id_dimension','=',$this->id_dim)->count();
+        $sum_porcentajes = 0;
+        foreach($this->sub_criterios as $subs){
+            $sum_porcentajes+=$subs["porcentaje"];
+            
+        }
+        if($sum_porcentajes<100){
+            $this->emit('quitarLoading');
+            $this->addError('porcentajes_subs', 'Los porcentajes de los subcriterios no suman 100%.');
+            return;
+        }
+        $this->emit('closeModalAspectosAvanzados');
+        $this->resetErrorBag();
         $this->rubrica->save();
         $dimension = Dimension::findOrFail($this->id_dim);
         $aspecto = Aspecto::create([
@@ -187,6 +212,8 @@ class RubricaMakerEdit extends Component
         $array_descendiente_3 = [100,80,60,40,20];
         $array_descendiente_4 = [100,90,70,50,30,10];
         $array_descendiente_5 = [100,85,70,45,30,15,0];
+
+
         $i = 0;
         foreach ($niveles as $nivel) {
             $z = 0;
@@ -208,15 +235,15 @@ class RubricaMakerEdit extends Component
                 }
                 if($subs["magnitud"] == "escala"){
                     if($num_niveles==3){
-                        $subs["porcentaje_magnitud"] = $array_escala_1[$i];
+                        $subs["escala_magnitud"] = $array_escala_1[$i];
                     }elseif($num_niveles==4){
-                        $subs["porcentaje_magnitud"] = $array_escala_2[$i];
+                        $subs["escala_magnitud"] = $array_escala_2[$i];
                     }elseif($num_niveles==5){
-                        $subs["porcentaje_magnitud"] = $array_escala_3[$i];
+                        $subs["escala_magnitud"] = $array_escala_3[$i];
                     }elseif($num_niveles==6){
-                        $subs["porcentaje_magnitud"] = $array_escala_4[$i];
+                        $subs["escala_magnitud"] = $array_escala_4[$i];
                     }elseif($num_niveles==7){
-                        $subs["porcentaje_magnitud"] = $array_escala_5[$i];
+                        $subs["escala_magnitud"] = $array_escala_5[$i];
                     }
                     $this->sub_criterios[$z] = $subs;
                 }
@@ -234,6 +261,25 @@ class RubricaMakerEdit extends Component
                     }
                     $this->sub_criterios[$z] = $subs;
                 }
+                if($subs["magnitud"] == "rango_asc"){
+                    if($num_niveles==3){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }elseif($num_niveles==4){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }elseif($num_niveles==5){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }elseif($num_niveles==6){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }elseif($num_niveles==7){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }
+                    $this->sub_criterios[$z] = $subs;
+                }
                 $z+=1;
             }
             $json = json_encode($this->sub_criterios);
@@ -247,6 +293,7 @@ class RubricaMakerEdit extends Component
         }
         
         session()->flash('success','Aspecto agregado con éxito.'); 
+        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica); 
     }
 
@@ -255,11 +302,11 @@ class RubricaMakerEdit extends Component
      */
     public function deleteAspecto($id_aspecto)
     {
-        $this->validate();
         $this->rubrica->save();
         $aspecto = Aspecto::find($id_aspecto);
         $aspecto->delete();
         session()->flash('success','Aspecto eliminado con éxito.');
+        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica);
         
     }
@@ -272,6 +319,7 @@ class RubricaMakerEdit extends Component
 
         $nivel->delete();
         session()->flash('success','Nivel eliminado con éxito.');
+        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica);
     }
     /**
@@ -301,6 +349,7 @@ class RubricaMakerEdit extends Component
             
         }
         session()->flash('success','Nivel agregado.');
+        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica);
     }
     /**
@@ -322,6 +371,7 @@ class RubricaMakerEdit extends Component
             ]);
         }
         session()->flash('success','Dimension agregada.');
+        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica);
     }
 
@@ -338,6 +388,7 @@ class RubricaMakerEdit extends Component
         $dimension->delete();
         
         session()->flash('success','Dimensión eliminada con éxito.');
+        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica);
     }
 
@@ -395,15 +446,15 @@ class RubricaMakerEdit extends Component
                 }
                 if($subs["magnitud"] == "escala"){
                     if($num_niveles==3){
-                        $subs["porcentaje_magnitud"] = $array_escala_1[$i];
+                        $subs["escala_magnitud"] = $array_escala_1[$i];
                     }elseif($num_niveles==4){
-                        $subs["porcentaje_magnitud"] = $array_escala_2[$i];
+                        $subs["escala_magnitud"] = $array_escala_2[$i];
                     }elseif($num_niveles==5){
-                        $subs["porcentaje_magnitud"] = $array_escala_3[$i];
+                        $subs["escala_magnitud"] = $array_escala_3[$i];
                     }elseif($num_niveles==6){
-                        $subs["porcentaje_magnitud"] = $array_escala_4[$i];
+                        $subs["escala_magnitud"] = $array_escala_4[$i];
                     }elseif($num_niveles==7){
-                        $subs["porcentaje_magnitud"] = $array_escala_5[$i];
+                        $subs["escala_magnitud"] = $array_escala_5[$i];
                     }
                 }
                 if($subs["magnitud"] == "porcentaje2"){
@@ -419,6 +470,24 @@ class RubricaMakerEdit extends Component
                         $subs["porcentaje_magnitud"] = $array_descendiente_5[$i];
                     }
                 }
+                if($subs["magnitud"] == "rango_asc"){
+                    if($num_niveles==3){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }elseif($num_niveles==4){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }elseif($num_niveles==5){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }elseif($num_niveles==6){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }elseif($num_niveles==7){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }
+                }
                 array_push($desc_avanzada, $subs);
             }
             $criterio->last_id_subcriterio = $last_id;
@@ -431,6 +500,13 @@ class RubricaMakerEdit extends Component
         }
         
         session()->flash('success','Subcriterio(s) agregado(s) con éxito.'); 
+        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica); 
+    }
+    
+    public function newversion()
+    {
+        $this->rubrica->version+=0.001;
+        $this->rubrica->save();
     }
 }
