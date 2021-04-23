@@ -11,7 +11,7 @@ class AspectoAplicando extends Component
     public $nombre;
     public $porcentaje;
     public $id_aspecto;
-    protected $listeners = ['refrescar'=>'$refresh'];
+    public $revision;
 
     protected $rules = [
         'aspecto.nombre' => 'required|string',
@@ -19,7 +19,8 @@ class AspectoAplicando extends Component
         'aspecto.porcentaje' => 'required|integer|min:0|max:100'
     ];
 
-    public function mount(Aspecto $aspecto){
+    public function mount(Aspecto $aspecto,$revision = null){
+        $this->revision = $revision;
         $this->aspecto = $aspecto;
         $this->nombre = $aspecto->nombre;
         $this->id_aspecto = $aspecto->id;

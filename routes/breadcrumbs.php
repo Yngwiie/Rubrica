@@ -45,4 +45,15 @@ Breadcrumbs::for('estudianteAplicando', function ($trail,$estudiante,$rubrica) {
     $trail->parent('aplicarEstudiantes',$rubrica);
     $trail->push($estudiante->nombre." ".$estudiante->apellido);
 });
+
+// mis rubricas aplicadas asociadas
+Breadcrumbs::for('rubricasAplicadas', function ($trail) {
+    $trail->push('Rúbricas Aplicadas Asociadas', route('rubricas.aplicadas'));
+});
+
+// mis rubricas asociadas > [rubrica aplicada especifica]
+Breadcrumbs::for('rubricaAsociada', function ($trail, $rubrica) {
+    $trail->parent('rubricasAplicadas');
+    $trail->push($rubrica->titulo, route('revision',$rubrica->id));
+});
 ?>

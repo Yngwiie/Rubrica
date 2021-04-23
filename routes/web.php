@@ -7,8 +7,10 @@ use App\http\LiveWire\RubricaMakerDesdeCero;
 use App\http\LiveWire\ShowRubricas;
 use App\http\LiveWire\RubricaMakerEdit;
 use App\Http\Controllers\ControladorRubricas;
+use App\Http\Livewire\EstudianteRubricasAplicadas;
 use App\Http\Livewire\EstudiantesAplicacion;
 use App\Http\Livewire\Plantilla;
+use App\Http\Livewire\RevisionRubrica;
 use App\Http\Livewire\RubricaAplicando;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -49,6 +51,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', Modulos::clas
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::get('/show_modulo/{id_modulo}', Show_modulo::class)->name('show.modulo');
     Route::get('/rubrica/{id_rubrica}', EstudiantesAplicacion::class)->name('apply.rubrica');
+    Route::get('/misrubricasaplicadas',EstudianteRubricasAplicadas::class)->name('rubricas.aplicadas');
+    Route::get('/revision/{id_rubrica}',RevisionRubrica::class)->name('revision');
     Route::get('/rubricaAplicando/{id_rubrica}', RubricaAplicando::class)->name('applying.rubrica');
     Route::get('/makerindex', [ControladorRubricas::class,'index'])->name('rubric.index');
     Route::get('/plantillas', [ControladorRubricas::class,'plantillas'])->name('rubric.plantillas');

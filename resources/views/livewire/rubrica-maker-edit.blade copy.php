@@ -1,5 +1,4 @@
 <div class="container p-4" id="contenedor">
-    <!-- <input type="text" class="form-control" wire:model.debounce.500ms="text_sub_criterio"> -->
     @include('mensajes-flash')
     <form>
         <div class="form-group row">

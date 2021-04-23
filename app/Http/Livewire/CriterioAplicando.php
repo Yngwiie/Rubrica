@@ -16,12 +16,14 @@ class CriterioAplicando extends Component
     public $deshabilitado;
     public $id_subcriterio;
     public $aplicado;
+    public $revision;
 
     protected $rules = [
         'criterio.descripcion' => 'required|string',
     ];
 
-    public function mount(Criterio $criterio){
+    public function mount(Criterio $criterio, $revision = null){
+        $this->revision = $revision;
         $this->id_subcriterio = -1;
         $this->criterio = $criterio;
         $this->descripcion = $criterio->descripcion;
