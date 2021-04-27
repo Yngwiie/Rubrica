@@ -12,7 +12,7 @@ class Aspecto extends Model
     protected $table = 'aspectos';
 
     protected $fillable = [
-        'nombre','id_dimension', 'porcentaje',
+        'nombre','id_dimension','porcentaje','puntaje_obtenido'
     ];
 
     public function dimension(){

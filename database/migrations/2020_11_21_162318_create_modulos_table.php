@@ -16,7 +16,7 @@ class CreateModulosTable extends Migration
         Schema::create('modulos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->String('nombre',60);
+            $table->String('nombre');
             $table->unsignedBigInteger('id_usuario')->notnull();
             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
         });

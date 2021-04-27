@@ -17,6 +17,7 @@ class CriterioAplicando extends Component
     public $id_subcriterio;
     public $aplicado;
     public $revision;
+    public $aspecto;
 
     protected $rules = [
         'criterio.descripcion' => 'required|string',
@@ -30,6 +31,7 @@ class CriterioAplicando extends Component
         $this->id_criterio = $criterio->id;
         $this->deshabilitado = $criterio->deshabilitado;
         $this->aplicado = $criterio->aplicado;
+        $this->aspecto = Aspecto::find($this->criterio->id_aspecto);
         $this->descripcion_avanzada = json_decode($criterio->descripcion_avanzada);
         if($criterio->descripcion==null){
             $this->criterio_avanzado = TRUE;
@@ -39,7 +41,9 @@ class CriterioAplicando extends Component
     }
     protected function getListeners()
     {
-        return ['updated_2'.$this->criterio->id_aspecto => 'updated_2'];
+        return ['updated_2'.$this->criterio->id_aspecto => 'updated_2',
+                'aplicar'.$this->criterio->id_aspecto => 'aplicarSubcriterio',
+                'updated_aplicado'.$this->criterio->id => "mount"];
     }
     public function render()
     {
@@ -48,16 +52,35 @@ class CriterioAplicando extends Component
     public function updated()
     {
         $this->criterio->aplicado = $this->aplicado;
-        $aspecto = Aspecto::find($this->criterio->id_aspecto);
-        foreach($aspecto->criterios as $criterio){
+        foreach($this->aspecto->criterios as $criterio){
             if($criterio->id != $this->criterio->id){
-                $criterio->aplicado = 0;
-                $criterio->save();
+                if($criterio->aplicado == 1){
+                    $criterio->aplicado = 0;
+                    $criterio->save();
+                    $this->emit("updated_aplicado".$criterio->id,$criterio);
+                }
                 
             }
         }
         
-        $this->emitUp("updated2");
         $this->criterio->save();
+        
+    }
+    public function upd(){
+        $this->criterio->save();
+    }
+    public function aplicarSubcriterio($aplicados)
+    {
+        $aux = json_decode($this->criterio->descripcion_avanzada);
+        foreach($aplicados as $key => $aplicado){
+            if($aplicado["id_criterio"] == $this->criterio->id){
+                $aux[$key]->aplicado = true;
+            }else{
+                $aux[$key]->aplicado = false;
+            }
+        }
+        $this->criterio->descripcion_avanzada = json_encode($aux);
+        $this->criterio->save();
+        $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
     }
 }

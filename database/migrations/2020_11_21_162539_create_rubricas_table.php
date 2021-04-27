@@ -16,9 +16,9 @@ class CreateRubricasTable extends Migration
         Schema::create('rubricas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('titulo',100);
-            $table->string('descripcion',2000);
-            $table->string('escala_notas',40)->nullable();
+            $table->string('titulo');
+            $table->text('descripcion');
+            $table->string('escala_notas',40)->default('1-7');
             $table->string('tipo_puntaje')->default('unico');
             $table->float('version',10,3)->default(0,000);
             $table->boolean('plantilla')->default(FALSE);

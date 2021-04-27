@@ -6,13 +6,13 @@
                 onclick="deleteAspecto({{$id_aspecto}})"><i class="fas fa-times"></i></button>
             <div class="col-sm-8">
                 <textarea style="font-size:small" type='text' class='form-control shadow-md' placeholder="Nombre Aspecto" 
-                wire:model="aspecto.nombre" rows="3" cols="8"></textarea> 
+                wire:model.lazy="aspecto.nombre" rows="3" cols="8"></textarea> 
             </div>
 
         </div>
         <div class="row">
             <div class="col-sm-8" style="margin-left: 27px;margin-top: 3px">
-                <input style="font-size:small" type="number" class="input col-5 shadow-md"wire:model="aspecto.porcentaje">%
+                <input style="font-size:small" type="number" class="input col-5 shadow-md" wire:model.lazy="aspecto.porcentaje">%
             </div>
 
         </div>
@@ -38,7 +38,7 @@
 
     <script>
     function setIdAspecto(id){
-        Livewire.emit('setIdAspecto', id)
+        Livewire.emit('setIdAspectoAddSubcriterios', id)
     }
     function deleteAspecto(id) {
         var opcion = confirm("¿Está seguro?");

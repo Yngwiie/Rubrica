@@ -16,7 +16,7 @@ class CreateNivelDesempenosTable extends Migration
         Schema::create('nivel_desempenos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nombre',400);
+            $table->string('nombre');
             $table->integer('puntaje')->default(0);
             $table->integer('ordenJerarquico');
             $table->float('puntaje_minimo',7,2)->default(0,0);

@@ -16,8 +16,8 @@ class CreateCriteriosTable extends Migration
         Schema::create('criterios', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('descripcion',2000)->nullable();
-            $table->string('descripcion_avanzada',2000)->nullable();
+            $table->text('descripcion')->nullable();
+            $table->text('descripcion_avanzada')->nullable();
             $table->boolean('deshabilitado')->default(FALSE);
             $table->boolean('aplicado')->default(FALSE);
             $table->integer('last_id_subcriterio')->default(0);

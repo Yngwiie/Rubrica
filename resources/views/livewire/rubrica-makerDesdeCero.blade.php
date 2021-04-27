@@ -7,10 +7,6 @@
                 <a class="nav-link active" data-toggle="tab" href="#infoPanel" role="tab" id="adsBack">Info.
                     General</a>
             <li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#ads" role="tab" id="infoContinue" disabled>Info.
-                    Preliminar</a>
-            <li> -->
 
         </ul>
 

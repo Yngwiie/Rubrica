@@ -16,7 +16,7 @@ class CreateEvaluacionsTable extends Migration
         Schema::create('evaluaciones', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nombre',70)->notnull();
+            $table->string('nombre')->notnull();
             $table->date('fecha')->nullable();
             $table->unsignedBigInteger('id_modulo')->notnull();
             $table->foreign('id_modulo')->references('id')->on('modulos')->onDelete('cascade');

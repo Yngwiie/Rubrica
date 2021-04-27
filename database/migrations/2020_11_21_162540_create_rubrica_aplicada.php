@@ -16,8 +16,8 @@ class CreateRubricaAplicada extends Migration
         Schema::create('rubrica_aplicada', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('titulo',100);
-            $table->string('descripcion',2000);
+            $table->string('titulo');
+            $table->text('descripcion');
             $table->string('escala_notas',40)->nullable();
             $table->string('tipo_puntaje')->default('unico');
             $table->float('version',10,3)->default(0,000);

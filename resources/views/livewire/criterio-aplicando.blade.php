@@ -7,44 +7,85 @@
                         @foreach($descripcion_avanzada as $desc)
                             <li wire:key="{{$loop->index}}">
                             <small style="font-size:11px"> <b>ID#{{$desc->id}}</b></small>
-                            <div class="form-row mb-1">
-                                @if($desc->magnitud == "porcentaje1")
-                                    <div class="w-41 ml-1">
-                                        <small>{{$desc->text}}</small>
-                                        <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
-                                    </div>
                             
-                                @elseif($desc->magnitud == "escala")
-                                    <div class="w-41 ml-1">
-                                        <small>{{$desc->text}}</small>
-                                        <small>[Magnitud: {{$desc->escala_magnitud}}]</small>
+                            @if($desc->aplicado == true)
+                                <div style="background-color:#D0FFD0">
+                                    <div class="form-row mb-1">
+                                        @if($desc->magnitud == "porcentaje1")
+                                            <div class="w-41 ml-1">
+                                                <small>{{$desc->text}}</small>
+                                                <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                            </div>
+                                    
+                                        @elseif($desc->magnitud == "escala")
+                                            <div class="w-41 ml-1">
+                                                <small>{{$desc->text}}</small>
+                                                <small>[Magnitud: {{$desc->escala_magnitud}}]</small>
+                                            </div>
+                                        @elseif($desc->magnitud == "porcentaje2")
+                                            <div class="w-41 ml-1">
+                                                <small>{{$desc->text}}</small>
+                                                <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                            </div>
+                                        @elseif($desc->magnitud == "rango_asc")
+                                            <div class="w-41 ml-1">
+                                                <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
+                                                <small>{{$desc->text}}</small>
+                                                <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
+                                            </div>
+                                        @else
+                                            <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
+                                            <small class="ml-1">{{$desc->text}}</small>
+                                        @endif
                                     </div>
-                                @elseif($desc->magnitud == "porcentaje2")
-                                    <div class="w-41 ml-1">
-                                        <small>{{$desc->text}}</small>
-                                        <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
-                                    </div>
-                                @elseif($desc->magnitud == "rango_asc")
-                                    <div class="w-41">
-                                        <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
-                                        <small>{{$desc->text}}</small>
-                                        <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
-                                    </div>
-                                @else
-                                    <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
-                                    <small>{{$desc->text}}</small>
-                                @endif
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="col-6">
-                                    <div class="input-group mb-1">
-                                    <!--  <input title="Porcentaje de importancia del subcriterio." style="font-size:small" class="form-control" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje" type="number"/> -->
-                                        <small><i>[Peso: {{$desc->porcentaje}}%]</i></small>
+                                    
+                                    <div class="form-row">
+                                        <div class="col-6">
+                                            <div class="input-group mb-1">
+                                                <small><i>[Peso: {{$desc->porcentaje}}%]</i></small>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @else
                             
+                                <div class="form-row mb-1">
+                                    @if($desc->magnitud == "porcentaje1")
+                                        <div class="w-41 ml-1">
+                                            <small>{{$desc->text}}</small>
+                                            <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                        </div>
+                                
+                                    @elseif($desc->magnitud == "escala")
+                                        <div class="w-41 ml-1">
+                                            <small>{{$desc->text}}</small>
+                                            <small>[Magnitud: {{$desc->escala_magnitud}}]</small>
+                                        </div>
+                                    @elseif($desc->magnitud == "porcentaje2")
+                                        <div class="w-41 ml-1">
+                                            <small>{{$desc->text}}</small>
+                                            <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                        </div>
+                                    @elseif($desc->magnitud == "rango_asc")
+                                        <div class="w-41">
+                                            <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
+                                            <small>{{$desc->text}}</small>
+                                            <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
+                                        </div>
+                                    @else
+                                        <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
+                                        <small>{{$desc->text}}</small>
+                                    @endif
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="col-6">
+                                        <div class="input-group mb-1">
+                                            <small><i>[Peso: {{$desc->porcentaje}}%]</i></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                             @if($loop->index != (count($descripcion_avanzada)-1))
                                 <hr class="bg-dark">
                             @endif
@@ -84,44 +125,84 @@
                         @foreach($descripcion_avanzada as $desc)
                             <li wire:key="{{$loop->index}}">
                             <small style="font-size:11px"> <b>ID#{{$desc->id}}</b></small>
-                            <div class="form-row mb-1">
-                                @if($desc->magnitud == "porcentaje1")
-                                    <div class="w-41 ml-1">
-                                        <small>{{$desc->text}}</small>
-                                        <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                            @if($desc->aplicado == true)
+                                <div style="background-color:#D0FFD0">
+                                    <div class="form-row mb-1">
+                                        @if($desc->magnitud == "porcentaje1")
+                                            <div class="w-41 ml-1">
+                                                <small>{{$desc->text}}</small>
+                                                <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                            </div>
+                                    
+                                        @elseif($desc->magnitud == "escala")
+                                            <div class="w-41 ml-1">
+                                                <small>{{$desc->text}}</small>
+                                                <small>[Magnitud: {{$desc->escala_magnitud}}]</small>
+                                            </div>
+                                        @elseif($desc->magnitud == "porcentaje2")
+                                            <div class="w-41 ml-1">
+                                                <small>{{$desc->text}}</small>
+                                                <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                            </div>
+                                        @elseif($desc->magnitud == "rango_asc")
+                                            <div class="w-41 ml-1">
+                                                <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
+                                                <small>{{$desc->text}}</small>
+                                                <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
+                                            </div>
+                                        @else
+                                            <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
+                                            <small class="ml-1">{{$desc->text}}</small>
+                                        @endif
                                     </div>
-                            
-                                @elseif($desc->magnitud == "escala")
-                                    <div class="w-41 ml-1">
-                                        <small>{{$desc->text}}</small>
-                                        <small>[Magnitud: {{$desc->escala_magnitud}}]</small>
-                                    </div>
-                                @elseif($desc->magnitud == "porcentaje2")
-                                    <div class="w-41 ml-1">
-                                        <small>{{$desc->text}}</small>
-                                        <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
-                                    </div>
-                                @elseif($desc->magnitud == "rango_asc")
-                                    <div class="w-41">
-                                        <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
-                                        <small>{{$desc->text}}</small>
-                                        <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
-                                    </div>
-                                @else
-                                    <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
-                                    <small>{{$desc->text}}</small>
-                                @endif
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="col-6">
-                                    <div class="input-group mb-1">
-                                    <!--  <input title="Porcentaje de importancia del subcriterio." style="font-size:small" class="form-control" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje" type="number"/> -->
-                                        <small><i>[Peso: {{$desc->porcentaje}}%]</i></small>
+                                    
+                                    <div class="form-row">
+                                        <div class="col-6">
+                                            <div class="input-group mb-1">
+                                                <small><i>[Peso: {{$desc->porcentaje}}%]</i></small>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @else
                             
+                                <div class="form-row mb-1">
+                                    @if($desc->magnitud == "porcentaje1")
+                                        <div class="w-41 ml-1">
+                                            <small>{{$desc->text}}</small>
+                                            <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                        </div>
+                                
+                                    @elseif($desc->magnitud == "escala")
+                                        <div class="w-41 ml-1">
+                                            <small>{{$desc->text}}</small>
+                                            <small>[Magnitud: {{$desc->escala_magnitud}}]</small>
+                                        </div>
+                                    @elseif($desc->magnitud == "porcentaje2")
+                                        <div class="w-41 ml-1">
+                                            <small>{{$desc->text}}</small>
+                                            <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                        </div>
+                                    @elseif($desc->magnitud == "rango_asc")
+                                        <div class="w-41">
+                                            <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
+                                            <small>{{$desc->text}}</small>
+                                            <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
+                                        </div>
+                                    @else
+                                        <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
+                                        <small>{{$desc->text}}</small>
+                                    @endif
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="col-6">
+                                        <div class="input-group mb-1">
+                                            <small><i>[Peso: {{$desc->porcentaje}}%]</i></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                             @if($loop->index != (count($descripcion_avanzada)-1))
                                 <hr class="bg-dark">
                             @endif

@@ -40,6 +40,6 @@ class AspectoComponent extends Component
     {
         $this->validate();
         $this->aspecto->save();
-        $this->emit('newversion');
+        $this->emit('addScroll');
     }
 }

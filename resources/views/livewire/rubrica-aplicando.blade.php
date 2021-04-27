@@ -93,7 +93,7 @@
 
         </div>
         <div class="d-flex justify-content-center">
-            <button class="btn btn-primary" wire:loading.attr="disabled" wire:click="aplicarRubrica">Aplicar</button>
+            <button class="btn btn-primary" wire:loading.attr="disabled" wire:target="aplicarSubcriterio" wire:click="aplicarRubrica">Aplicar y Guardar Cambios</button>
             <div wire:loading wire:target="aplicarRubrica" class="mr-3">
                 <x-loading/>
             </div>

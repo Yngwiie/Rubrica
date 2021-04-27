@@ -16,8 +16,9 @@ class CreateAspectosTable extends Migration
         Schema::create('aspectos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nombre',70);
+            $table->string('nombre');
             $table->integer('porcentaje');
+            $table->float('puntaje_obtenido',7,2)->default(-1);
             $table->string('comentario')->default("");
             $table->unsignedBigInteger('id_dimension')->notnull();
             $table->foreign('id_dimension')->references('id')->on('dimensiones')->onDelete('cascade');

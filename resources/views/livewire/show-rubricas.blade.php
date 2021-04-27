@@ -37,7 +37,7 @@
                                     <td><i class="far fa-lg fa-list-alt"></i> {{$rubrica->titulo}}</td>
                                     <td>{{$rubrica->evaluacion->nombre}} - {{$rubrica->evaluacion->modulo->nombre}}</td>
                                     <td>
-                                        <a type="button" class="btn btn-outline-secondary" href="{{route('apply.rubrica',$rubrica->id)}}">Aplicar</a>
+                                        <a type="button" class="btn btn-outline-secondary" href="{{route('apply.rubrica',$rubrica->id)}}"><i class="fas fa-clipboard-check"></i> Aplicar</a>
                                         <a class="btn btn-sm btn-sec" href="{{route('rubric.edit',$rubrica->id)}}" title="Editar Rúbrica"><i class="far fa-lg fa-edit"></i></a>
                                         <button class="btn btn-sm btn-sec" title="Exportar Rúbrica" data-toggle="modal" data-target="#exportRubrica" wire:click="setIdRubrica({{$rubrica->id}})">
                                             <i class="fas fa-lg fa-file-download"></i></button>

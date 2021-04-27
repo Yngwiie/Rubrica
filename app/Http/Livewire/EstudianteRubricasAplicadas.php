@@ -18,6 +18,7 @@ class EstudianteRubricasAplicadas extends Component
         $searchTerm = '%'.$this->searchTerm.'%';
         $estudiante = Estudiante::where('email',Auth::user()->email)->first();
         $rubricas = RubricaAplicada::where('id_estudiante',$estudiante->id)->where('titulo','LIKE',$searchTerm)
+                                                                           ->orderBy('id','DESC')
                                                                            ->paginate(10);
         return view('livewire.estudiante-rubricas-aplicadas',['rubricas' => $rubricas]);
     }

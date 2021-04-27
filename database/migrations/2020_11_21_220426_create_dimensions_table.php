@@ -16,7 +16,7 @@ class CreateDimensionsTable extends Migration
         Schema::create('dimensiones', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nombre',60);
+            $table->string('nombre');
             $table->integer('porcentaje');
             $table->unsignedBigInteger('id_rubrica')->nullable();
             $table->foreign('id_rubrica')->references('id')->on('rubricas')->onDelete('cascade');

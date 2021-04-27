@@ -162,6 +162,7 @@
                                 <option wire:ignore value="porcentaje1">Porcentajes Ascendentes [30%,60%,80%,etc.]</option>
                                 <option wire:ignore value="porcentaje2">Porcentajes Descendentes[100%,80%,60%,etc.]</option>
                                 <option wire:ignore value="escala">Escala Numerica/cantidad [1,2,3,4,etc.]</option>
+                                <option wire:ignore value="frecuencia">Frecuencia [Siempre,frecuentemente,casi nunca,etc.]</option>
                                 <option wire:ignore value="rango_asc">Rango Ascendente [{0->1},{2->3},{4->5},etc.]</option>
                                 <option wire:ignore value="none">Sin magnitud</option>
                             </select>
@@ -219,6 +220,8 @@
                                         <p>Porcentajes Descendentes[100%,80%,60%,etc.]</p>
                                     @elseif($item['magnitud']=="rango_asc")
                                         <p>Rango Ascendente [{0->1},{2->3},{4->5},etc.]</p>
+                                    @elseif($item['magnitud']=="frecuencia")
+                                        <p>Frecuencia [Siempre,frecuentemente,casi nunca,etc.]</p>
                                     @else
                                         <p>Sin Magnitud</p>
                                     @endif
@@ -271,6 +274,7 @@
                                 <option wire:ignore value="porcentaje1">Porcentajes Ascendentes[30%,60%,80%,etc.]</option>
                                 <option wire:ignore value="porcentaje2">Porcentajes Descendentes[100%,80%,60%,etc.]</option>
                                 <option wire:ignore value="escala">Escala Numerica [1,2,3,4,etc.]</option>
+                                <option wire:ignore value="frecuencia">Frecuencia [Siempre,frecuentemente,casi nunca,etc.]</option>
                                 <option wire:ignore value="rango_asc">Rango Ascendente [{0->1},{2->3},{4->5},etc.]</option>
                                 <option wire:ignore value="none">Sin magnitud</option>
                             </select>
@@ -305,6 +309,11 @@
                             @error('subcriterio_magnitud') <small class="error text-danger">{{ $message }}</small> @enderror
                         </div>
                     </div>
+                    <div class="form-row">
+                            <div class="col-md-3">
+                                <p>Porcentaje Restante: {{$porcentaje_restante}}</p>
+                            </div>
+                    </div>
                     <hr class="bg-dark">
                     <ul class="list-group">
                         @foreach($sub_criterios as $item)
@@ -323,6 +332,8 @@
                                         <p>Porcentajes Descendentes[100%,80%,60%,etc.]</p>
                                     @elseif($item['magnitud']=="rango_asc")
                                         <p>Rango Ascendente [{0->1},{2->3},{4->5},etc.]</p>
+                                    @elseif($item['magnitud']=="frecuencia")
+                                        <p>Frecuencia [Siempre,frecuentemente,casi nunca,etc.]</p>
                                     @else
                                         <p>Sin Magnitud</p>
                                     @endif

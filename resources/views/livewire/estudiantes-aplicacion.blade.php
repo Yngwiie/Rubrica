@@ -47,7 +47,7 @@
                                     </td>
                                     <td>
                                         @if($estudiante->pivot->nota!= -1)
-                                            <a type="button" class="btn btn-outline-secondary" href="{{route('apply.rubrica',$rubrica->id)}}">Revisión</a>
+                                            <a type="button" class="btn btn-outline-secondary" onclick="loading()" wire:click="aplicar({{$estudiante->id}})">Revisión</a>
                                         @else
                                             <button type="button" class="btn btn-outline-secondary" onclick="loading()" wire:click="aplicar({{$estudiante->id}})">Aplicar</button>
                                         @endif

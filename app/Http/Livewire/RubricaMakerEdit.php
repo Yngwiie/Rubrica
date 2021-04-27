@@ -31,8 +31,8 @@ class RubricaMakerEdit extends Component
         'rubrica.tipo_puntaje' => 'required',
     ];
 
-    protected $listeners = ['update','deleteAspecto','storeAspecto','storeDimension','deleteDimension',
-                            'storeAspectoAvanzado','deleteLevel','storeNivel','setIdAspecto','addSubcriterios','newversion'];
+    protected $listeners = ['update','deleteAspecto','storeAspecto','storeDimension','deleteDimension','setIdAspectoAddSubcriterios',
+                            'storeAspectoAvanzado','deleteLevel','storeNivel','setIdAspecto','addSubcriterios','newversion','updatedRubrica'];
 
     public function render()
     {
@@ -60,6 +60,12 @@ class RubricaMakerEdit extends Component
             $suma_porcentajes += intval($subcriterio["porcentaje"]);
         }
         $suma_porcentajes += intval($this->porcentaje_subcriterio);
+        if($this->porcentaje_subcriterio<1){
+            $this->addError('subcriterio_porcentaje', 'El porcentaje no puede ser menor a 1.');
+        }
+        if($this->porcentaje_subcriterio>$this->porcentaje_restante){
+            $this->addError('subcriterio_porcentaje', 'Sobrepasa el porcentaje restante.');
+        }
         if($this->porcentaje_subcriterio==""){
             $this->addError('subcriterio_porcentaje', 'Porcentaje del subcriterio es obligatorio.');
         }
@@ -77,16 +83,18 @@ class RubricaMakerEdit extends Component
         }
         $this->resetErrorBag();
         if($this->magnitud_subcriterio=="porcentaje1"){
-            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
+            array_push($this->sub_criterios, ['id'=>"",'aplicado' => false,'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
         }elseif($this->magnitud_subcriterio=="escala"){
-            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'escala_magnitud'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
+            array_push($this->sub_criterios, ['id'=>"",'aplicado' => false,'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'escala_magnitud'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
         }elseif($this->magnitud_subcriterio=="porcentaje2"){
-            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
+            array_push($this->sub_criterios, ['id'=>"",'aplicado' => false,'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje_magnitud'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
         }elseif($this->magnitud_subcriterio=="rango_asc"){
-            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'valor_min'=>0,'valor_max'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
+            array_push($this->sub_criterios, ['id'=>"",'aplicado' => false,'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'valor_min'=>0,'valor_max'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
+        }elseif($this->magnitud_subcriterio=="frecuencia"){
+            array_push($this->sub_criterios, ['id'=>"",'aplicado' => false,'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'frecuencia'=>"",'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
         }
         else{
-            array_push($this->sub_criterios, ['id'=>"",'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
+            array_push($this->sub_criterios, ['id'=>"",'aplicado' => false,'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
         }
         $this->porcentaje_restante-=intval($this->redondeado($this->porcentaje_subcriterio,0));
         $this->sub_criterio = "";
@@ -103,14 +111,16 @@ class RubricaMakerEdit extends Component
      */
     public function removeSubcriterio($index)
     {
+        $this->porcentaje_restante += $this->sub_criterios[$index]["porcentaje"];
         unset($this->sub_criterios[$index]);
         $this->sub_criterios = array_values($this->sub_criterios);
 
     }
 
-    public function updateAll()
-    {
-        $this->emit('update');
+    public function updatedRubrica(){
+        $this->rubrica->save();
+        $this->emit('addScroll');
+        return redirect()->route('rubric.edit', $this->id_rubrica); 
     }
     public function updated()
     {
@@ -139,7 +149,7 @@ class RubricaMakerEdit extends Component
         if($message != ""){
             session()->flash('warning',$message); 
         }
-        session()->flash('success','Salvado.'); 
+        /* session()->flash('success','Salvado.');  */
         $this->newversion();
         $this->emit("salvado");
         /* return redirect()->route('rubric.edit', $this->id_rubrica);  */
@@ -164,7 +174,6 @@ class RubricaMakerEdit extends Component
             ]);
         }
         session()->flash('success','Aspecto agregado con éxito.'); 
-        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica); 
     }
     /**
@@ -213,7 +222,11 @@ class RubricaMakerEdit extends Component
         $array_descendiente_4 = [100,90,70,50,30,10];
         $array_descendiente_5 = [100,85,70,45,30,15,0];
 
-
+        $array_frecuencias_1 = ["Usualmente","A veces","Casi nunca"];
+        $array_frecuencias_2 = ["Usualmente","A menudo","Ocasionalmente","Casi nunca"];
+        $array_frecuencias_3 = ["Siempre","Usualmente","A menudo","Ocasionalmente","Casi nunca"];
+        $array_frecuencias_4 = ["Siempre","Usualmente","A menudo","Ocasionalmente","Casi nunca","Nunca"];
+        $array_frecuencias_5 = ["Siempre","Generalmente","A menudo","A veces","Ocasionalmente","Casi nunca","Nunca"];
         $i = 0;
         foreach ($niveles as $nivel) {
             $z = 0;
@@ -231,7 +244,6 @@ class RubricaMakerEdit extends Component
                     }elseif($num_niveles==7){
                         $subs["porcentaje_magnitud"] = $array_5[$i];
                     }
-                    $this->sub_criterios[$z] = $subs;
                 }
                 if($subs["magnitud"] == "escala"){
                     if($num_niveles==3){
@@ -245,7 +257,6 @@ class RubricaMakerEdit extends Component
                     }elseif($num_niveles==7){
                         $subs["escala_magnitud"] = $array_escala_5[$i];
                     }
-                    $this->sub_criterios[$z] = $subs;
                 }
                 if($subs["magnitud"] == "porcentaje2"){
                     if($num_niveles==3){
@@ -259,7 +270,6 @@ class RubricaMakerEdit extends Component
                     }elseif($num_niveles==7){
                         $subs["porcentaje_magnitud"] = $array_descendiente_5[$i];
                     }
-                    $this->sub_criterios[$z] = $subs;
                 }
                 if($subs["magnitud"] == "rango_asc"){
                     if($num_niveles==3){
@@ -278,8 +288,21 @@ class RubricaMakerEdit extends Component
                         $subs["valor_min"] = $i;
                         $subs["valor_max"] = $i+1;
                     }
-                    $this->sub_criterios[$z] = $subs;
                 }
+                if($subs["magnitud"] == "frecuencia"){
+                    if($num_niveles==3){
+                        $subs["frecuencia"] = $array_frecuencias_1[$i];
+                    }elseif($num_niveles==4){
+                        $subs["frecuencia"] = $array_frecuencias_2[$i];
+                    }elseif($num_niveles==5){
+                        $subs["frecuencia"] = $array_frecuencias_3[$i];
+                    }elseif($num_niveles==6){
+                        $subs["frecuencia"] = $array_frecuencias_4[$i];
+                    }elseif($num_niveles==7){
+                        $subs["frecuencia"] = $array_frecuencias_5[$i];
+                    }
+                }
+                $this->sub_criterios[$z] = $subs;
                 $z+=1;
             }
             $json = json_encode($this->sub_criterios);
@@ -293,7 +316,6 @@ class RubricaMakerEdit extends Component
         }
         
         session()->flash('success','Aspecto agregado con éxito.'); 
-        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica); 
     }
 
@@ -306,7 +328,6 @@ class RubricaMakerEdit extends Component
         $aspecto = Aspecto::find($id_aspecto);
         $aspecto->delete();
         session()->flash('success','Aspecto eliminado con éxito.');
-        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica);
         
     }
@@ -319,7 +340,6 @@ class RubricaMakerEdit extends Component
 
         $nivel->delete();
         session()->flash('success','Nivel eliminado con éxito.');
-        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica);
     }
     /**
@@ -349,7 +369,6 @@ class RubricaMakerEdit extends Component
             
         }
         session()->flash('success','Nivel agregado.');
-        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica);
     }
     /**
@@ -371,7 +390,6 @@ class RubricaMakerEdit extends Component
             ]);
         }
         session()->flash('success','Dimension agregada.');
-        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica);
     }
 
@@ -388,13 +406,31 @@ class RubricaMakerEdit extends Component
         $dimension->delete();
         
         session()->flash('success','Dimensión eliminada con éxito.');
-        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica);
     }
 
     public function setIdAspecto($id_aspecto)
     {
         $this->id_aspecto = $id_aspecto;
+        $this->emit('addScroll');
+    }
+
+    public function setIdAspectoAddSubcriterios($id_aspecto)
+    {
+        
+        $this->id_aspecto = $id_aspecto;
+        $criterios = Criterio::where('id_aspecto',$this->id_aspecto)->get();
+        $suma_porcentajes = 0;
+        
+        foreach($criterios as $criterio){
+            
+            $desc_avanzada = json_decode($criterio->descripcion_avanzada);
+            foreach($desc_avanzada as $subs){
+                $suma_porcentajes+=$subs->porcentaje;
+            }
+            break;
+        }
+        $this->porcentaje_restante = 100-$suma_porcentajes;
         $this->emit('addScroll');
     }
 
@@ -422,6 +458,12 @@ class RubricaMakerEdit extends Component
         $array_descendiente_3 = [100,80,60,40,20];
         $array_descendiente_4 = [100,90,70,50,30,10];
         $array_descendiente_5 = [100,85,70,45,30,15,0];
+
+        $array_frecuencias_1 = ["Usualmente","A veces","Casi nunca"];
+        $array_frecuencias_2 = ["Usualmente","A menudo","Ocasionalmente","Casi nunca"];
+        $array_frecuencias_3 = ["Siempre","Usualmente","A menudo","Ocasionalmente","Casi nunca"];
+        $array_frecuencias_4 = ["Siempre","Usualmente","A menudo","Ocasionalmente","Casi nunca","Nunca"];
+        $array_frecuencias_5 = ["Siempre","Usualmente","A menudo","A veces","Ocasionalmente","Casi nunca","Nunca"];
         $i = 0;
         $criterios = Criterio::where('id_aspecto',$aspecto->id)->get();
         foreach ($criterios as $criterio) {
@@ -488,6 +530,19 @@ class RubricaMakerEdit extends Component
                         $subs["valor_max"] = $i+1;
                     }
                 }
+                if($subs["magnitud"] == "frecuencia"){
+                    if($num_niveles==3){
+                        $subs["frecuencia"] = $array_frecuencias_1[$i];
+                    }elseif($num_niveles==4){
+                        $subs["frecuencia"] = $array_frecuencias_2[$i];
+                    }elseif($num_niveles==5){
+                        $subs["frecuencia"] = $array_frecuencias_3[$i];
+                    }elseif($num_niveles==6){
+                        $subs["frecuencia"] = $array_frecuencias_4[$i];
+                    }elseif($num_niveles==7){
+                        $subs["frecuencia"] = $array_frecuencias_5[$i];
+                    }
+                }
                 array_push($desc_avanzada, $subs);
             }
             $criterio->last_id_subcriterio = $last_id;
@@ -500,7 +555,6 @@ class RubricaMakerEdit extends Component
         }
         
         session()->flash('success','Subcriterio(s) agregado(s) con éxito.'); 
-        $this->newversion();
         return redirect()->route('rubric.edit', $this->id_rubrica); 
     }
     

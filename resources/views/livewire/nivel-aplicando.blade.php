@@ -8,12 +8,8 @@
             </div>
         @elseif($rubrica->tipo_puntaje=="rango")
             <div class="col-sm-12" style="margin-top:4px">
-                <small style="color:white">Mín. </small><input style="font-size:small"  step="0.01" title="Puntaje mínimo" type="number" min="0" wire:model.debounce.900ms="puntaje_minimo" class="input col-3 shadow-md">
-                <small style="color:white">Máx. </small><input style="font-size:small" step="0.01" title="Puntaje máximo" type="number" min="0" wire:model.debounce.900ms="puntaje_maximo" class="input col-3 shadow-md">
-                @if($nivel->ordenJerarquico>3)
-                        <button class="btn btn-sm btn-danger" wire:loading.attr="disabled" onclick="deleteNivel({{$id_nivel}})"><i class="fas fa-md fa-times"></i></button>
-                @endif
-            <div>
+                <small style="color:white">Mín. {{$puntaje_minimo}}</small>
+                <small style="color:white">Máx. {{$puntaje_maximo}}</small>
         @endif
     </div> 
     <div class="row">

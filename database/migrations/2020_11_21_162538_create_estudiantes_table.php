@@ -17,8 +17,8 @@ class CreateEstudiantesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('email')->unique()->notnull();
-            $table->string('nombre',80);
-            $table->string('apellido',90);
+            $table->string('nombre');
+            $table->string('apellido');
         });
     }
 
