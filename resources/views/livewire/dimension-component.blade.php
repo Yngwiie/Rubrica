@@ -2,7 +2,7 @@
 <input type="text" class="input" wire:model.lazy="nombre" placeholder="Nombre Dimensión">
 <div class="row">
     <div class="col-sm-8" style="margin-top:4px">
-        <input type="number" style="margin-top:4px;font-size:small;" class="input col-5" min="0" max="100" wire:model.lazy="porcentaje">
+        <input type="number" style="margin-top:4px;font-size:small;" class="input col-5" min="0" max="100" wire:model="porcentaje">
         <small style="color:white">%</small> 
     </div>
 </div>

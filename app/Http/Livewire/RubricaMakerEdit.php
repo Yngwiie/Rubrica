@@ -135,8 +135,10 @@ class RubricaMakerEdit extends Component
         $porcentaje_total = 0;
         $dimensiones = Dimension::where('id_rubrica',$this->rubrica->id)->get();
         $message = "";
+        $suma_porcentajes_dimensiones = 0;
         foreach ($dimensiones as $dimension) {  
             $porcentaje_total = 0;
+            $suma_porcentajes_dimensiones+=$dimension->porcentaje;
             foreach ($dimension->aspectos as $aspecto) {
                 $porcentaje_total += $aspecto->porcentaje;
             }
@@ -145,6 +147,11 @@ class RubricaMakerEdit extends Component
             }elseif($porcentaje_total<100){
                 $message .= '¡Cuidado!, Los aspectos de la dimension "'.$dimension->nombre.'" no suman el 100% <br>';
             }
+        }
+        if($suma_porcentajes_dimensiones > 100){
+            $message .= '¡Cuidado!, Los porcentajes de las dimensiones de aspectos sobrepasan el 100% <br>';
+        }elseif($suma_porcentajes_dimensiones < 100){
+            $message .= '¡Cuidado!, Los porcentajes de las dimensiones de aspectos no suman el 100% <br>';
         }
         if($message != ""){
             session()->flash('warning',$message); 

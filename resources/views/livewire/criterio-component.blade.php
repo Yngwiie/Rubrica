@@ -12,14 +12,30 @@
                                 <div class="w-41">
                                     <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
-                                
-                                <div class="col-3">
+                                <!-- <div class="col-3">
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                                     <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12 " min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
                                     
                                 </div>
                                 <div class="w-3" style="margin-left:-7px" >
                                     <small>%</small> 
+                                </div> -->
+                                <div class="col-4" >
+                                    <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12 " min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
+                                        </div>
+                                        <div class="w-3" style="margin-left:-13px" >
+                                            <small>%</small> 
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row" style="margin-top:-2px">
+                                        <div class="col-sm-7">
+                                            <small>Asc-></small>
+                                        </div>
+                                    </div>
                                 </div>
                             @elseif($desc->magnitud == "escala")
                                 <div class="w-41">
@@ -36,13 +52,31 @@
                                     <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
                                 
-                                <div class="col-3">
+                                <!-- <div class="col-3">
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                                     <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
                                     
                                 </div>
                                 <div class="w-3" style="margin-left:-7px" >
                                     <small>%</small> 
+                                    <small>Desc.</small>
+                                </div> -->
+                                <div class="col-4" >
+                                    <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
+                                        </div>
+                                        <div class="w-3" style="margin-left:-13px" >
+                                            <small>%</small> 
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row" style="margin-top:-2px">
+                                        <div class="col-sm-8">
+                                            <small>desc-></small>
+                                        </div>
+                                    </div>
                                 </div>
                             @elseif($desc->magnitud == "rango_asc")
                                 <div class="w-41">

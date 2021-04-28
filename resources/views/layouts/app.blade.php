@@ -132,6 +132,11 @@
             window.Livewire.on('salvado',()=>{
                 toastr.success('Rúbrica Guardada.');  
                 $('.double-scroll').doubleScroll({resetOnWindowResize: true});
+                /* window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                        $(this).remove();
+                    });
+                }, 5000); */
             })
             window.Livewire.on('moduloAgregado',()=>{
                 $('#addModulo').modal('hide');
