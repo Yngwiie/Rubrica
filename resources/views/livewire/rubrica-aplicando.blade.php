@@ -100,4 +100,50 @@
         </div>
         
     </div>
+    <!-- Modal Elección nota final -->
+    <div wire:ignore.self class="modal fade" id="eleccionNota" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nota Final</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Al aplicar la rúbrica se obtubieron las siguientes notas:</p>
+
+                    <div class="form-row">
+                        <li>Nota mínima: {{$nota_minima}}</li>
+                    </div>
+                    <div class="form-row">
+                        <li>Nota máxima: {{$nota_maxima}}</li>
+                    </div>
+                    <div class="form-row">
+                        <li>Nota sugerida: {{$nota_sugerida}}</li>
+                    </div>
+                    <div class="mt-3">
+                        <p>Ingrese la nota final entre <b>{{$nota_minima}}</b> y <b>{{$nota_maxima}}</b>:</p>   
+                        <div class="form-row">
+                            <input type="number" class="form-control" id="nota_final" wire:model.lazy="nota_final">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        @error('nota_final') <small class="error text-danger">{{ $message }}</small> @enderror  
+                    </div> 
+                    <div class="d-flex justify-content-center mt-2">
+                        <div wire:loading wire:target="aplicarNotaFinal"> 
+                            <x-loading-md></x-loading-md>
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" wire:loading.attr="disabled" class="btn btn-primary" wire:click="aplicarNotaFinal()" >Aplicar Nota</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

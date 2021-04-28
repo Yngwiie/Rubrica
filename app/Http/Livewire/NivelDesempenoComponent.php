@@ -18,7 +18,6 @@ class NivelDesempenoComponent extends Component
     public $puntaje_maximo;
     public $puntaje;
 
-    protected $listeners = ['nivel_updated'];
 
     public function mount(NivelDesempeno $nivel,Rubrica $rubrica){
         $this->nivel = $nivel;
@@ -90,7 +89,7 @@ class NivelDesempenoComponent extends Component
             $this->nivel->nombre = $this->nombre;
             $this->nivel->save();
             
-            $nivel_anterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
+            /* $nivel_anterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
                                             ->where('id','<',$this->nivel->id)
                                             ->orderBy('id','desc')->first();
             $nivel_posterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
@@ -120,7 +119,7 @@ class NivelDesempenoComponent extends Component
                     $this->nivel->save();
                     return;
                 }
-            }
+            } */
         }
         $this->emit('nivel_updated'.$this->nivel->id_dimension);
         $this->resetErrorBag();
@@ -171,7 +170,7 @@ class NivelDesempenoComponent extends Component
             $this->nivel->nombre = $this->nombre;
             $this->nivel->save();
             
-            $nivel_anterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
+            /* $nivel_anterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
                                             ->where('id','<',$this->nivel->id)
                                             ->orderBy('id','desc')->first();
             $nivel_posterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
@@ -195,7 +194,7 @@ class NivelDesempenoComponent extends Component
                     $this->nivel->save();
                     return;
                 }
-            }
+            } */
         }
         $this->resetErrorBag();
     }

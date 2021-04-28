@@ -38,7 +38,6 @@
             </div>
             
         </div>
-        <div>
         <div class="form-group row">
             <label for="Descripcion" class="col-sm-2 col-form-label"><strong>Tipo de puntajes</strong></label>
             <div class="col-sm-5">
@@ -48,7 +47,11 @@
                     <option value="rango">Rango de notas</option>
                 </select>
             </div>
-        </div>
+            <div class="col-sm-5">
+                <div wire:loading wire:target="rubrica.tipo_puntaje">
+                    <x-loading></x-loading>
+                </div>
+            </div>
         </div>
     </form>
     <div class="col-8 mb-2">
@@ -162,7 +165,7 @@
                                 <option wire:ignore value="porcentaje1">Porcentajes Ascendentes [30%,60%,80%,etc.]</option>
                                 <option wire:ignore value="porcentaje2">Porcentajes Descendentes[100%,80%,60%,etc.]</option>
                                 <option wire:ignore value="escala">Escala Numerica/cantidad [1,2,3,4,etc.]</option>
-                                <option wire:ignore value="frecuencia">Frecuencia [Siempre,frecuentemente,casi nunca,etc.]</option>
+                                <option wire:ignore value="frecuencia">Frecuencia Ascendente [Nunca,Frecuentemente,Usualmente,etc.]</option>
                                 <option wire:ignore value="rango_asc">Rango Ascendente [{0->1},{2->3},{4->5},etc.]</option>
                                 <option wire:ignore value="none">Sin magnitud</option>
                             </select>
@@ -221,7 +224,7 @@
                                     @elseif($item['magnitud']=="rango_asc")
                                         <p>Rango Ascendente [{0->1},{2->3},{4->5},etc.]</p>
                                     @elseif($item['magnitud']=="frecuencia")
-                                        <p>Frecuencia [Siempre,frecuentemente,casi nunca,etc.]</p>
+                                        <p>Frecuencia Ascendente[Nunca,Frecuentemente,Usualmente,etc.]</p>
                                     @else
                                         <p>Sin Magnitud</p>
                                     @endif
@@ -232,7 +235,7 @@
                                 </div>
 
                                 <div class="col">
-                                    <button class="btn btn-danger" wire:loading.attr="disabled" wire:target="" wire:click="removeSubcriterio({{$loop->index}})"><i class="fas fa-lg fa-times"></i> Eliminar</button>
+                                    <button class="btn btn-danger" wire:loading.attr="disabled" wire:click="removeSubcriterio({{$loop->index}})"><i class="fas fa-lg fa-times"></i> Eliminar</button>
                                 </div>
                                 
                             </div>
@@ -274,7 +277,7 @@
                                 <option wire:ignore value="porcentaje1">Porcentajes Ascendentes[30%,60%,80%,etc.]</option>
                                 <option wire:ignore value="porcentaje2">Porcentajes Descendentes[100%,80%,60%,etc.]</option>
                                 <option wire:ignore value="escala">Escala Numerica [1,2,3,4,etc.]</option>
-                                <option wire:ignore value="frecuencia">Frecuencia [Siempre,frecuentemente,casi nunca,etc.]</option>
+                                <option wire:ignore value="frecuencia">Frecuencia Ascendente [Nunca,Frecuentemente,Usualmente,etc.]</option>
                                 <option wire:ignore value="rango_asc">Rango Ascendente [{0->1},{2->3},{4->5},etc.]</option>
                                 <option wire:ignore value="none">Sin magnitud</option>
                             </select>
@@ -333,7 +336,7 @@
                                     @elseif($item['magnitud']=="rango_asc")
                                         <p>Rango Ascendente [{0->1},{2->3},{4->5},etc.]</p>
                                     @elseif($item['magnitud']=="frecuencia")
-                                        <p>Frecuencia [Siempre,frecuentemente,casi nunca,etc.]</p>
+                                        <p>Frecuencia Ascendente[Nunca,Frecuentemente,Usualmente,etc.]</p>
                                     @else
                                         <p>Sin Magnitud</p>
                                     @endif
@@ -352,7 +355,6 @@
                         @endforeach
                     </ul>
                 </div>
-                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="storeSubcriterios()">Crear subcriterio(s)</button>

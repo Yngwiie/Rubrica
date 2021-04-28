@@ -30,41 +30,39 @@
         </div>
     </div>
     <!-- Modal agregar evaluacion -->
-<div wire:ignore.self class="modal fade" id="confirmPlantilla" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Seleccione la evaluación</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <select class="form-control" name="id_evaluacion" wire:model="id_evaluacion">
-                    <option hidden selected>Selecciona una opción</option>
-                    @foreach($evaluaciones as $evaluacion)
-                            <option value="{{$evaluacion->id}}">{{$evaluacion->nombre}} -
-                            {{$evaluacion->modulo->nombre}}</option>
-                    @endforeach
-                </select>
-                @error('id_evaluacion') 
-                        <span class="error text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary"  onclick="copyTemplate()" data-dismiss="modal">Seleccionar</button>
+    <div wire:ignore.self class="modal fade" id="confirmPlantilla" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Seleccione la evaluación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <select class="form-control" name="id_evaluacion" wire:model="id_evaluacion">
+                        <option hidden selected>Selecciona una opción</option>
+                        @foreach($evaluaciones as $evaluacion)
+                                <option value="{{$evaluacion->id}}">{{$evaluacion->nombre}} -
+                                {{$evaluacion->modulo->nombre}}</option>
+                        @endforeach
+                    </select>
+                    <div class="form-row">
+                            @error('id_evaluacion') <small class="error text-danger">{{ $message }}</small> @enderror  
+                    </div> 
+                    <div class="d-flex justify-content-center mt-2">
+                        <div wire:loading wire:target="copyTemplate">
+                            <x-loading></x-loading>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" wire:loading.attr="disabled" class="btn btn-primary"  wire:click="copyTemplate()" >Seleccionar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script>
-    function copyTemplate(){
-        var contenedor = document.getElementById('contenedor_carga');
 
-        contenedor.style.visibility = 'visible';
-        contenedor.style.opacity = '0.9';
-        Livewire.emit('copyTemplate')
-    }
-</script>
 </div>

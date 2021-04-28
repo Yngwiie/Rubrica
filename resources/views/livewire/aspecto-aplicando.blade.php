@@ -20,10 +20,21 @@
                 </div>
             @endif
         @endif
-        @if($aspecto->puntaje_obtenido != -1)
-            <div class="d-flex justify-content-center mt-2" >
-                <small>Puntaje Obtenido: {{$aspecto->puntaje_obtenido}}</small>
-            </div>
+        @if($tipo_puntaje == "unico")
+            @if($aspecto->puntaje_obtenido != -1)
+                <div class="d-flex justify-content-center mt-2" >
+                    <small>Puntaje Obtenido: {{$aspecto->puntaje_obtenido}}</small>
+                </div>
+            @endif
+        @else
+            @if($aspecto->puntaje_minimo != -1 and $aspecto->puntaje_maximo != -1)
+                <div class="d-flex justify-content-center mt-2" >
+                    <small>Puntaje mínimo obtenido: {{$aspecto->puntaje_minimo}}</small>
+                </div>
+                <div class="d-flex justify-content-center mt-2" >
+                    <small>Puntaje máximo obtenido: {{$aspecto->puntaje_maximo}}</small>
+                </div>
+            @endif
         @endif
         <div class="d-flex justify-content-center">
             <div wire:loading wire:target="aplicarAspectoAvanzado">

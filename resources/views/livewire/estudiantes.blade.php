@@ -72,11 +72,16 @@
                             @error('email') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </form>
+                    <div class="d-flex justify-content-center mt-2">
+                        <div wire:loading wire:target="store">
+                            <x-loading></x-loading>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" wire:click="store()">Agregar Estudiante</button>
+                    <button type="button" class="btn btn-primary" wire:loading.attr="disabled" wire:click="store()">Agregar Estudiante</button>
 
                 </div>
             </div>
@@ -148,10 +153,15 @@
                 </div>
                 <div class="modal-body">
                     <p>¿Esta seguro de eliminar la evaluación?</p>
+                    <div class="d-flex justify-content-center mt-2">
+                        <div wire:loading wire:target="destroy">
+                            <x-loading></x-loading>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger" wire:click="destroy()">Eliminar Estudiante</button>
+                    <button type="button" class="btn btn-danger" wire:loading.attr="disabled" wire:click="destroy()">Eliminar Estudiante</button>
 
                 </div>
             </div>
@@ -186,12 +196,15 @@
                             @error('email') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </form>
-
+                    <div class="d-flex justify-content-center mt-2">
+                        <div wire:loading wire:target="update">
+                            <x-loading></x-loading>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" wire:click="update()">Editar Estudiante</button>
-
+                    <button type="button" class="btn btn-primary" wire:loading.attr="disabled" wire:click="update()">Editar Estudiante</button>
                 </div>
             </div>
         </div>

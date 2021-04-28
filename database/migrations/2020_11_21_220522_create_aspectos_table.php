@@ -19,6 +19,8 @@ class CreateAspectosTable extends Migration
             $table->string('nombre');
             $table->integer('porcentaje');
             $table->float('puntaje_obtenido',7,2)->default(-1);
+            $table->float('puntaje_minimo',7,2)->default(-1);
+            $table->float('puntaje_maximo',7,2)->default(-1);
             $table->string('comentario')->default("");
             $table->unsignedBigInteger('id_dimension')->notnull();
             $table->foreign('id_dimension')->references('id')->on('dimensiones')->onDelete('cascade');

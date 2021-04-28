@@ -33,6 +33,12 @@
                                                 <small>{{$desc->text}}</small>
                                                 <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
                                             </div>
+                                        @elseif($desc->magnitud == "frecuencia")
+                                            <div class="w-41 ml-1">
+                                                <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
+                                                <small>{{$desc->text}}</small>
+                                                <small>[Magnitud: {{$desc->frecuencia}}]</small>
+                                            </div>
                                         @else
                                             <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
                                             <small class="ml-1">{{$desc->text}}</small>
@@ -72,6 +78,12 @@
                                             <small>{{$desc->text}}</small>
                                             <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
                                         </div>
+                                    @elseif($desc->magnitud == "frecuencia")
+                                            <div class="w-41 ml-1">
+                                                <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
+                                                <small>{{$desc->text}}</small>
+                                                <small>[Magnitud: {{$desc->frecuencia}}]</small>
+                                            </div>
                                     @else
                                         <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
                                         <small>{{$desc->text}}</small>

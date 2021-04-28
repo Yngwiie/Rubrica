@@ -49,7 +49,6 @@ class Plantilla extends Component
     public function copyTemplate()
     {
         $this->validate();
-
         $rubrica = Rubrica::find($this->id_rubrica);
 
         $newRubrica = Rubrica::create([

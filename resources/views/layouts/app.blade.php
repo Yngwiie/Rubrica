@@ -140,6 +140,13 @@
             window.Livewire.on('notaAplicada',()=>{
                 toastr.success('Rúbrica Aplicada');  
             })
+            window.Livewire.on('notaFinalAplicada',()=>{
+                toastr.success('Rúbrica Aplicada');  
+                $('#eleccionNota').modal('hide'); 
+            })
+            window.Livewire.on('eleccionNota',()=>{
+                $('#eleccionNota').modal('show');  
+            })
             
             window.Livewire.on('quitarLoading',()=>{
                 var contenedor = document.getElementById('contenedor_carga');
@@ -160,6 +167,9 @@
                 $('#confirmarNewVersion').modal('show');
                 contenedor.style.visibility = 'hidden';
                 contenedor.style.display = 'block';
+            })
+            Livewire.on('closeConfirmPlantilla',()=>{
+                $('#confirmPlantilla').modal('hide');
             })
             window.Livewire.on('pantallaCarga',()=>{
                 var contenedor = document.getElementById('contenedor_carga');

@@ -32,7 +32,7 @@ class RubricaMakerEdit extends Component
     ];
 
     protected $listeners = ['update','deleteAspecto','storeAspecto','storeDimension','deleteDimension','setIdAspectoAddSubcriterios',
-                            'storeAspectoAvanzado','deleteLevel','storeNivel','setIdAspecto','addSubcriterios','newversion','updatedRubrica'];
+                            'storeAspectoAvanzado','deleteLevel','storeNivel','setIdAspecto','addSubcriterios','newversion'];
 
     public function render()
     {
@@ -117,11 +117,11 @@ class RubricaMakerEdit extends Component
 
     }
 
-    public function updatedRubrica(){
+    /* public function updatedRubrica(){
         $this->rubrica->save();
         $this->emit('addScroll');
         return redirect()->route('rubric.edit', $this->id_rubrica); 
-    }
+    } */
     public function updated()
     {
         $this->rubrica->version+=0.001;
@@ -222,11 +222,11 @@ class RubricaMakerEdit extends Component
         $array_descendiente_4 = [100,90,70,50,30,10];
         $array_descendiente_5 = [100,85,70,45,30,15,0];
 
-        $array_frecuencias_1 = ["Usualmente","A veces","Casi nunca"];
-        $array_frecuencias_2 = ["Usualmente","A menudo","Ocasionalmente","Casi nunca"];
-        $array_frecuencias_3 = ["Siempre","Usualmente","A menudo","Ocasionalmente","Casi nunca"];
-        $array_frecuencias_4 = ["Siempre","Usualmente","A menudo","Ocasionalmente","Casi nunca","Nunca"];
-        $array_frecuencias_5 = ["Siempre","Generalmente","A menudo","A veces","Ocasionalmente","Casi nunca","Nunca"];
+        $array_frecuencias_1 = ["Casi nunca","A veces","Usualmente"];
+        $array_frecuencias_2 = ["Casi nunca","Ocasionalment","A menudo","Usualmente"];
+        $array_frecuencias_3 = ["Casi nunca","Ocasionalmente","A menudo","Usualmente","Siempre"];
+        $array_frecuencias_4 = ["Nunca","Casi nunca","Ocasionalmente","A menudo","Usualmente","Siempre"];
+        $array_frecuencias_5 = ["Nunca","Casi nunca","Ocasionalmente","A veces","A menudo","Generalmente","Siempre"];
         $i = 0;
         foreach ($niveles as $nivel) {
             $z = 0;
