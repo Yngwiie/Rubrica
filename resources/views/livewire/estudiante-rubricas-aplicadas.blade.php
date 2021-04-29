@@ -38,7 +38,7 @@
                                     <td>{{$rubrica->evaluacion->nombre}} - {{$rubrica->evaluacion->modulo->nombre}}</td>
                                     <td>
                                         <a type="button" class="btn btn-outline-secondary" href="{{route('revision',$rubrica->id)}}"><i class="far fa-eye"></i> Revisión</a>
-                                        <a type="button" class="btn btn-outline-secondary" href="{{route('revision',$rubrica->id)}}"><i class="far fa-chart-bar"></i> Estadisticas</a>
+                                        <a type="button" class="btn btn-outline-secondary" href="{{route('estadisticas',$rubrica->id)}}"><i class="far fa-chart-bar"></i> Estadisticas</a>
                                     </td>
                                 </tr>
                             @endforeach

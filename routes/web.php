@@ -7,6 +7,7 @@ use App\http\LiveWire\RubricaMakerDesdeCero;
 use App\http\LiveWire\ShowRubricas;
 use App\http\LiveWire\RubricaMakerEdit;
 use App\Http\Controllers\ControladorRubricas;
+use App\Http\Livewire\EstadisticasRubrica;
 use App\Http\Livewire\EstudianteRubricasAplicadas;
 use App\Http\Livewire\EstudiantesAplicacion;
 use App\Http\Livewire\Plantilla;
@@ -60,6 +61,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::get('/misrubricas', ShowRubricas::class)->name('misrubricas');
     Route::get('/plantillas', Plantilla::class)->name('plantillas');
     Route::get('/makeredit/{id_rubrica}', RubricaMakerEdit::class)->name('rubric.edit');
+    Route::get('/estadisticas/{id_rubrica}', EstadisticasRubrica::class)->name('estadisticas');
     /* Route::view('/rubricview', 'export.rubricaPDF', ['rubrica' => Rubrica::find(12)]);
     Route::view('/rubricexcel', 'export.rubricaEXCEL', ['rubrica' => Rubrica::find(12)]); */
 });

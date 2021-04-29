@@ -56,4 +56,10 @@ Breadcrumbs::for('rubricaAsociada', function ($trail, $rubrica) {
     $trail->parent('rubricasAplicadas');
     $trail->push($rubrica->titulo, route('revision',$rubrica->id));
 });
+
+// mis rubricas asociadas > [rubrica aplicada especifica]
+Breadcrumbs::for('rubricaAsociadaEstadistica', function ($trail, $rubrica) {
+    $trail->parent('rubricasAplicadas');
+    $trail->push($rubrica->titulo);
+});
 ?>

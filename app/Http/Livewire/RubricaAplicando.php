@@ -76,6 +76,28 @@ class RubricaAplicando extends Component
                     $sumas_totales_aspectos+=($ultimo_nivel->puntaje - $primer_nivel->puntaje)*$aspecto->porcentaje;
                 }
                 $porcentaje_nota_dimension +=($sumas_puntajes_obtenido*$dimension->porcentaje)/$sumas_totales_aspectos;
+                if($this->rubrica_aplicando->escala_notas == "1-7"){
+                    $dimension->notaAsociada = $this->redondeado(((($sumas_puntajes_obtenido/$sumas_totales_aspectos))*6)+1,1);
+                    $dimension->save();
+                }elseif($this->rubrica_aplicando->escala_notas == "1-5"){
+                    $dimension->notaAsociada = $this->redondeado(((($sumas_puntajes_obtenido/$sumas_totales_aspectos))*4)+1,1);
+                    $dimension->save();
+                }elseif($this->rubrica_aplicando->escala_notas == "1-6"){
+                    $dimension->notaAsociada = $this->redondeado(((($sumas_puntajes_obtenido/$sumas_totales_aspectos))*5)+1,1);
+                    $dimension->save();
+                }elseif($this->rubrica_aplicando->escala_notas == "1-10"){
+                    $dimension->notaAsociada = $this->redondeado(((($sumas_puntajes_obtenido/$sumas_totales_aspectos))*9)+1,1);
+                    $dimension->save();
+                }elseif($this->rubrica_aplicando->escala_notas == "1-12"){
+                    $dimension->notaAsociada = $this->redondeado(((($sumas_puntajes_obtenido/$sumas_totales_aspectos))*11)+1,1);
+                    $dimension->save();
+                }elseif($this->rubrica_aplicando->escala_notas == "1-20"){
+                    $dimension->notaAsociada = $this->redondeado(((($sumas_puntajes_obtenido/$sumas_totales_aspectos))*19)+1,1);
+                    $dimension->save();
+                }elseif($this->rubrica_aplicando->escala_notas == "1-100"){
+                    $dimension->notaAsociada = $this->redondeado(((($sumas_puntajes_obtenido/$sumas_totales_aspectos)/100)*99)+1,1);
+                    $dimension->save();
+                }
                 
             }
             //se multiplica por el puntaje maximo dependiendo la escala elegida.
@@ -85,32 +107,32 @@ class RubricaAplicando extends Component
                 $this->emit('addScroll');
                 $this->emit("notaAplicada");
             }elseif($this->rubrica_aplicando->escala_notas == "1-5"){
-                $this->rubrica_aplicando->nota = $this->redondeado(($porcentaje_nota_dimension/100)*5,1);
+                $this->rubrica_aplicando->nota = $this->redondeado((($porcentaje_nota_dimension/100)*4)+1,1);
                 $this->rubrica_aplicando->save();
                 $this->emit('addScroll');
                 $this->emit("notaAplicada");
             }elseif($this->rubrica_aplicando->escala_notas == "1-6"){
-                $this->rubrica_aplicando->nota = $this->redondeado(($porcentaje_nota_dimension/100)*6,1);
+                $this->rubrica_aplicando->nota = $this->redondeado((($porcentaje_nota_dimension/100)*5)+1,1);
                 $this->rubrica_aplicando->save();
                 $this->emit('addScroll');
                 $this->emit("notaAplicada");
             }elseif($this->rubrica_aplicando->escala_notas == "1-10"){
-                $this->rubrica_aplicando->nota = $this->redondeado(($porcentaje_nota_dimension/100)*10,1);
+                $this->rubrica_aplicando->nota = $this->redondeado((($porcentaje_nota_dimension/100)*9)+1,1);
                 $this->rubrica_aplicando->save();
                 $this->emit('addScroll');
                 $this->emit("notaAplicada");
             }elseif($this->rubrica_aplicando->escala_notas == "1-12"){
-                $this->rubrica_aplicando->nota = $this->redondeado(($porcentaje_nota_dimension/100)*12,1);
+                $this->rubrica_aplicando->nota = $this->redondeado((($porcentaje_nota_dimension/100)*11)+1,1);
                 $this->rubrica_aplicando->save();
                 $this->emit('addScroll');
                 $this->emit("notaAplicada");
             }elseif($this->rubrica_aplicando->escala_notas == "1-20"){
-                $this->rubrica_aplicando->nota = $this->redondeado(($porcentaje_nota_dimension/100)*20,1);
+                $this->rubrica_aplicando->nota = $this->redondeado((($porcentaje_nota_dimension/100)*19)+1,1);
                 $this->rubrica_aplicando->save();
                 $this->emit('addScroll');
                 $this->emit("notaAplicada");
             }elseif($this->rubrica_aplicando->escala_notas == "1-100"){
-                $this->rubrica_aplicando->nota = $this->redondeado(($porcentaje_nota_dimension/100)*100,1);
+                $this->rubrica_aplicando->nota = $this->redondeado((($porcentaje_nota_dimension/100)*99)+1,1);
                 $this->rubrica_aplicando->save();
                 $this->emit('addScroll');
                 $this->emit("notaAplicada");
@@ -144,28 +166,23 @@ class RubricaAplicando extends Component
                         }
                         
                     }else{//sumar puntaje obtenido de un aspecto avanzado.
-                        if($aspecto->puntaje_obtenido != -1){
-                            $sumas_puntajes_obtenido_sugerido+=(((($aspecto->puntaje_maximo - $aspecto->puntaje_minimo)/2) - $primer_nivel->puntaje)*$aspecto->porcentaje);
-                            $sumas_puntajes_obtenido_minimo+=(($aspecto->puntaje_minimo - $primer_nivel->puntaje)*$aspecto->porcentaje);
-                            $sumas_puntajes_obtenido_maximo+=(($aspecto->puntaje_maximo - $primer_nivel->puntaje)*$aspecto->porcentaje);
-                            /* $nivel_perteneciente = "";
-                            foreach($dimension->nivelesDesempeno as $nivel){
-                                if($aspecto->puntaje_obtenido >= $nivel->puntaje_minimo and $aspecto->puntaje_obtenido <= $nivel->puntaje_maximo){
-                                    $nivel_perteneciente = $nivel;
-                                    break;
-                                }
-                            } */
+                        
+                        if($aspecto->puntaje_minimo != -1 and $aspecto->puntaje_maximo != -1){
+                            $sumas_puntajes_obtenido_sugerido+=(((($aspecto->puntaje_maximo + $aspecto->puntaje_minimo)/2) - $primer_nivel->puntaje_minimo)*$aspecto->porcentaje);
+                            $sumas_puntajes_obtenido_minimo+=(($aspecto->puntaje_minimo - $primer_nivel->puntaje_minimo)*$aspecto->porcentaje);
+                            $sumas_puntajes_obtenido_maximo+=(($aspecto->puntaje_maximo - $primer_nivel->puntaje_minimo)*$aspecto->porcentaje);
                         }
                     }
-                    $sumas_totales_aspectos+=($ultimo_nivel->puntaje - $primer_nivel->puntaje)*$aspecto->porcentaje;
+                    $sumas_totales_aspectos+=($ultimo_nivel->puntaje_maximo - $primer_nivel->puntaje_minimo)*$aspecto->porcentaje;
                 }
+                 
                 $porcentaje_nota_dimension_minimo +=($sumas_puntajes_obtenido_minimo*$dimension->porcentaje)/$sumas_totales_aspectos;
                 $porcentaje_nota_dimension_maximo +=($sumas_puntajes_obtenido_maximo*$dimension->porcentaje)/$sumas_totales_aspectos;
-                $porcentaje_nota_dimension_sugerido +=($sumas_puntajes_obtenido_sugerido*$dimension->porcentaje)/$sumas_totales_aspectos;
-                
+                $porcentaje_nota_dimension_sugerido +=($sumas_puntajes_obtenido_sugerido*$dimension->porcentaje)/$sumas_totales_aspectos;       
             }
             //se multiplica por el puntaje maximo dependiendo la escala elegida.
             if($this->rubrica_aplicando->escala_notas == "1-7"){
+                
                 $this->nota_minima = $this->redondeado((($porcentaje_nota_dimension_minimo/100)*6)+1,1);
                 $this->nota_maxima = $this->redondeado((($porcentaje_nota_dimension_maximo/100)*6)+1,1);
                 $this->nota_sugerida = $this->redondeado((($porcentaje_nota_dimension_sugerido/100)*6)+1,1);

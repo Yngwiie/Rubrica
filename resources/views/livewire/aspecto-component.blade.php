@@ -12,7 +12,7 @@
         </div>
         <div class="row">
             <div class="col-sm-8" style="margin-left: 27px;margin-top: 3px">
-                <input style="font-size:small" type="number" class="input col-5 shadow-md" wire:model.lazy="aspecto.porcentaje">%
+                <input style="font-size:small" type="number" class="input col-5 shadow-md" wire:model="aspecto.porcentaje">%
             </div>
 
         </div>

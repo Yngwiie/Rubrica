@@ -18,6 +18,7 @@ class CreateDimensionsTable extends Migration
             $table->timestamps();
             $table->string('nombre');
             $table->integer('porcentaje');
+            $table->float('notaAsociada',7,2)->default(-1);
             $table->unsignedBigInteger('id_rubrica')->nullable();
             $table->foreign('id_rubrica')->references('id')->on('rubricas')->onDelete('cascade');
             $table->unsignedBigInteger('id_rubricaAplicada')->nullable();

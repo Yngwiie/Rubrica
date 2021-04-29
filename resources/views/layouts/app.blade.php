@@ -40,6 +40,9 @@
         <script src="{{ asset('js/jquery.doubleScroll.js') }}" defer></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
         <script type="text/javascript">
             $(document).ready(function() {
                 $('.double-scroll').doubleScroll({resetOnWindowResize: true});
@@ -115,6 +118,8 @@
 
         @stack('modals')
         @stack('scripts')
+        <livewire:scripts />
+        @livewireChartsScripts
 
         <script>
             $( function() {
