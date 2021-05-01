@@ -114,6 +114,10 @@
                                                             <div class="col">
                                                                 <small>- {{$desc->text}} [Magnitud:[{{$desc->valor_min}}-{{$desc->valor_max}}]</small>
                                                             </div>
+                                                        @elseif($desc->magnitud == "frecuencia")
+                                                            <div class="col">
+                                                                <small>- {{$desc->text}} [Magnitud:{{$desc->frecuencia}}]</small>
+                                                            </div>
                                                         @else
                                                             <div class="col">
                                                                 <small>- {{$desc->text}}</small>

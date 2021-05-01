@@ -22,6 +22,7 @@
                 </div>
             @endif
         </div>
+        
         <div class="form-group row">
             <label for="Descripcion" class="col-sm-2 col-form-label"><strong>Escala de notas</strong></label>
             <div class="col-sm-5">
@@ -84,6 +85,9 @@
     </div>
     <div class="p-3">
         <div class="d-flex justify-content-center">
+            @error('aspectoNoAplicado') <small class="error text-danger">{{ $message }}</small> @enderror  
+        </div>
+        <div class="d-flex justify-content-center">
             <p><strong>Nota Final: </strong></p>
             @if($rubrica_aplicando->nota==-1)
                 <p class="ml-2">No Calculada</p>
@@ -136,12 +140,10 @@
                             <x-loading-md></x-loading-md>
                         </div> 
                     </div>
-                </div>
-
+                </div>             
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:loading.attr="disabled" class="btn btn-primary" wire:click="aplicarNotaFinal()" >Aplicar Nota</button>
-
+                    <button type="button" wire:loading.attr="disabled" wire:target="aplicarNotaFinal, nota_final" class="btn btn-primary" wire:click="aplicarNotaFinal()" >Aplicar Nota</button>            
                 </div>
             </div>
         </div>

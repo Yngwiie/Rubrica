@@ -35,7 +35,7 @@ class AspectoAplicando extends Component
             $this->aspecto_avanzado = TRUE;
             $this->criterios = $aspecto->criterios;
             foreach(json_decode($this->criterios->first()->descripcion_avanzada) as $desc){
-                array_push($this->aplicados,["id_criterio" => 0]);
+                array_push($this->aplicados,["id_criterio" => -1]);
             }
         }
         
@@ -55,6 +55,13 @@ class AspectoAplicando extends Component
 
     public function aplicarAspectoAvanzado()
     {   
+        $this->resetErrorBag();
+        foreach($this->aplicados as $aplicado){
+            if($aplicado["id_criterio"] == -1){
+                $this->addError('aspectoAvanzadoNoAplicado','Todos los subcriterios deben estar aplicados.');
+                return;
+            }
+        }
         $suma_puntaje = 0;
         $suma_puntaje_minimo = 0;
         $suma_puntaje_maximo = 0;
@@ -77,6 +84,7 @@ class AspectoAplicando extends Component
         
         $this->aspecto->save();
         $this->emit('aplicar'.$this->aspecto->id,$this->aplicados);
+        $this->emit('modalAspectoAvanzadoClose',$this->aspecto->id);
     }
 
 }

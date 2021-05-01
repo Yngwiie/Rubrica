@@ -62,4 +62,14 @@ Breadcrumbs::for('rubricaAsociadaEstadistica', function ($trail, $rubrica) {
     $trail->parent('rubricasAplicadas');
     $trail->push($rubrica->titulo);
 });
+// mis rubricas asociadas > [rubrica aplicada especifica]
+Breadcrumbs::for('rubricaEstadistica', function ($trail, $rubrica) {
+    $trail->parent('misRubricas');
+    $trail->push($rubrica->titulo);
+});
+// mis rubricas asociadas > [rubrica aplicada especifica]
+Breadcrumbs::for('estadisticas', function ($trail,$rubrica) {
+    $trail->parent('aplicarEstudiantes',$rubrica);
+    $trail->push("Estadísticas");
+});
 ?>

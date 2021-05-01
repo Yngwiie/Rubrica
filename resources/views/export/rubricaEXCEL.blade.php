@@ -91,6 +91,10 @@
                                                             <div class="col">
                                                                 <small>- {!!nl2br($desc->text)!!} [Magnitud:{{$desc->valor_min}}-{{$desc->valor_max}}]{!!nl2br("\n")!!}</small>
                                                             </div>
+                                                        @elseif($desc->magnitud == "frecuencia")
+                                                            <div class="col">
+                                                                <small>- {!!nl2br($desc->text)!!} [Magnitud:{{$desc->frecuencia}}]{!!nl2br("\n")!!}</small>
+                                                            </div>
                                                         @else
                                                             <div class="col">
                                                                 <small>- {!!nl2br($desc->text."\n")!!}</small>

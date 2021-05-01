@@ -1,7 +1,7 @@
 <div class="container">
     
     @include('mensajes-flash')
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+    <div class="max-w-9xl mx-auto py-10 sm:px-6 lg:px-8">
         {{ Breadcrumbs::render('aplicarEstudiantes', $rubrica) }}
         <div class="card shadow-lg">
 
@@ -15,8 +15,7 @@
 
                 <div class="d-flex justify-content-between">
                     <div class="col-md-4">
-                        <!-- <button class="btn btn-md btn-sec" data-toggle="modal" data-target="#addModulo"><i
-                                class="far fa-lg fa-plus-square"></i> Nuevo Módulo</button> -->
+                        <a class="btn btn-md btn-sec" href="{{route('estadisticas',['id_evaluacion' => $rubrica->id_evaluacion,'misRubricas' => 2])}}"><i class="far fa-lg fa-chart-bar"></i> Estadísticas</a>
                     </div>
                      <div class="col-md-4">
                         <input type="text" class="form-control" placeholder="Buscar..." wire:model="searchTerm" />

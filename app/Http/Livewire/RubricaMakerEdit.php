@@ -230,7 +230,7 @@ class RubricaMakerEdit extends Component
         $array_descendiente_5 = [100,85,70,45,30,15,0];
 
         $array_frecuencias_1 = ["Casi nunca","A veces","Usualmente"];
-        $array_frecuencias_2 = ["Casi nunca","Ocasionalment","A menudo","Usualmente"];
+        $array_frecuencias_2 = ["Casi nunca","Ocasionalmente","A menudo","Usualmente"];
         $array_frecuencias_3 = ["Casi nunca","Ocasionalmente","A menudo","Usualmente","Siempre"];
         $array_frecuencias_4 = ["Nunca","Casi nunca","Ocasionalmente","A menudo","Usualmente","Siempre"];
         $array_frecuencias_5 = ["Nunca","Casi nunca","Ocasionalmente","A veces","A menudo","Generalmente","Siempre"];

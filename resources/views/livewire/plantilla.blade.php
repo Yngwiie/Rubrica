@@ -1,7 +1,7 @@
 <div class="container pt-9">
     {{ Breadcrumbs::render('plantilla') }}
     @include('mensajes-flash')
-    <div class="max-w-7xl mx-auto py-3 sm:px-6 lg:px-8">
+    <div class="max-w-9xl mx-auto py-3 sm:px-6 lg:px-8">
         <div class="row mb-3 justify-content-center">
             <h3>Plantillas</h3>
         </div>

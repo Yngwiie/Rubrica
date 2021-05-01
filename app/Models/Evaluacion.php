@@ -19,6 +19,10 @@ class Evaluacion extends Model
         return $this->belongsTo('App\Models\Modulo','id_modulo');
     }
 
+    public function rubricasAplicadas()
+    {
+        return $this->hasMany('App\Models\RubricaAplicada','id_evaluacion');
+    }
     public function rubrica(){
         return $this->hasOne('App\Models\Rubrica','id_evaluacion');
     }

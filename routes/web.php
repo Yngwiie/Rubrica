@@ -61,7 +61,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::get('/misrubricas', ShowRubricas::class)->name('misrubricas');
     Route::get('/plantillas', Plantilla::class)->name('plantillas');
     Route::get('/makeredit/{id_rubrica}', RubricaMakerEdit::class)->name('rubric.edit');
-    Route::get('/estadisticas/{id_rubrica}', EstadisticasRubrica::class)->name('estadisticas');
+    Route::get('/estadisticas/{id_evaluacion}/{misRubricas?}', EstadisticasRubrica::class)->name('estadisticas');
     /* Route::view('/rubricview', 'export.rubricaPDF', ['rubrica' => Rubrica::find(12)]);
     Route::view('/rubricexcel', 'export.rubricaEXCEL', ['rubrica' => Rubrica::find(12)]); */
 });

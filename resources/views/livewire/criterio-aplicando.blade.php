@@ -136,7 +136,7 @@
                     <ul >
                         @foreach($descripcion_avanzada as $desc)
                             <li wire:key="{{$loop->index}}">
-                            <small style="font-size:11px"> <b>ID#{{$desc->id}}</b></small>
+                            <!-- <small style="font-size:11px"> <b>ID#{{$desc->id}}</b></small> -->
                             @if($desc->aplicado == true)
                                 <div style="background-color:#D0FFD0">
                                     <div class="form-row mb-1">

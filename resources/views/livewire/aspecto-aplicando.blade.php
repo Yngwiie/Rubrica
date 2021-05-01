@@ -29,18 +29,13 @@
         @else
             @if($aspecto->puntaje_minimo != -1 and $aspecto->puntaje_maximo != -1)
                 <div class="d-flex justify-content-center mt-2" >
-                    <small>Puntaje mínimo obtenido: {{$aspecto->puntaje_minimo}}</small>
+                    <small>Pts. mínimo obtenido: {{$aspecto->puntaje_minimo}}</small>
                 </div>
                 <div class="d-flex justify-content-center mt-2" >
-                    <small>Puntaje máximo obtenido: {{$aspecto->puntaje_maximo}}</small>
+                    <small>Pts. máximo obtenido: {{$aspecto->puntaje_maximo}}</small>
                 </div>
             @endif
         @endif
-        <div class="d-flex justify-content-center">
-            <div wire:loading wire:target="aplicarAspectoAvanzado">
-                <x-loading></x-loading>
-            </div>
-        </div>
         <!-- Modal Eliminar dimension -->
         <div wire:ignore.self class="modal fade" id="aplicarAspecto{{$aspecto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -61,7 +56,7 @@
                             @foreach(json_decode($criterios->first()->descripcion_avanzada) as $key => $desc)
                                 @if($desc->magnitud != "none")
                                     <li>{{$desc->text}}</li>
-                                    <select class="form-control" name="id_evaluacion" wire:model="aplicados.{{$loop->index}}.id_criterio">
+                                    <select class="form-control" required name="id_evaluacion" wire:model="aplicados.{{$loop->index}}.id_criterio">
                                         <option hidden selected>Selecciona una opción</option>
                                         @foreach($criterios as $criterio)
                                             @if(json_decode($criterio->descripcion_avanzada)[$key]->magnitud == "porcentaje1")
@@ -94,11 +89,18 @@
                                 <hr class="bg-dark">
                             @endforeach
                         @endif
-
+                        <div class="form-row">
+                            @error('aspectoAvanzadoNoAplicado') <span class="error text-danger">{{ $message }}</span> @enderror  
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div wire:loading wire:target="aplicarAspectoAvanzado">
+                                <x-loading></x-loading>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" wire:click="aplicarAspectoAvanzado()" >Aplicar</button>
+                        <button type="button" class="btn btn-primary" wire:loading.attr="disabled" wire:click="aplicarAspectoAvanzado()" >Aplicar</button>
 
                     </div>
                 </div>

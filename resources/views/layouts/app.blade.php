@@ -148,8 +148,16 @@
                 $('#editModulo').modal('hide'); 
             })
             window.Livewire.on('notaAplicada',()=>{
-                toastr.success('Rúbrica Aplicada');  
+                toastr.success('Rúbrica Aplicada.');  
             })
+            window.Livewire.on('aspectosNoAplicados',()=>{
+                toastr.error('Todos los aspectos deben estar aplicados.');  
+            })
+
+            window.Livewire.on('modalAspectoAvanzadoClose', aspectoId=>{
+                $('#aplicarAspecto'+aspectoId).modal('hide');  
+            })
+
             window.Livewire.on('notaFinalAplicada',()=>{
                 toastr.success('Rúbrica Aplicada');  
                 $('#eleccionNota').modal('hide'); 

@@ -1,7 +1,7 @@
 <div class="container">
     
     @include('mensajes-flash')
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+    <div class="max-w-9xl mx-auto py-10 sm:px-6 lg:px-8">
     {{ Breadcrumbs::render('misRubricas')}}
         <div class="card shadow-lg">
 
@@ -39,10 +39,11 @@
                                     <td>
                                         <a type="button" class="btn btn-outline-secondary" href="{{route('apply.rubrica',$rubrica->id)}}"><i class="fas fa-clipboard-check"></i> Aplicar</a>
                                         <a class="btn btn-sm btn-sec" href="{{route('rubric.edit',$rubrica->id)}}" title="Editar Rúbrica"><i class="far fa-lg fa-edit"></i></a>
+                                        <a class="btn btn-sm btn-sec" href="{{route('estadisticas',['id_evaluacion' => $rubrica->id_evaluacion,'misRubricas' => 1])}}" title="Estadísticas"><i class="far fa-lg fa-chart-bar"></i></a>
                                         <button class="btn btn-sm btn-sec" title="Exportar Rúbrica" data-toggle="modal" data-target="#exportRubrica" wire:click="setIdRubrica({{$rubrica->id}})">
                                             <i class="fas fa-lg fa-file-download"></i></button>
                                         <button class="btn btn-sm btn-sec" id="res" title="Copiar Rúbrica" data-tooltip="tooltip" data-toggle="modal" onclick="closeT()" data-target="#copyRubrica" wire:click="setIdRubrica({{$rubrica->id}})"><i class="far fa-lg fa-copy"></i></button>
-                                        <button tclass="btn btn-sm btn-sec" data-toggle="modal" onclick="closeT()" data-target="#deleteRubrica" wire:click="delete({{$rubrica->id}})" 
+                                        <button class="btn btn-sm btn-sec" data-toggle="modal" onclick="closeT()" data-target="#deleteRubrica" wire:click="delete({{$rubrica->id}})" 
                                         title="Eliminar Rúbrica"><i style="color:red " class="far fa-lg fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
@@ -104,7 +105,7 @@
                             <button class="btn btn-success" wire:click="exportEXCEL()"><i class="far fa-lg fa-file-excel"></i> EXCEL</button>
                         </div>
                     </div>
-                    <div wire:loading wire:target="exportPDF">
+                    <div wire:loading wire:target="exportPDF,exportEXCEL">
                         La descarga comenzará pronto... 
                         <div class="d-flex justify-content-center">
                             <x-loading-md></x-loading-md>

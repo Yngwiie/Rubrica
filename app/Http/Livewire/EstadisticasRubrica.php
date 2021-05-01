@@ -3,25 +3,39 @@
 namespace App\Http\Livewire;
 
 use App\Models\estudiante_evaluacion;
+use App\Models\Evaluacion;
 use App\Models\RubricaAplicada;
 use Livewire\Component;
 use Asantibanez\LivewireCharts\Facades\LivewireCharts;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Asantibanez\LivewireCharts\Models\PieChartModel;
+use Illuminate\Support\Facades\URL;
 
 class EstadisticasRubrica extends Component
 {
     public $rubrica_aplicada;
     public $colores = [];
+    public $misRubricas;
+    public Evaluacion $evaluacion;
+    public $tipo_puntaje;
 /*     protected $listeners = [
         'onPointClick' => 'handleOnPointClick',
         'onSliceClick' => 'handleOnSliceClick',
         'onColumnClick' => 'handleOnColumnClick',
     ]; */
 
-    public function mount($id_rubrica)
+    public function mount($id_evaluacion, $misRubricas = null,$id_rubrica = null)
     {
-        $this->rubrica_aplicada = RubricaAplicada::find($id_rubrica);
+        $this->misRubricas = $misRubricas;
+        $this->evaluacion = Evaluacion::find($id_evaluacion);
+
+        $this->rubrica_aplicada = RubricaAplicada::where('id_evaluacion',$id_evaluacion)->where('nota','!=',-1)->first();
+
+        if($this->rubrica_aplicada != null){
+            $this->tipo_puntaje = $this->rubrica_aplicada->tipo_puntaje;
+        }
+        
+        
     }
 /* 
     public function handleOnSliceClick($slice)
@@ -31,21 +45,34 @@ class EstadisticasRubrica extends Component
     
     public function render()
     {
-        $estudiantes_aprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','>=','4')->where('nota','!=','-1')->count();
-        $estudiantes_reprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','<','4')->where('nota','!=','-1')->count();
+        $pieChartModel = 0;
+        $columnChartModel = 0;
+        if($this->rubrica_aplicada == null)
+        {
+            $this->rubrica_aplicada = $this->evaluacion->rubrica;
+            return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel,'pocosDatos' => true]);
+        }
+        if($this->rubrica_aplicada->escala_notas == "1-7"){
+            $estudiantes_aprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','>=','4')->where('nota','!=','-1')->count();
+            $estudiantes_reprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','<','4')->where('nota','!=','-1')->count();
+        }elseif($this->rubrica_aplicada->escala_notas == "1-100"){
+            $estudiantes_aprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','>=','70')->where('nota','!=','-1')->count();
+            $estudiantes_reprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','<','70')->where('nota','!=','-1')->count();
+        }else{
+            $estudiantes_aprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','>=','4')->where('nota','!=','-1')->count();
+            $estudiantes_reprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','<','4')->where('nota','!=','-1')->count();
+        }
+        
         $pieChartModel = (new PieChartModel())
-                        ->setTitle('Estudiantes Aprobados/Reprobados')
                         ->setAnimated(true)
-                        ->withOnSliceClickEvent('onSliceClick')
                         ->addSlice('Aprobados', $estudiantes_aprobados, '#03CA1E')
                         ->addSlice('Reprobados', $estudiantes_reprobados, '#FF0000')
                         ->withDataLabels();
         $columnChartModel = (new ColumnChartModel())
-                            ->setTitle('Promedio notas en dimensiónes de aspectos')
                             ->setAnimated(true)
                             ->withDataLabels();
-        if($this->rubrica_aplicada->tipo_puntaje == "unico"){
-            $rubricas_aplicadas = RubricaAplicada::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->get();
+        if($this->rubrica_aplicada->tipo_puntaje == "unico"){//calcular estadisticas de las rubricas que esten aplicadas con puntaje único.
+            $rubricas_aplicadas = RubricaAplicada::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where("nota","!=",-1)->get();
             $total_rubricas = $rubricas_aplicadas->count();
             $suma_notas_dimensiones = [];
             foreach($this->rubrica_aplicada->dimensiones as $dimension){
@@ -54,6 +81,10 @@ class EstadisticasRubrica extends Component
     
                 
             foreach($rubricas_aplicadas as $rubrica){
+                if($rubrica->tipo_puntaje == "rango"){
+                    $this->tipo_puntaje = "rango";
+                    return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel,'pocosDatos' => false]);
+                }
                 $i = 0;
                 foreach($rubrica->dimensiones as $dimension){
                     $suma_notas_dimensiones[$i]["suma_total"] += $dimension->notaAsociada;
@@ -71,7 +102,7 @@ class EstadisticasRubrica extends Component
             }
         }
         
-        return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel]);
+        return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel,'pocosDatos' => false]);
     }
     public function redondeado ($numero, $decimales) 
     {
