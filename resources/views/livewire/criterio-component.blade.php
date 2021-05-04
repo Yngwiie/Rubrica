@@ -24,7 +24,7 @@
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                                     <div class="row">
                                         <div class="col-sm-9">
-                                            <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12 " min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
+                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12 " min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
                                         </div>
                                         <div class="w-3" style="margin-left:-13px" >
                                             <small>%</small> 
@@ -44,28 +44,18 @@
                                 
                                 <div class="col-3">
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
-                                    <input title="Magnitud que se aplica el sub-criterio"  style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.escala_magnitud" type="number">
+                                    <input title="Magnitud que se aplica el subcriterio"  style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.escala_magnitud" type="number">
                                     
                                 </div>
                             @elseif($desc->magnitud == "porcentaje2")
                                 <div class="w-41">
                                     <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
-                                
-                                <!-- <div class="col-3">
-                                    <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
-                                    <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
-                                    
-                                </div>
-                                <div class="w-3" style="margin-left:-7px" >
-                                    <small>%</small> 
-                                    <small>Desc.</small>
-                                </div> -->
                                 <div class="col-4" >
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                                     <div class="row">
                                         <div class="col-sm-9">
-                                            <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
+                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
                                         </div>
                                         <div class="w-3" style="margin-left:-13px" >
                                             <small>%</small> 
@@ -90,7 +80,7 @@
                                             <small>mín.</small>
                                         </div>
                                         <div class="col-sm-9">
-                                            <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;padding: 1px;" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="form-control form-control-sm" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.valor_min" type="number">
+                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;padding: 1px;" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="form-control form-control-sm" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.valor_min" type="number">
                                         </div>
                                     </div>
                                     
@@ -99,7 +89,7 @@
                                             <small>máx.</small>
                                         </div>
                                         <div class="col-sm-9">
-                                            <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;padding: 1px;" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="form-control form-control-sm" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.valor_max" type="number">
+                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;padding: 1px;" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="form-control form-control-sm" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.valor_max" type="number">
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +100,7 @@
                                 
                                 <div class="col-4">
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
-                                    <select style="font-size:small;" class="form-control p-1" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" name="id_evaluacion" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.frecuencia">
+                                    <select style="font-size:small;" title="Magnitud que se aplica el subcriterio" class="form-control p-1" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" name="id_evaluacion" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.frecuencia">
                                         <option hidden selected>Selecciona una opción</option>
                                         <option value="Siempre">Siempre</option>
                                         <option value="Usualmente">Usualmente</option>
@@ -143,6 +133,9 @@
                             @if($criterio->aspecto->criterios->first()->id == $criterio->id)
                                 <div class="col-3" style="font-size:small">
                                     <button class="btn btn-sm btn-danger" onclick="emitremove({{$criterio->id_aspecto}},{{$loop->index}})"><i class="fas fa-md fa-times"></i></button>
+                                    <div wire:loading>
+                                            <x-loading-small></x-loading-small>
+                                    </div>
                                 </div>
                             @endif
                         </div>

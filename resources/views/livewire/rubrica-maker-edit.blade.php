@@ -181,7 +181,10 @@
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <button class="btn btn-sec" wire:click="addSubcriterio()"><i class="far fa-lg fa-plus-square"></i> Añadir sub criterio</button>
+                            <button class="btn btn-sec" wire:loading.attr="disabled" wire:click="addSubcriterio()"><i class="far fa-lg fa-plus-square"></i> Añadir sub criterio</button>
+                            <div wire:loading wire:target="addSubcriterio">
+                                <x-loading-md></x-loading-md>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
@@ -206,17 +209,21 @@
                         </div>
                         
                     </div>
-                    <ul class="list-group">
-                        @foreach($sub_criterios as $item)
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col">
-                                    <p>{{$item['text']}}</p>
-                                </div>
-
-                                <div class="col">
-                                    @if($item['magnitud']=="porcentaje1")
-                                        <p>Porcentajes Ascendentes [30%,60%,80%,etc.]</p>
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                            <th style="width: 50%">Descripcion</th>
+                            <th style="width: 30%">Tipo Magnitud</th>
+                            <th style="width: 20%">Porcentaje</th>
+                            <th style="width: 40%">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($sub_criterios as $item)
+                                <tr>
+                                    <td>{{$item['text']}}</td>
+                                    <td>@if($item['magnitud']=="porcentaje1")
+                                        <p>Porcentajes [30%,60%,80%,etc.]</p>
                                     @elseif($item['magnitud']=="escala")
                                         <p>Escala Numerica [1,2,3,4,etc.]</p>
                                     @elseif($item['magnitud']=="porcentaje2")
@@ -227,26 +234,24 @@
                                         <p>Frecuencia Ascendente[Nunca,Frecuentemente,Usualmente,etc.]</p>
                                     @else
                                         <p>Sin Magnitud</p>
-                                    @endif
-                                </div>
-
-                                <div class="col">
-                                    <p>{{$item['porcentaje']}}%</p>
-                                </div>
-
-                                <div class="col">
-                                    <button class="btn btn-danger" wire:loading.attr="disabled" wire:click="removeSubcriterio({{$loop->index}})"><i class="fas fa-lg fa-times"></i> Eliminar</button>
-                                </div>
-                                
-                            </div>
-                        </li>
-                        @endforeach
-                    </ul>
+                                    @endif</td>
+                                    <td><p>{{$item['porcentaje']}}%</p></td>
+                                    <td><button class="btn btn-sm btn-danger" wire:loading.attr="disabled" wire:click="removeSubcriterio({{$loop->index}})"><i class="fas fa-lg fa-times"></i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                     <div class="form-row">
                         <div class="col-md-5">
                             @error('porcentajes_subs') <small class="error text-danger">{{ $message }}</small> @enderror
                         </div>
                     </div>
+                    <div class="d-flex justify-content-center">
+                        <div wire:loading wire:target="removeSubcriterio">
+                            <x-loading-md></x-loading-md>
+                        </div> 
+                    </div> 
                 </div>
                 
                 <div class="modal-footer">
@@ -294,7 +299,10 @@
                         </div>
                         <!-- <label class="col-auto col-form-label" for="porcentaje">%</label> -->
                         <div class="col-md-3 mb-3">
-                            <button class="btn btn-sec" wire:click="addSubcriterio()"><i class="far fa-lg fa-plus-square"></i> Añadir sub criterio</button>
+                            <button class="btn btn-sec" wire:loading.attr="disabled" wire:click="addSubcriterio()"><i class="far fa-lg fa-plus-square"></i> Añadir subcriterio</button>
+                            <div wire:loading wire:target="addSubcriterio">
+                                <x-loading-md></x-loading-md>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
@@ -318,16 +326,20 @@
                             </div>
                     </div>
                     <hr class="bg-dark">
-                    <ul class="list-group">
-                        @foreach($sub_criterios as $item)
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col">
-                                    <p>{{$item['text']}}</p>
-                                </div>
-
-                                <div class="col">
-                                    @if($item['magnitud']=="porcentaje1")
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                            <th style="width: 50%">Descripcion</th>
+                            <th style="width: 30%">Tipo Magnitud</th>
+                            <th style="width: 20%">Porcentaje</th>
+                            <th style="width: 40%">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($sub_criterios as $item)
+                                <tr>
+                                    <td>{{$item['text']}}</td>
+                                    <td>@if($item['magnitud']=="porcentaje1")
                                         <p>Porcentajes [30%,60%,80%,etc.]</p>
                                     @elseif($item['magnitud']=="escala")
                                         <p>Escala Numerica [1,2,3,4,etc.]</p>
@@ -339,21 +351,19 @@
                                         <p>Frecuencia Ascendente[Nunca,Frecuentemente,Usualmente,etc.]</p>
                                     @else
                                         <p>Sin Magnitud</p>
-                                    @endif
-                                </div>
-
-                                <div class="col">
-                                    <p>{{$item['porcentaje']}}%</p>
-                                </div>
-
-                                <div class="col">
-                                    <button class="btn btn-danger" wire:loading.attr="disabled" wire:target="" wire:click="removeSubcriterio({{$loop->index}})"><i class="fas fa-lg fa-times"></i> Eliminar</button>
-                                </div>
-                                
-                            </div>
-                        </li>
-                        @endforeach
-                    </ul>
+                                    @endif</td>
+                                    <td><p>{{$item['porcentaje']}}%</p></td>
+                                    <td><button class="btn btn-sm btn-danger" wire:loading.attr="disabled" wire:click="removeSubcriterio({{$loop->index}})"><i class="fas fa-lg fa-times"></i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                        <div class="d-flex justify-content-center">
+                            <div wire:loading wire:target="removeSubcriterio">
+                                <x-loading-md></x-loading-md>
+                            </div> 
+                        </div> 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
