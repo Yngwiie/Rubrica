@@ -89,7 +89,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:loading.attr="disabled" class="btn btn-primary" wire:click="store()">Agregar Modulo</button>
+                    <button type="button" wire:loading.attr="disabled" class="btn btn-primary" wire:click="store()">Agregar Módulo</button>
 
                 </div>
             </div>
@@ -123,7 +123,7 @@
                 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:loading.attr="disabled" class="btn btn-primary" wire:click="update()">Editar Modulo</button>
+                    <button type="button" wire:loading.attr="disabled" class="btn btn-primary" wire:click="update()">Editar Módulo</button>
 
                 </div>
             </div>
@@ -141,7 +141,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>¿Esta seguro de eliminar el modulo?</p>
+                    <p>¿Esta seguro de eliminar el módulo?, se eliminarán todas las rúbricas aplicadas asociadas al módulo.</p>
                     <div class="d-flex justify-content-center mt-2">
                         <div wire:loading wire:target="destroy">
                             <x-loading></x-loading>

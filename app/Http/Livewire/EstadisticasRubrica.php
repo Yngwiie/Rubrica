@@ -2,13 +2,16 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Estudiante;
 use App\Models\estudiante_evaluacion;
 use App\Models\Evaluacion;
+use App\Models\modulo_estudiante;
 use App\Models\RubricaAplicada;
 use Livewire\Component;
 use Asantibanez\LivewireCharts\Facades\LivewireCharts;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Asantibanez\LivewireCharts\Models\PieChartModel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 
 class EstadisticasRubrica extends Component
@@ -18,15 +21,11 @@ class EstadisticasRubrica extends Component
     public $misRubricas;
     public Evaluacion $evaluacion;
     public $tipo_puntaje;
-/*     protected $listeners = [
-        'onPointClick' => 'handleOnPointClick',
-        'onSliceClick' => 'handleOnSliceClick',
-        'onColumnClick' => 'handleOnColumnClick',
-    ]; */
+    public $estudiante_no_percenece_al_modulo;
 
     public function mount($id_evaluacion, $misRubricas = null,$id_rubrica = null)
     {
-        $this->misRubricas = $misRubricas;
+        $this->misRubricas = $misRubricas;//Para identificar si el profesor esta consultando estadisticas o el estudiante.
         $this->evaluacion = Evaluacion::find($id_evaluacion);
 
         $this->rubrica_aplicada = RubricaAplicada::where('id_evaluacion',$id_evaluacion)->where('nota','!=',-1)->first();
@@ -47,6 +46,14 @@ class EstadisticasRubrica extends Component
     {
         $pieChartModel = 0;
         $columnChartModel = 0;
+        $estudiante = Estudiante::where('email',Auth::user()->email)->first();
+        $modulo_estudiante = modulo_estudiante::where('id_estudiante',$estudiante->id)->where('id_modulo',$this->rubrica_aplicada->evaluacion->modulo->id)->first();
+        if($modulo_estudiante == null & $this->misRubricas==null){//validar si el estudiante aun pertenece al curso, para poder ver estadisticas.
+            $this->estudiante_no_percenece_al_modulo = true;
+            $this->rubrica_aplicada = $this->evaluacion->rubrica;
+            return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel,'pocosDatos' => true]);
+        }
+        
         if($this->rubrica_aplicada == null)
         {
             $this->rubrica_aplicada = $this->evaluacion->rubrica;

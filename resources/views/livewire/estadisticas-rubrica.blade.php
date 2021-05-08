@@ -10,47 +10,60 @@
         {{ Breadcrumbs::render('rubricaAsociadaEstadistica',$rubrica_aplicada) }}
     @endif
 
-    @if($pocosDatos == false)
-        <div class="card shadow-lg">
-            <div class="card-header">
-                <h3>Estadísticas</h3>
-                <h6>Módulo: {{$rubrica_aplicada->evaluacion->modulo->nombre}}<i></i></h6>
-                <h6>Evaluación: {{$rubrica_aplicada->evaluacion->nombre}}<i></i></h6>
-            </div>
-            <div class="card-body" >
-                <div class="d-flex justify-content-center mt-2">
-                    <b style="font-size:13px">Estudiantes Aprobados/Reprobados</b>
+    @if($estudiante_no_percenece_al_modulo == true)
+            <div class="card shadow-lg">
+                <div class="card-header">
+                    <h3>Estadísticas</h3>
+                    <h6>Módulo: {{$rubrica_aplicada->evaluacion->modulo->nombre}}<i></i></h6>
+                    <h6>Evaluación: {{$rubrica_aplicada->evaluacion->nombre}}<i></i></h6>
                 </div>
-                <div style="height: 400px !important">
-                    <livewire:livewire-pie-chart
-                        :pie-chart-model="$pieChartModel"
-                    />
+                <div class="card-body" >
+                    <h3>Ya no está asociado al módulo.</h3>
                 </div>
-                @if($tipo_puntaje == "unico")
-                    <hr class="bg-dark">
+            <div>
+    @else
+        @if($pocosDatos == false)
+            <div class="card shadow-lg">
+                <div class="card-header">
+                    <h3>Estadísticas</h3>
+                    <h6>Módulo: {{$rubrica_aplicada->evaluacion->modulo->nombre}}<i></i></h6>
+                    <h6>Evaluación: {{$rubrica_aplicada->evaluacion->nombre}}<i></i></h6>
+                </div>
+                <div class="card-body" >
                     <div class="d-flex justify-content-center mt-2">
-                        <b style="font-size:13px">Promedio notas en dimensiones de aspectos</b>
+                        <b style="font-size:13px">Estudiantes Aprobados/Reprobados</b>
                     </div>
                     <div style="height: 400px !important">
-                        <livewire:livewire-column-chart
-                            :column-chart-model="$columnChartModel"
+                        <livewire:livewire-pie-chart
+                            :pie-chart-model="$pieChartModel"
                         />
                     </div>
-                @endif
-            </div>
-        <div>
-    @else
-        <div class="card shadow-lg">
-            <div class="card-header">
-                <h3>Estadísticas</h3>
-                <h6>Módulo: {{$rubrica_aplicada->evaluacion->modulo->nombre}}<i></i></h6>
-                <h6>Evaluación: {{$rubrica_aplicada->evaluacion->nombre}}<i></i></h6>
-            </div>
-            <div class="card-body" >
-                <h3>No hay suficientes datos.</h3>
-            </div>
-        <div>
+                    @if($tipo_puntaje == "unico")
+                        <hr class="bg-dark">
+                        <div class="d-flex justify-content-center mt-2">
+                            <b style="font-size:13px">Promedio notas en dimensiones de aspectos</b>
+                        </div>
+                        <div style="height: 400px !important">
+                            <livewire:livewire-column-chart
+                                :column-chart-model="$columnChartModel"
+                            />
+                        </div>
+                    @endif
+                </div>
+            <div>
+        @else
+            <div class="card shadow-lg">
+                <div class="card-header">
+                    <h3>Estadísticas</h3>
+                    <h6>Módulo: {{$rubrica_aplicada->evaluacion->modulo->nombre}}<i></i></h6>
+                    <h6>Evaluación: {{$rubrica_aplicada->evaluacion->nombre}}<i></i></h6>
+                </div>
+                <div class="card-body" >
+                    <h3>No hay suficientes datos.</h3>
+                </div>
+            <div>
 
+        @endif
     @endif
     </div>
     

@@ -99,6 +99,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-md btn-success mb-3" wire:click="descargarPlantillaImport"><i class="far fa-lg fa-file-excel"></i> Descargar Plantilla</button>
+                    </div>
                     <form wire:submit.prevent="import">
                         <label class="form-label" for="customFile">Seleccione su archivo excel</label>
                         <div class="flex flex-items-center">
@@ -134,7 +137,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" wire:target="fileImport" wire:loading.attr="disabled" wire:click="import()">Importar Estudiantes</button>
+                    <button type="button" class="btn btn-primary" wire:target="fileImport,import" wire:loading.attr="disabled" wire:click="import()">Importar Estudiantes</button>
                     
                 </div>
             </div>
@@ -146,13 +149,13 @@
         <div class="modal-dialog modal-md modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Evaluación</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Estudiante</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>¿Esta seguro de eliminar la evaluación?</p>
+                    <p>¿Esta seguro de eliminar el estudiante de este módulo?</p>
                     <div class="d-flex justify-content-center mt-2">
                         <div wire:loading wire:target="destroy">
                             <x-loading></x-loading>

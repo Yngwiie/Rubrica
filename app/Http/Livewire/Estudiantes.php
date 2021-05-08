@@ -13,6 +13,7 @@ use Illuminate\Pagination\Paginator;
 use Maatwebsite\Excel\Facades\Excel;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class Estudiantes extends Component
 {
@@ -71,26 +72,47 @@ class Estudiantes extends Component
             'apellido' => 'required',
             'email' => 'required|email'
         ]);
-
-        $estudiante = Estudiante::create([
-            'nombre' => $validateData['nombre'],
-            'apellido' => $validateData['apellido'],
-            'email' => $validateData['email'],
-        ]);
-        
-        modulo_estudiante::create([
-            'id_modulo' => $this->id_modulo,
-            'id_estudiante' => $estudiante->id,
-        ]);
-
-        $evaluaciones_modulo = Evaluacion::where('id_modulo',$this->id_modulo)->get();
-
-        foreach($evaluaciones_modulo as $evaluacion){
-            estudiante_evaluacion::create([
-                'id_estudiante' => $estudiante->id,
-                'id_evaluacion' => $evaluacion->id,
+        $estudiante = Estudiante::where('email',$validateData['email'])->first();
+        if($estudiante == null){
+            $estudiante = Estudiante::create([
+                'nombre' => $validateData['nombre'],
+                'apellido' => $validateData['apellido'],
+                'email' => $validateData['email'],
             ]);
+            modulo_estudiante::create([
+                'id_modulo' => $this->id_modulo,
+                'id_estudiante' => $estudiante->id,
+            ]);
+    
+            $evaluaciones_modulo = Evaluacion::where('id_modulo',$this->id_modulo)->get();
+    
+            foreach($evaluaciones_modulo as $evaluacion){
+                estudiante_evaluacion::create([
+                    'id_estudiante' => $estudiante->id,
+                    'id_evaluacion' => $evaluacion->id,
+                ]);
+            }
+        }else{
+            $modulo_estudiante = Modulo_estudiante::where('id_modulo',$this->id_modulo)->where('id_estudiante',$estudiante->id)->first();
+            if($modulo_estudiante == null){//evitar asociar dos estudiantes al mismo modulo.
+                modulo_estudiante::create([
+                    'id_modulo' => $this->id_modulo,
+                    'id_estudiante' => $estudiante->id,
+                ]);
+        
+                $evaluaciones_modulo = Evaluacion::where('id_modulo',$this->id_modulo)->get();
+        
+                foreach($evaluaciones_modulo as $evaluacion){
+                    estudiante_evaluacion::create([
+                        'id_estudiante' => $estudiante->id,
+                        'id_evaluacion' => $evaluacion->id,
+                    ]);
+                }
+            }
         }
+        
+        
+        
 
         session()->flash('success','Estudiante agregado con éxito.');
         $this->resetInputFields();
@@ -146,7 +168,14 @@ class Estudiantes extends Component
      */
     public function destroy()
     {
-        Estudiante::destroy($this->id_estudiante);
+
+        Modulo_estudiante::where('id_modulo',$this->id_modulo)->where('id_estudiante',$this->id_estudiante)->delete();
+
+        $evaluaciones_modulo = Evaluacion::where('id_modulo',$this->id_modulo)->get();
+
+        foreach($evaluaciones_modulo as $evaluacion){
+            estudiante_evaluacion::where('id_estudiante',$this->id_estudiante)->where('id_evaluacion',$evaluacion->id)->delete();
+        }
         session()->flash('success','Estudiante eliminado con éxito.');
         $this->resetInputFields();
         $this->emit('estudianteEliminado');
@@ -172,5 +201,9 @@ class Estudiantes extends Component
         session()->flash('success','Estudiante importados con éxito.');
         $this->resetInputFields();
         $this->emit('estudiantesImportados');
+    }
+    public function descargarPlantillaImport()
+    {
+        return Storage::download('importTemplate.xlsx');
     }
 }

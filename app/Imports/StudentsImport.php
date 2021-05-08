@@ -48,7 +48,7 @@ class StudentsImport implements ToModel, WithValidation, WithHeadingRow
             ]);
         }else{
             $modulo_estudiante = Modulo_estudiante::where('id_modulo',$this->id_modulo)->where('id_estudiante',$estudiante->id)->first();
-            if($modulo_estudiante == null){
+            if($modulo_estudiante == null){//evitar asociar dos estudiantes al mismo modulo.
                 $evaluaciones_modulo = Evaluacion::where('id_modulo',$this->id_modulo)->get();
 
                 foreach($evaluaciones_modulo as $evaluacion){
@@ -72,9 +72,9 @@ class StudentsImport implements ToModel, WithValidation, WithHeadingRow
     public function rules(): array
     {
         return [
-            '*.nombre' => ['required'],
-            '*.apellido' => ['required'],
-            '*.email' => ['required','email'],
+            'nombre' => ['required'],
+            'apellido' => ['required'],
+            'email' => ['required','email'],
         ];
     }
 }
