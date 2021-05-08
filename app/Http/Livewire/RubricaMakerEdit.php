@@ -23,6 +23,7 @@ class RubricaMakerEdit extends Component
     public $porcentaje_subcriterio;
     public $nombre_aspecto;
     public $porcentaje_restante;
+    public $porcentaje_aspecto_avanzado;
 
     protected $rules = [
         'rubrica.descripcion' => 'required|string',
@@ -183,30 +184,45 @@ class RubricaMakerEdit extends Component
         session()->flash('success','Aspecto agregado con éxito.'); 
         return redirect()->route('rubric.edit', $this->id_rubrica); 
     }
-    /**
-     * store an aspect with criteria associated(Advanced version)
-     */
-    public function storeAspectoAvanzado()
+
+    public function validacionesAspectoAvanzado()
     {
-        $num_niveles = NivelDesempeno::where('id_dimension','=',$this->id_dim)->count();
+        if($this->nombre_aspecto == ""){
+            $this->addError('nombre_aspecto', 'El nombre del aspecto es obligatorio.');
+        }
+        if($this->porcentaje_aspecto_avanzado < 1){
+            $this->addError('porcentaje_aspecto_min','El valor mínimo del porcentaje del aspecto es 1.');
+        }
+        if($this->porcentaje_aspecto_avanzado > 100){
+            $this->addError('porcentaje_aspecto_max','El valor máximo del porcentaje del aspecto es 100.');
+        }
         $sum_porcentajes = 0;
         foreach($this->sub_criterios as $subs){
             $sum_porcentajes+=$subs["porcentaje"];
             
         }
         if($sum_porcentajes<100){
-            $this->emit('quitarLoading');
             $this->addError('porcentajes_subs', 'Los porcentajes de los subcriterios no suman 100%.');
+        }
+    }
+    /**
+     * store an aspect with criteria associated(Advanced version)
+     */
+    public function storeAspectoAvanzado()
+    {
+        $this->resetErrorBag();
+        $this->validacionesAspectoAvanzado();
+        if($this->getErrorBag()->isNotEmpty()){
+            $this->emit('quitarLoading');
             return;
         }
         $this->emit('closeModalAspectosAvanzados');
-        $this->resetErrorBag();
         $this->rubrica->save();
         $dimension = Dimension::findOrFail($this->id_dim);
         $aspecto = Aspecto::create([
             'nombre' => $this->nombre_aspecto,
             'id_dimension' => $dimension->id,
-            'porcentaje' => 1,
+            'porcentaje' => $this->porcentaje_aspecto_avanzado,
         ]);
         $num_niveles = NivelDesempeno::where('id_dimension','=',$this->id_dim)->count();
         $niveles = NivelDesempeno::where('id_dimension','=',$this->id_dim)->get();

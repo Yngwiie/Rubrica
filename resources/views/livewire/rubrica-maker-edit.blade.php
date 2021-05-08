@@ -149,9 +149,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label for="aspectonombre" class="col-sm-2 col-form-label">Nombre Aspecto</label>
-                        <div class="col-sm-10">
+                        <div class="col">
+                            <label for="aspectonombre" class="col-form-label">Nombre Aspecto</label>
                             <input type="text" class="form-control" id="nombre_aspecto" wire:model.defer="nombre_aspecto" placeholder="Nombre">
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="aspectoporcentaje" class="col-form-label">Porcentaje Aspecto</label>
+                            <div class="input-group mb-3">
+                                <input type="number" class="form-control" placeholder="1" data-toggle="tooltip" data-placement="top"
+                                title="Porcentaje de importancia del aspecto." wire:model.defer="porcentaje_aspecto_avanzado">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr class="bg-dark">
@@ -245,6 +255,21 @@
                     <div class="form-row">
                         <div class="col-md-5">
                             @error('porcentajes_subs') <small class="error text-danger">{{ $message }}</small> @enderror
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-5">
+                            @error('porcentaje_aspecto_min') <small class="error text-danger">{{ $message }}</small> @enderror
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-5">
+                            @error('porcentaje_aspecto_max') <small class="error text-danger">{{ $message }}</small> @enderror
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-5">
+                            @error('nombre_aspecto') <small class="error text-danger">{{ $message }}</small> @enderror
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">

@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <h1>RubricApp</h1>
+            <span class="text-4xl font-extrabold pl-2 text-gray-300"><span class="text-4xl font-extrabold pl-2 text-white">Rubric</span>App</span>
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
