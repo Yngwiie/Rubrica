@@ -199,8 +199,51 @@
                     </tr>
                 @endforeach
             </tbody>
-            </table>
+        </table>
         <br>
+    @endforeach
+    <H5>Comentarios</H5>
+    @foreach ($rubrica->dimensiones as $dimension)
+    <table class="table shadow" style="font-size:smaller"id="table{{$dimension->id}}">
+            <thead class="bg-secondary">
+                <tr>
+                    <th >
+                        <p style="color:white"><u>{{$dimension->nombre}}</u></p>
+                        <div class="row">
+                            <div class="col-sm-8" style="margin-top:4px">
+                                <small style="color:white"><i>{{$dimension->porcentaje}} %</i></small>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <p style="color:white">Comentarios</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach($dimension->aspectos as $aspecto)
+                    <tr style="background-color: #c9c9c9">
+                        <th >
+                            <div class="row">
+                                <div class="col-12">
+                                    <small>{{$aspecto->nombre}}</small>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="row p-2" >
+                                @if($aspecto->comentario == "")
+                                    <small><b>Sin Comentarios</b></small>
+                                @else
+                                    <small><b>{{$aspecto->comentario}}</b></small>
+                                @endif
+                            </div>
+                        </th>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     @endforeach
 </body>
 </html>
