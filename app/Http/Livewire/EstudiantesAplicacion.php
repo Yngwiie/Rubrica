@@ -78,6 +78,7 @@ class EstudiantesAplicacion extends Component
             'id_estudiante' => $this->id_estudiante,
             'id_evaluacion' => $this->rubrica->id_evaluacion,
             'escala_notas' => $this->rubrica->escala_notas,
+            'nota_aprobativa' => $this->rubrica->nota_aprobativa,
             'version' => $this->rubrica->version,
             'tipo_puntaje' => $this->rubrica->tipo_puntaje,
         ]);

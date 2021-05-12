@@ -58,17 +58,17 @@
                     <form>
                         <div class="form-group">
                             <label for="Nombre">Nombre</label>
-                            <input type="text" name="nombre" class="form-control" wire:model="nombre">
+                            <input type="text" name="nombre" class="form-control" wire:model.defer="nombre">
                             @error('nombre') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <label for="fecha">Apellido</label>
-                            <input type="text" name="fecha" class="form-control" wire:model="apellido">
+                            <input type="text" name="fecha" class="form-control" wire:model.defer="apellido">
                             @error('apellido') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <label for="fecha">Correo Electrónico</label>
-                            <input type="text" name="fecha" class="form-control" wire:model="email">
+                            <input type="text" name="fecha" class="form-control" wire:model.defer="email">
                             @error('email') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </form>

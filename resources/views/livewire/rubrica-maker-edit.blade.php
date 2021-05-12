@@ -27,16 +27,19 @@
             <div class="col-sm-5">
                 <select class="custom-select" required wire:model.defer="rubrica.escala_notas">
                     <option hidden value="">Seleccione la escala de notas</option>
-                    <option value="1-5">1-5</option>
-                    <option value="1-6">1-6</option>
+                    <!-- <option value="1-5">1-5</option> -->
+                    <!-- <option value="1-6">1-6</option> -->
                     <option value="1-7">1-7</option>
                     <option value="1-10">1-10</option>
-                    <option value="1-12">1-12</option>
-                    <option value="1-20">1-20</option>
+                   <!--  <option value="1-12">1-12</option>
+                    <option value="1-20">1-20</option> -->
                     <option value="1-100">1-100</option>
                 </select>
             </div>
-            
+            <label for="Descripcion" class="col-sm-2"><strong>Nota aprobativa</strong></label>
+            <div class="col-sm-3">
+                <input type="number" style="font-size:small" class="form-control" id="titulo" wire:model.defer="rubrica.nota_aprobativa" placeholder="Nota Aprobativa">
+            </div>
         </div>
         <div class="form-group row">
             <label for="Descripcion" class="col-sm-2 col-form-label"><strong>Tipo de puntajes</strong></label>
@@ -63,6 +66,12 @@
             </div>
             <div class="row">
                 @error('rubrica.escala_notas') <small class="error text-danger">{{ $message }}</small> @enderror  
+            </div>  
+            <div class="row">
+                @error('rubrica.nota_aprobativa') <small class="error text-danger">{{ $message }}</small> @enderror  
+            </div>  
+            <div class="row">
+                @error('nota_aprobativa') <small class="error text-danger">{{ $message }}</small> @enderror  
             </div>  
     </div>
     <div class="mb-2">

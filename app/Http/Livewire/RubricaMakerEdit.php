@@ -30,6 +30,7 @@ class RubricaMakerEdit extends Component
         'rubrica.titulo' => 'required|string',
         'rubrica.escala_notas' => 'required',
         'rubrica.tipo_puntaje' => 'required',
+        'rubrica.nota_aprobativa' => 'required|numeric|min:1',
     ];
 
     protected $listeners = ['update','deleteAspecto','storeAspecto','storeDimension','deleteDimension','setIdAspectoAddSubcriterios',
@@ -118,20 +119,49 @@ class RubricaMakerEdit extends Component
 
     }
 
-    /* public function updatedRubrica(){
-        $this->rubrica->save();
-        $this->emit('addScroll');
-        return redirect()->route('rubric.edit', $this->id_rubrica); 
-    } */
     public function updated()
     {
+        $this->validate();
+        if($this->rubrica->escala_notas == '1-7'){
+            if($this->rubrica->nota_aprobativa > 7){
+                $this->addError('nota_aprobativa','El campo nota aprobativa no puede ser mayor a 7.');
+                return;
+            }
+        }elseif($this->rubrica->escala_notas == '1-10'){
+            if($this->rubrica->nota_aprobativa > 10){
+                $this->addError('nota_aprobativa','El campo nota aprobativa no puede ser mayor a 10.');
+                return;
+            }
+        }elseif($this->rubrica->escala_notas == '1-100'){
+            if($this->rubrica->nota_aprobativa > 100){
+                $this->addError('nota_aprobativa','El campo nota aprobativa no puede ser mayor a 100.');
+                return;
+            }
+        }
         $this->rubrica->version+=0.001;
         $this->rubrica->save();
     }
 
     public function update()
     {
+        $this->resetErrorBag();
         $this->validate();
+        if($this->rubrica->escala_notas == '1-7'){
+            if($this->rubrica->nota_aprobativa > 7){
+                $this->addError('nota_aprobativa','El campo nota aprobativa no puede ser mayor a 7.');
+                return;
+            }
+        }elseif($this->rubrica->escala_notas == '1-10'){
+            if($this->rubrica->nota_aprobativa > 10){
+                $this->addError('nota_aprobativa','El campo nota aprobativa no puede ser mayor a 10.');
+                return;
+            }
+        }elseif($this->rubrica->escala_notas == '1-100'){
+            if($this->rubrica->nota_aprobativa > 100){
+                $this->addError('nota_aprobativa','El campo nota aprobativa no puede ser mayor a 100.');
+                return;
+            }
+        }
         $this->rubrica->save();
         $porcentaje_total = 0;
         $dimensiones = Dimension::where('id_rubrica',$this->rubrica->id)->get();

@@ -22,6 +22,7 @@ class CreateRubricaAplicada extends Migration
             $table->string('tipo_puntaje')->default('unico');
             $table->float('version',10,3)->default(0,000);
             $table->float('nota',7,2)->default(-1);
+            $table->float('nota_aprobativa',7,2)->nullable();
             $table->unsignedBigInteger('id_evaluacion')->nullable();
             $table->foreign('id_evaluacion')->references('id')->on('evaluaciones')->onDelete('cascade');
             $table->unsignedBigInteger('id_estudiante')->nullable();

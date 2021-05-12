@@ -51,7 +51,7 @@ class Estudiantes extends Component
                                             $q->where('nombre','LIKE',$searchTerm);
                                             $q->orwhere('email','LIKE',$searchTerm);
                                         })
-                                        ->orderBy('id','DESC')->paginate(10);
+                                        ->orderBy('id','ASC')->paginate(10);
         
         return view('livewire.estudiantes',['estudiantes' => $estudiantes]);
     }

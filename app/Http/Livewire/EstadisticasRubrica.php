@@ -46,6 +46,12 @@ class EstadisticasRubrica extends Component
     {
         $pieChartModel = 0;
         $columnChartModel = 0;
+    
+        if($this->rubrica_aplicada == null)
+        {
+            $this->rubrica_aplicada = $this->evaluacion->rubrica;
+            return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel,'pocosDatos' => true]);
+        }
         $estudiante = Estudiante::where('email',Auth::user()->email)->first();
         $modulo_estudiante = modulo_estudiante::where('id_estudiante',$estudiante->id)->where('id_modulo',$this->rubrica_aplicada->evaluacion->modulo->id)->first();
         if($modulo_estudiante == null & $this->misRubricas==null){//validar si el estudiante aun pertenece al curso, para poder ver estadisticas.
@@ -53,21 +59,15 @@ class EstadisticasRubrica extends Component
             $this->rubrica_aplicada = $this->evaluacion->rubrica;
             return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel,'pocosDatos' => true]);
         }
-        
-        if($this->rubrica_aplicada == null)
-        {
-            $this->rubrica_aplicada = $this->evaluacion->rubrica;
-            return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel,'pocosDatos' => true]);
-        }
         if($this->rubrica_aplicada->escala_notas == "1-7"){
-            $estudiantes_aprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','>=','4')->where('nota','!=','-1')->count();
-            $estudiantes_reprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','<','4')->where('nota','!=','-1')->count();
+            $estudiantes_aprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','>=',$this->rubrica_aplicada->nota_aprobativa)->where('nota','!=','-1')->count();
+            $estudiantes_reprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','<',$this->rubrica_aplicada->nota_aprobativa)->where('nota','!=','-1')->count();
         }elseif($this->rubrica_aplicada->escala_notas == "1-100"){
-            $estudiantes_aprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','>=','70')->where('nota','!=','-1')->count();
-            $estudiantes_reprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','<','70')->where('nota','!=','-1')->count();
+            $estudiantes_aprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','>=',$this->rubrica_aplicada->nota_aprobativa)->where('nota','!=','-1')->count();
+            $estudiantes_reprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','<',$this->rubrica_aplicada->nota_aprobativa)->where('nota','!=','-1')->count();
         }else{
-            $estudiantes_aprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','>=','4')->where('nota','!=','-1')->count();
-            $estudiantes_reprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','<','4')->where('nota','!=','-1')->count();
+            $estudiantes_aprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','>=',$this->rubrica_aplicada->nota_aprobativa)->where('nota','!=','-1')->count();
+            $estudiantes_reprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','<',$this->rubrica_aplicada->nota_aprobativa)->where('nota','!=','-1')->count();
         }
         
         $pieChartModel = (new PieChartModel())

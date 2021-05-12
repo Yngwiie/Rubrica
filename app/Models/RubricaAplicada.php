@@ -12,7 +12,7 @@ class RubricaAplicada extends Model
     protected $table = 'rubrica_aplicada';
 
     protected $fillable = [
-        'titulo','descripcion','id_evaluacion','id_estudiante','escala_notas','tipo_puntaje','version','nota'
+        'titulo','descripcion','id_evaluacion','id_estudiante','escala_notas','tipo_puntaje','version','nota','nota_aprobativa',
     ];
 
     public function evaluacion(){

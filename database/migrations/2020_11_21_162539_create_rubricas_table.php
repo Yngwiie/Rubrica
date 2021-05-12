@@ -21,6 +21,7 @@ class CreateRubricasTable extends Migration
             $table->string('escala_notas',40)->default('1-7');
             $table->string('tipo_puntaje')->default('unico');
             $table->float('version',10,3)->default(0,000);
+            $table->float('nota_aprobativa',7,2)->nullable();
             $table->boolean('plantilla')->default(FALSE);
             $table->unsignedBigInteger('id_evaluacion')->nullable();
             $table->foreign('id_evaluacion')->references('id')->on('evaluaciones')->onDelete('cascade');
