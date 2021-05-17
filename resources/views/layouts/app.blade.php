@@ -129,6 +129,23 @@
                     at: "center top", 
                 }
                 });
+                toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "6000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+                }
             } );
 
             window.Livewire.on('show-modal-confirmation', ()=>{
@@ -166,6 +183,16 @@
                 $('#eleccionNota').modal('show');  
             })
             
+           
+            window.Livewire.on('quitarLoadingSubcriteriosVacios',()=>{
+                var contenedor = document.getElementById('contenedor_carga');
+
+                contenedor.style.display = 'none';
+                contenedor.style.opacity = '1';
+                contenedor.style.visibility = 'hidden';
+                contenedor.style.display = 'block'; 
+                toastr.info('No hay subcriterios que agregar.');  
+            })
             window.Livewire.on('quitarLoading',()=>{
                 var contenedor = document.getElementById('contenedor_carga');
 

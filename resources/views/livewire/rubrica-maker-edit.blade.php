@@ -1,5 +1,5 @@
-<div class="container p-4" id="contenedor">
-    <!-- <input type="text" class="form-control" wire:model.debounce.500ms="text_sub_criterio"> -->
+<div class="container p-4" wire:loading.class="bg-gray" id="contenedor">
+
     @include('mensajes-flash')
     <form>
         <div class="form-group row">
@@ -36,8 +36,10 @@
                     <option value="1-100">1-100</option>
                 </select>
             </div>
+        </div>
+        <div class="form-group row">
             <label for="Descripcion" class="col-sm-2"><strong>Nota aprobativa</strong></label>
-            <div class="col-sm-3">
+            <div class="col-sm-5">
                 <input type="number" style="font-size:small" class="form-control" id="titulo" wire:model.defer="rubrica.nota_aprobativa" placeholder="Nota Aprobativa">
             </div>
         </div>
@@ -59,19 +61,19 @@
     </form>
     <div class="col-8 mb-2">
             <div class="row">
-                @error('rubrica.titulo') <small class="error text-danger">{{ $message }}</small> @enderror
+                @error('rubrica.titulo') <span class="error text-danger">{{ $message }}</span> @enderror
             </div>
             <div class="row">
-                @error('rubrica.descripcion') <small class="error text-danger">{{ $message }}</small> @enderror  
+                @error('rubrica.descripcion') <span class="error text-danger">{{ $message }}</span> @enderror  
             </div>
             <div class="row">
-                @error('rubrica.escala_notas') <small class="error text-danger">{{ $message }}</small> @enderror  
+                @error('rubrica.escala_notas') <span class="error text-danger">{{ $message }}</span> @enderror  
             </div>  
             <div class="row">
-                @error('rubrica.nota_aprobativa') <small class="error text-danger">{{ $message }}</small> @enderror  
+                @error('rubrica.nota_aprobativa') <span class="error text-danger">{{ $message }}</span> @enderror  
             </div>  
             <div class="row">
-                @error('nota_aprobativa') <small class="error text-danger">{{ $message }}</small> @enderror  
+                @error('nota_aprobativa') <span class="error text-danger">{{ $message }}</span> @enderror  
             </div>  
     </div>
     <div class="mb-2">
@@ -85,9 +87,9 @@
     <hr class="bg-dark">
     <div wire:key="foo">
     @foreach ($rubrica->dimensiones as $dimension)
-        <button type="button" class="btn btn-sec" data-tooltip="tooltip" data-html="true" title="Existen dos opciones para crear un aspecto.
-        El primero de ellos creará un aspecto sin ninguna configuración previa, en cambio el añadir aspecto avanzado se podran asignar los subcriterios
-        del aspecto, los cuales se clonaran en cada uno de los niveles.">
+        <button type="button" class="btn btn-sec" data-tooltip="tooltip" data-html="true" title='Existen dos opciones para crear un aspecto.
+        "Añadir aspecto normal" creará un aspecto sin ninguna configuración previa, en cambio "añadir aspecto avanzado" se crea una lista de subcriterios
+        que serán replicados en todos los niveles, con su respectiva magnitud y porcentaje.'>
             <i class="far fa-lg fa-question-circle"></i>
         </button>
         <button type="button" onclick="anadirAspecto({{$dimension->id}})" class="btn btn-md btn-sec add-row"><i class="far fa-lg fa-plus-square"></i> Añadir Aspecto Normal</button>
@@ -176,7 +178,7 @@
                     <hr class="bg-dark">
                     <div class="form-row">
                         <div class="col-md-3 mb-3">
-                            <input type="text" class="form-control" placeholder="Descripción sub criterio" wire:model.defer="sub_criterio">
+                            <input type="text" class="form-control" placeholder="Descripción subcriterio" wire:model.defer="sub_criterio">
                         </div>
                         <div class="col-md-3 mb-3">
                             <select class="custom-select" required wire:model.defer="magnitud_subcriterio">
@@ -200,7 +202,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <button class="btn btn-sec" wire:loading.attr="disabled" wire:click="addSubcriterio()"><i class="far fa-lg fa-plus-square"></i> Añadir sub criterio</button>
+                            <button class="btn btn-sec" wire:loading.attr="disabled" wire:click="addSubcriterio()"><i class="far fa-lg fa-plus-square"></i> Añadir subcriterio</button>
                             <div wire:loading wire:target="addSubcriterio">
                                 <x-loading-md></x-loading-md>
                             </div>
@@ -208,17 +210,17 @@
                     </div>
                     <div class="form-row">
                         <div class="col-md-3">
-                            @error('subcriterio_porcentaje') <small class="error text-danger">{{ $message }}</small> @enderror
+                            @error('subcriterio_porcentaje') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-3">
-                            @error('subcriterio_descripcion') <small class="error text-danger">{{ $message }}</small> @enderror
+                            @error('subcriterio_descripcion') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-3">
-                            @error('subcriterio_magnitud') <small class="error text-danger">{{ $message }}</small> @enderror
+                            @error('subcriterio_magnitud') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <hr class="bg-dark">
@@ -231,7 +233,7 @@
                     <table class="table table-responsive">
                         <thead>
                             <tr>
-                            <th style="width: 50%">Descripcion</th>
+                            <th style="width: 50%">Descripción</th>
                             <th style="width: 30%">Tipo Magnitud</th>
                             <th style="width: 20%">Porcentaje</th>
                             <th style="width: 40%">Acciones</th>
@@ -263,22 +265,22 @@
                     </table>
                     <div class="form-row">
                         <div class="col-md-5">
-                            @error('porcentajes_subs') <small class="error text-danger">{{ $message }}</small> @enderror
+                            @error('porcentajes_subs') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-5">
-                            @error('porcentaje_aspecto_min') <small class="error text-danger">{{ $message }}</small> @enderror
+                            @error('porcentaje_aspecto_min') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-5">
-                            @error('porcentaje_aspecto_max') <small class="error text-danger">{{ $message }}</small> @enderror
+                            @error('porcentaje_aspecto_max') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-5">
-                            @error('nombre_aspecto') <small class="error text-danger">{{ $message }}</small> @enderror
+                            @error('nombre_aspecto') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">
@@ -341,17 +343,17 @@
                     </div>
                     <div class="form-row">
                         <div class="col-md-3">
-                            @error('subcriterio_porcentaje') <small class="error text-danger">{{ $message }}</small> @enderror
+                            @error('subcriterio_porcentaje') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-3">
-                            @error('subcriterio_descripcion') <small class="error text-danger">{{ $message }}</small> @enderror
+                            @error('subcriterio_descripcion') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-3">
-                            @error('subcriterio_magnitud') <small class="error text-danger">{{ $message }}</small> @enderror
+                            @error('subcriterio_magnitud') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                     <div class="form-row">
@@ -363,7 +365,7 @@
                     <table class="table table-responsive">
                         <thead>
                             <tr>
-                            <th style="width: 50%">Descripcion</th>
+                            <th style="width: 50%">Descripción</th>
                             <th style="width: 30%">Tipo Magnitud</th>
                             <th style="width: 20%">Porcentaje</th>
                             <th style="width: 40%">Acciones</th>

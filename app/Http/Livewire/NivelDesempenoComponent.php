@@ -72,8 +72,10 @@ class NivelDesempenoComponent extends Component
             }else{
                 if(($nivel_anterior->puntaje >= $this->nivel->puntaje) or ($nivel_posterior->puntaje <= $this->nivel->puntaje)){
                     $this->addError('orden_rangos', 'Los puntajes no estan en orden.');
+                    $this->emit('nivel_updated'.$this->nivel->id_dimension);
                     $this->nivel->puntaje = $old_puntaje;
                     $this->nivel->save();
+                    
                     return;
                 }
             }
@@ -89,7 +91,7 @@ class NivelDesempenoComponent extends Component
             $this->nivel->nombre = $this->nombre;
             $this->nivel->save();
             
-            /* $nivel_anterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
+            $nivel_anterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
                                             ->where('id','<',$this->nivel->id)
                                             ->orderBy('id','desc')->first();
             $nivel_posterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
@@ -114,12 +116,13 @@ class NivelDesempenoComponent extends Component
             }else{
                 if(($nivel_anterior->puntaje_maximo >= $this->nivel->puntaje_minimo) or ($nivel_posterior->puntaje_minimo <= $this->nivel->puntaje_maximo)){
                     $this->addError('orden_rangos', 'Los rangos no estan en orden.');
+                    $this->emit('nivel_updated'.$this->nivel->id_dimension);
                     $this->nivel->puntaje_minimo = $old_puntaje_minimo;
                     $this->nivel->puntaje_maximo = $old_puntaje_maximo;
                     $this->nivel->save();
                     return;
                 }
-            } */
+            }
         }
         $this->emit('nivel_updated'.$this->nivel->id_dimension);
         $this->resetErrorBag();
@@ -142,18 +145,22 @@ class NivelDesempenoComponent extends Component
             if($nivel_anterior==null){
                 if(($nivel_posterior->puntaje <= $this->nivel->puntaje)){
                     $this->addError('orden_rangos', 'Los puntajes no estan en orden.');
+                    $this->nivel->puntaje = $old_puntaje;
+                    $this->nivel->save();
                     return;
                 }
             }elseif($nivel_posterior==null){
                 if(($nivel_anterior->puntaje >= $this->nivel->puntaje)){
                     $this->addError('orden_rangos', 'Los puntajes no estan en orden.');
+                    $this->nivel->puntaje = $old_puntaje;
+                    $this->nivel->save();
                     return;
                 }
             }else{
                 if(($nivel_anterior->puntaje >= $this->nivel->puntaje) or ($nivel_posterior->puntaje <= $this->nivel->puntaje)){
                     $this->addError('orden_rangos', 'Los puntajes no estan en orden.');
-                    $this->nivel->puntaje = $old_puntaje;
-                    $this->nivel->save();
+                   /*  $this->nivel->puntaje = $old_puntaje;
+                    $this->nivel->save(); */
                     return;
                 }
             }
@@ -170,7 +177,7 @@ class NivelDesempenoComponent extends Component
             $this->nivel->nombre = $this->nombre;
             $this->nivel->save();
             
-            /* $nivel_anterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
+            $nivel_anterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
                                             ->where('id','<',$this->nivel->id)
                                             ->orderBy('id','desc')->first();
             $nivel_posterior = NivelDesempeno::where('id_dimension',$this->nivel->id_dimension)
@@ -179,22 +186,28 @@ class NivelDesempenoComponent extends Component
             if($nivel_anterior==null){
                 if(($nivel_posterior->puntaje_minimo <= $this->nivel->puntaje_maximo)){
                     $this->addError('orden_rangos', 'Los rangos no estan en orden.');
+                    $this->nivel->puntaje_minimo = $old_puntaje_minimo;
+                    $this->nivel->puntaje_maximo = $old_puntaje_maximo;
+                    $this->nivel->save();
                     return;
                 }
             }elseif($nivel_posterior==null){
                 if(($nivel_anterior->puntaje_maximo >= $this->nivel->puntaje_minimo)){
-                    $this->addError('orden_rangos', 'Los rangos no estan en orden.');
-                    return;
-                }
-            }else{
-                if(($nivel_anterior->puntaje_maximo >= $this->nivel->puntaje_minimo) or ($nivel_posterior->puntaje_minimo <= $this->nivel->puntaje_maximo)){
                     $this->addError('orden_rangos', 'Los rangos no estan en orden.');
                     $this->nivel->puntaje_minimo = $old_puntaje_minimo;
                     $this->nivel->puntaje_maximo = $old_puntaje_maximo;
                     $this->nivel->save();
                     return;
                 }
-            } */
+            }else{
+                if(($nivel_anterior->puntaje_maximo >= $this->nivel->puntaje_minimo) or ($nivel_posterior->puntaje_minimo <= $this->nivel->puntaje_maximo)){
+                    $this->addError('orden_rangos', 'Los rangos no estan en orden.');
+                    /* $this->nivel->puntaje_minimo = $old_puntaje_minimo;
+                    $this->nivel->puntaje_maximo = $old_puntaje_maximo;
+                    $this->nivel->save(); */
+                    return;
+                }
+            }
         }
         $this->resetErrorBag();
     }

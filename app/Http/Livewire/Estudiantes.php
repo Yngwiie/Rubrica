@@ -40,9 +40,9 @@ class Estudiantes extends Component
     }
     public function render()
     {
-        /* dd($this->modulo->estudiantes()); */
         /* $searchTerm = '%'.$this->searchTerm.'%';
         $estudiantes = $this->modulo->estudiantes()->where('nombre','LIKE',$searchTerm)
+                                                   ->orderBy('modulo_estudiantes.id','desc')
                                                    ->paginate(10); */
         
         $estudiantes = Modulo_estudiante::where('id_modulo','=',$this->id_modulo)
@@ -51,7 +51,8 @@ class Estudiantes extends Component
                                             $q->where('nombre','LIKE',$searchTerm);
                                             $q->orwhere('email','LIKE',$searchTerm);
                                         })
-                                        ->orderBy('id','ASC')->paginate(10);
+                                        ->orderBy('id','desc')
+                                        ->paginate(10);
         
         return view('livewire.estudiantes',['estudiantes' => $estudiantes]);
     }
@@ -66,7 +67,6 @@ class Estudiantes extends Component
 
     public function store()
     {
-        
         $validateData = $this->validate([
             'nombre' => 'required|string|max:40',
             'apellido' => 'required',

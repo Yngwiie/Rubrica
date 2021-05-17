@@ -93,7 +93,7 @@ class RubricaMakerEdit extends Component
         }elseif($this->magnitud_subcriterio=="rango_asc"){
             array_push($this->sub_criterios, ['id'=>"",'aplicado' => false,'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'valor_min'=>0,'valor_max'=>0,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
         }elseif($this->magnitud_subcriterio=="frecuencia"){
-            array_push($this->sub_criterios, ['id'=>"",'aplicado' => false,'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'frecuencia'=>"",'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
+            array_push($this->sub_criterios, ['id'=>"",'aplicado' => false,'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'frecuencia'=>""/* ,"frecuencia_valor_numerico"=>"" */,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
         }
         else{
             array_push($this->sub_criterios, ['id'=>"",'aplicado' => false,'text'=>$this->sub_criterio,'magnitud'=>$this->magnitud_subcriterio,'porcentaje'=>intval($this->redondeado($this->porcentaje_subcriterio,0))]);
@@ -193,6 +193,7 @@ class RubricaMakerEdit extends Component
         /* return redirect()->route('rubric.edit', $this->id_rubrica);  */
         
     }
+
     public function storeAspecto($id_dimension)
     {
         /* $this->validate();
@@ -345,6 +346,7 @@ class RubricaMakerEdit extends Component
                 if($subs["magnitud"] == "frecuencia"){
                     if($num_niveles==3){
                         $subs["frecuencia"] = $array_frecuencias_1[$i];
+                       /*  $subs["frecuencia_valor_numerico"] = $array_frecuencias_1[$i]; */
                     }elseif($num_niveles==4){
                         $subs["frecuencia"] = $array_frecuencias_2[$i];
                     }elseif($num_niveles==5){
@@ -489,7 +491,11 @@ class RubricaMakerEdit extends Component
 
     public function addSubcriterios()
     {
-       
+        if($this->sub_criterios == null){
+            $this->emit('quitarLoadingSubcriteriosVacios');
+            $this->emit('addScroll');
+            return;
+        }
         $aspecto = Aspecto::find($this->id_aspecto);
         
         $num_niveles = NivelDesempeno::where('id_dimension','=',$aspecto->dimension->id)->count();

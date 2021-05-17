@@ -25,6 +25,7 @@
             </tr>
         </thead>
         <tbody>
+
             @foreach($estudiantes as $estudiante)
             <tr>
                 <td><i class="fas fa-lg fa-user-graduate"></i> {{$estudiante->estudiante->nombre}} {{$estudiante->estudiante->apellido}}</td>
@@ -68,7 +69,7 @@
                         </div>
                         <div class="form-group">
                             <label for="fecha">Correo Electrónico</label>
-                            <input type="text" name="fecha" class="form-control" wire:model.defer="email">
+                            <input type="text" name="fecha" class="form-control" wire:model="email">
                             @error('email') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </form>

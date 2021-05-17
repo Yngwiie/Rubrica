@@ -29,6 +29,7 @@ class EstudiantesAplicacion extends Component
         $searchTerm = '%'.$this->searchTerm.'%';
         $evaluacion = Evaluacion::find($this->rubrica->id_evaluacion);
         return view('livewire.estudiantes-aplicacion',['estudiantes' => $evaluacion->estudiantes()->where('nombre','LIKE',$searchTerm)
+                                                                                                  ->orderBy('estudiante_evaluaciones.id','desc')
                                                                                                   ->paginate(6)]);
     }
 
