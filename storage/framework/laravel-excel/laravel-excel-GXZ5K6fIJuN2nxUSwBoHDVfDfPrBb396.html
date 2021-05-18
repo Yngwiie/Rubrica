@@ -1,0 +1,628 @@
+<!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        
+        <!-- Styles -->
+        
+        <link rel="stylesheet" href="/css/app.css">
+        
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"> 
+        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+        <!-- Livewire Styles -->
+<style>
+    [wire\:loading], [wire\:loading\.delay], [wire\:loading\.inline-block], [wire\:loading\.inline], [wire\:loading\.block], [wire\:loading\.flex], [wire\:loading\.table], [wire\:loading\.grid] {
+        display: none;
+    }
+
+    [wire\:offline] {
+        display: none;
+    }
+
+    [wire\:dirty]:not(textarea):not(input):not(select) {
+        display: none;
+    }
+
+    input:-webkit-autofill, select:-webkit-autofill, textarea:-webkit-autofill {
+        animation-duration: 50000s;
+        animation-name: livewireautofill;
+    }
+
+    @keyframes livewireautofill { from {} }
+</style>
+<div class="container">
+    <form>
+        <div class="form-group justify-content-center row">
+                <h1>Trabajo en equipo</h1>
+        </div>
+        <div class="form-group justify-content-center row">
+            <p>El trabajo en equipo es un comportamiento que está bajo el control de cada uno de los miembros del equipo (el esfuerzo que ponen en las tareas del equipo, su forma de interactuar con los demás en el equipo y la cantidad y calidad de contribuciones que hacen en la toma de desición del equipo).</p>
+        </div>
+        <div class="form-group row">
+                            <strong>Evaluación: </strong><p>Prueba 2</p>
+                    </div>
+        <div class="form-group row">
+                            <strong>Módulo: </strong><p>Prueba 2</p>
+                    </div>
+    </form>
+    <hr class="bg-dark">
+            <table id="table5">
+            <thead class="bg-secondary">
+                <tr>
+                    <th >
+                        <p style="color:white">Trabajo en equipo</p>
+                        <div class="row">
+                            <div class="col-sm-8" style="margin-top:4px">
+                                <small style="color:white">100 %</small>
+                            </div>
+                        </div>
+                    </th>
+
+                                        <th >
+                        <p style="color:white">Necesita mejorar</p>
+                        <div class="row">
+                            <div class="col-sm-6" style="margin-top:4px">
+                                <small style="color:white">Puntaje: 0</small>
+                            </div>
+                        </div> 
+                    </th>
+
+                                        <th >
+                        <p style="color:white">En desarrollo</p>
+                        <div class="row">
+                            <div class="col-sm-6" style="margin-top:4px">
+                                <small style="color:white">Puntaje: 0</small>
+                            </div>
+                        </div> 
+                    </th>
+
+                                        <th >
+                        <p style="color:white">Suficiente</p>
+                        <div class="row">
+                            <div class="col-sm-6" style="margin-top:4px">
+                                <small style="color:white">Puntaje: 0</small>
+                            </div>
+                        </div> 
+                    </th>
+
+                                        <th >
+                        <p style="color:white">Superior al promedio</p>
+                        <div class="row">
+                            <div class="col-sm-6" style="margin-top:4px">
+                                <small style="color:white">Puntaje: 0</small>
+                            </div>
+                        </div> 
+                    </th>
+
+                                    </tr>
+            </thead>
+            <tbody>
+
+                                    <tr style="background-color: #c9c9c9">
+                        <th >
+                            <div style="width:160px"class="row">
+                                <div class="col-12">
+                                    <small>Contribuye en las reuniones del equipo</small>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8" style="margin-top: 6px">
+                                   <small>20%</small>
+                                </div>
+
+                            </div>
+                        </th>
+
+                                                    <!-- <th wire:id="OiMnh8Oeb9KogVVnUYCy" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;OiMnh8Oeb9KogVVnUYCy&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Comparte ideas pero no hace avanzar el trabajo del grupo.&quot;},&quot;descripcion&quot;:&quot;Comparte ideas pero no hace avanzar el trabajo del grupo.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:89,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:89,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;317363c17785816c5636c7fd7a821c01937523e9f726aa702affa4504531a7b2&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Comparte ideas pero no hace avanzar el trabajo del grupo.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="Mfzx47djCQ0NY11VSTVa" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;Mfzx47djCQ0NY11VSTVa&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Ofrece nuevas sugerencias para avanzar en el trabajo del grupo.&quot;},&quot;descripcion&quot;:&quot;Ofrece nuevas sugerencias para avanzar en el trabajo del grupo.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:90,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:90,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;9c7a809e1c1d2506e4f7f263c290da83870bd0f5c6ffeeff127e0fdba3e116ce&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Ofrece nuevas sugerencias para avanzar en el trabajo del grupo.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="8xyVrxStZSl4RE5IcJk1" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;8xyVrxStZSl4RE5IcJk1&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Ofrece soluciones o lineas de acci\u00f3n alternativas que se basan en las ideas de otros.&quot;},&quot;descripcion&quot;:&quot;Ofrece soluciones o lineas de acci\u00f3n alternativas que se basan en las ideas de otros.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:91,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:91,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;fbd68c72cbd485cf6eedac25db3d1e1b047581d36cd90d1be7c40e0f267c5705&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Ofrece soluciones o lineas de acción alternativas que se basan en las ideas de otros.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="gXOm0CtdHKAmL5KR2RfK" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;gXOm0CtdHKAmL5KR2RfK&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Ayuda al equipo a avanzar articulando los m\u00e9ritos de las ideas o propuestas alternativas.&quot;},&quot;descripcion&quot;:&quot;Ayuda al equipo a avanzar articulando los m\u00e9ritos de las ideas o propuestas alternativas.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:92,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:92,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;a47eec6887549679fe2ab558957f2f70e6bced4a3541df492c7826e825e431fb&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Ayuda al equipo a avanzar articulando los méritos de las ideas o propuestas alternativas.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                            </tr>
+                                    <tr style="background-color: #c9c9c9">
+                        <th >
+                            <div style="width:160px"class="row">
+                                <div class="col-12">
+                                    <small>Facilita la participacion de los miembros del equipo.</small>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8" style="margin-top: 6px">
+                                   <small>20%</small>
+                                </div>
+
+                            </div>
+                        </th>
+
+                                                    <!-- <th wire:id="Adw6ZKPnfDUXGw5Ro8fT" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;Adw6ZKPnfDUXGw5Ro8fT&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Hace participar a los miembros del equipo tomando turnos y escuchando a los dem\u00e1s sin interrumpir.&quot;},&quot;descripcion&quot;:&quot;Hace participar a los miembros del equipo tomando turnos y escuchando a los dem\u00e1s sin interrumpir.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:93,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:93,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;0906c3887631acaadc7120b160f21d7c8fd2ebbb4b296f52a70ae36ee007fd7b&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Hace participar a los miembros del equipo tomando turnos y escuchando a los demás sin interrumpir.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="zaV3g4n8UMzHge4DonMD" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;zaV3g4n8UMzHge4DonMD&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Hace part\u00edcipes a los miembros del equipo de forma que facilite sus contribuciones a las reuniones, reafirmando las opiniones de otros miembros del equipo y\/o haciendo preguntas de aclaraci\u00f3n.&quot;},&quot;descripcion&quot;:&quot;Hace part\u00edcipes a los miembros del equipo de forma que facilite sus contribuciones a las reuniones, reafirmando las opiniones de otros miembros del equipo y\/o haciendo preguntas de aclaraci\u00f3n.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:94,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:94,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;61c34f84563d98b6d5fd07ee69f356dadd4136d9550ef688bdca2189d4e31b43&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Hace partícipes a los miembros del equipo de forma que facilite sus contribuciones a las reuniones, reafirmando las opiniones de otros miembros del equipo y/o haciendo preguntas de aclaración.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="WUSpHCxDCNTtv7AMQiR4" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;WUSpHCxDCNTtv7AMQiR4&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Hace part\u00edcipes a los miembros del equipo de manera que faciliten sus contribuciones a las reuniones, aprovechando o sintetizando constructivamente las contribuciones de los dem\u00e1s.&quot;},&quot;descripcion&quot;:&quot;Hace part\u00edcipes a los miembros del equipo de manera que faciliten sus contribuciones a las reuniones, aprovechando o sintetizando constructivamente las contribuciones de los dem\u00e1s.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:95,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:95,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;0cd80803d3d94ffd3275fb38e1746cb15f5a24f1481ee82ade5f72c116a093c0&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Hace partícipes a los miembros del equipo de manera que faciliten sus contribuciones a las reuniones, aprovechando o sintetizando constructivamente las contribuciones de los demás.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="vPNoYguRqynlRRY4aZHl" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;vPNoYguRqynlRRY4aZHl&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Hace part\u00edcipes a los miembros del equipo de forma que se faciliten sus contribuciones a las reuniones, tanto aprovechando o sintetizando de forma constructiva las contribuciones de los dem\u00e1s, como notando cuando alguien no est\u00e1 participando e invit\u00e1ndole a participar.&quot;},&quot;descripcion&quot;:&quot;Hace part\u00edcipes a los miembros del equipo de forma que se faciliten sus contribuciones a las reuniones, tanto aprovechando o sintetizando de forma constructiva las contribuciones de los dem\u00e1s, como notando cuando alguien no est\u00e1 participando e invit\u00e1ndole a participar.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:96,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:96,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;02a745677ba6c3dab910d1a61a720eb6e52e6a450c575cfbf4c56b87a62d55bd&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Hace partícipes a los miembros del equipo de forma que se faciliten sus contribuciones a las reuniones, tanto aprovechando o sintetizando de forma constructiva las contribuciones de los demás, como notando cuando alguien no está participando e invitándole a participar.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                            </tr>
+                                    <tr style="background-color: #c9c9c9">
+                        <th >
+                            <div style="width:160px"class="row">
+                                <div class="col-12">
+                                    <small>Contribuciones individuales fuera de las reuniones de equipo</small>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8" style="margin-top: 6px">
+                                   <small>20%</small>
+                                </div>
+
+                            </div>
+                        </th>
+
+                                                    <!-- <th wire:id="jyZZsObalkemOEjDBDZx" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;jyZZsObalkemOEjDBDZx&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Completa todas las tareas asignadas en el plazo previsto&quot;},&quot;descripcion&quot;:&quot;Completa todas las tareas asignadas en el plazo previsto&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:97,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:97,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;6217a4a0270e9b7a9c9bfd1e9ca67bb0ad5c856aa4ad98c9ee5380442717eb02&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Completa todas las tareas asignadas en el plazo previsto</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="ndLGoHSRAZ4HgwDGHI0f" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;ndLGoHSRAZ4HgwDGHI0f&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Completa todas las tareas asignadas dentro del plazo; el trabajo realizado hace avanzar el proyecto.&quot;},&quot;descripcion&quot;:&quot;Completa todas las tareas asignadas dentro del plazo; el trabajo realizado hace avanzar el proyecto.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:98,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:98,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;e5e548571a51f3c45ff0dd8684db48f35e3ed26a0c309dff863f7651c88fefbe&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Completa todas las tareas asignadas dentro del plazo; el trabajo realizado hace avanzar el proyecto.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="2o31NWW34Vqv1gL88P6N" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;2o31NWW34Vqv1gL88P6N&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Completa todas las tareas asignadas dentro del plazo;el trabajo realizado es minucioso, exhaustivo y hace avanzar el proyecto&quot;},&quot;descripcion&quot;:&quot;Completa todas las tareas asignadas dentro del plazo;el trabajo realizado es minucioso, exhaustivo y hace avanzar el proyecto&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:99,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:99,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;9a0c74ba606aabe872f19a8b46801eced5b36fc1a2ab259863be3697099ceb51&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Completa todas las tareas asignadas dentro del plazo;el trabajo realizado es minucioso, exhaustivo y hace avanzar el proyecto</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="FrQ3ft6QnMl3mQMmfCxW" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;FrQ3ft6QnMl3mQMmfCxW&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Completa todas las tareas asignadas dentro del plazo;el trabajo realizado es minucioso, exhaustivo y hace avanzar el proyecto. Ayuda de forma proactiva a otros miembros del equipo a completar las tareas asignadas con un nivel de excelencia similar.&quot;},&quot;descripcion&quot;:&quot;Completa todas las tareas asignadas dentro del plazo;el trabajo realizado es minucioso, exhaustivo y hace avanzar el proyecto. Ayuda de forma proactiva a otros miembros del equipo a completar las tareas asignadas con un nivel de excelencia similar.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:100,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:100,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;d43721219043807af951e6b03da955f08ff99659b2ec1e1e84723938bcc14f0b&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Completa todas las tareas asignadas dentro del plazo;el trabajo realizado es minucioso, exhaustivo y hace avanzar el proyecto. Ayuda de forma proactiva a otros miembros del equipo a completar las tareas asignadas con un nivel de excelencia similar.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                            </tr>
+                                    <tr style="background-color: #c9c9c9">
+                        <th >
+                            <div style="width:160px"class="row">
+                                <div class="col-12">
+                                    <small>Fomenta un clima de equipo constructivo</small>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8" style="margin-top: 6px">
+                                   <small>20%</small>
+                                </div>
+
+                            </div>
+                        </th>
+
+                                                    <!-- <th wire:id="1p1FHm4rtnHRpm0Iw0FK" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;1p1FHm4rtnHRpm0Iw0FK&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:\r\n- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicaci\u00f3n.\r\n- Utiliza un tono vocal o escrito positivo, expresiones faciales y\/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.\r\n- Motiva a los compa\u00f1eros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.\r\n- Proporciona ayuda y\/o \u00e1nimo a los miembros del equipo.&quot;},&quot;descripcion&quot;:&quot;Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:\r\n- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicaci\u00f3n.\r\n- Utiliza un tono vocal o escrito positivo, expresiones faciales y\/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.\r\n- Motiva a los compa\u00f1eros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.\r\n- Proporciona ayuda y\/o \u00e1nimo a los miembros del equipo.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:101,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:101,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;3c1385bbcf8d3b6f305274f0c58be3d3d706d11b571ca0c6eeebd07103db3eda&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:
+- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicación.
+- Utiliza un tono vocal o escrito positivo, expresiones faciales y/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.
+- Motiva a los compañeros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.
+- Proporciona ayuda y/o ánimo a los miembros del equipo.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="MYELlAT2wbtW2Voo6FL4" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;MYELlAT2wbtW2Voo6FL4&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:\r\n- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicaci\u00f3n.\r\n- Utiliza un tono vocal o escrito positivo, expresiones faciales y\/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.\r\n- Motiva a los compa\u00f1eros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.\r\n- Proporciona ayuda y\/o \u00e1nimo a los miembros del equipo.&quot;},&quot;descripcion&quot;:&quot;Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:\r\n- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicaci\u00f3n.\r\n- Utiliza un tono vocal o escrito positivo, expresiones faciales y\/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.\r\n- Motiva a los compa\u00f1eros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.\r\n- Proporciona ayuda y\/o \u00e1nimo a los miembros del equipo.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:102,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:102,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;6b3c1dd4e24182ab5385be4951c1d5a3bbd5d5f6dc1375b9bc1299f0e36a7ffc&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:
+- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicación.
+- Utiliza un tono vocal o escrito positivo, expresiones faciales y/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.
+- Motiva a los compañeros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.
+- Proporciona ayuda y/o ánimo a los miembros del equipo.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="cogOZ764hpnPBS1CSRuL" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;cogOZ764hpnPBS1CSRuL&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:\r\n- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicaci\u00f3n.\r\n- Utiliza un tono vocal o escrito positivo, expresiones faciales y\/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.\r\n- Motiva a los compa\u00f1eros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.\r\n- Proporciona ayuda y\/o \u00e1nimo a los miembros del equipo.&quot;},&quot;descripcion&quot;:&quot;Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:\r\n- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicaci\u00f3n.\r\n- Utiliza un tono vocal o escrito positivo, expresiones faciales y\/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.\r\n- Motiva a los compa\u00f1eros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.\r\n- Proporciona ayuda y\/o \u00e1nimo a los miembros del equipo.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:103,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:103,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;6e1d506b967de38bb0f78cf57dbb8f2a345fb25e9656f10294da0ae030ba2613&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:
+- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicación.
+- Utiliza un tono vocal o escrito positivo, expresiones faciales y/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.
+- Motiva a los compañeros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.
+- Proporciona ayuda y/o ánimo a los miembros del equipo.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="b1xMDegflAU6WdORVORz" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;b1xMDegflAU6WdORVORz&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:\r\n- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicaci\u00f3n.\r\n- Utiliza un tono vocal o escrito positivo, expresiones faciales y\/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.\r\n- Motiva a los compa\u00f1eros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.\r\n- Proporciona ayuda y\/o \u00e1nimo a los miembros del equipo.&quot;},&quot;descripcion&quot;:&quot;Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:\r\n- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicaci\u00f3n.\r\n- Utiliza un tono vocal o escrito positivo, expresiones faciales y\/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.\r\n- Motiva a los compa\u00f1eros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.\r\n- Proporciona ayuda y\/o \u00e1nimo a los miembros del equipo.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:104,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:104,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;63803bd5b6b78114c2a91df0a36673e2bc019a2592c324c3f4b768a4e2ff7ecc&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:
+- Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicación.
+- Utiliza un tono vocal o escrito positivo, expresiones faciales y/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.
+- Motiva a los compañeros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.
+- Proporciona ayuda y/o ánimo a los miembros del equipo.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                            </tr>
+                                    <tr style="background-color: #c9c9c9">
+                        <th >
+                            <div style="width:160px"class="row">
+                                <div class="col-12">
+                                    <small>Respuesta al conflicto.</small>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8" style="margin-top: 6px">
+                                   <small>20%</small>
+                                </div>
+
+                            </div>
+                        </th>
+
+                                                    <!-- <th wire:id="dcjc1uL8pTcap7uYeDYT" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;dcjc1uL8pTcap7uYeDYT&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Acepta pasivamente puntos de vista\/ideas\/opiniones alternativas.&quot;},&quot;descripcion&quot;:&quot;Acepta pasivamente puntos de vista\/ideas\/opiniones alternativas.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:105,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:105,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;d032f9d6d80b14559704ebc50599fa72bfbd3677280f2c4b7b902bacedb884cf&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Acepta pasivamente puntos de vista/ideas/opiniones alternativas.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="wQLmfKOtvG1qQzovWrea" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;wQLmfKOtvG1qQzovWrea&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Redirigir la atenci\u00f3n hacia un terreno com\u00fan, hacia la tarea en cuesti\u00f3n (lejos del conflicto).&quot;},&quot;descripcion&quot;:&quot;Redirigir la atenci\u00f3n hacia un terreno com\u00fan, hacia la tarea en cuesti\u00f3n (lejos del conflicto).&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:106,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:106,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;9f6f313f87d28a4f65142d3716ba0fc5e663901951a57585a6f5e65f62dd33f8&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Redirigir la atención hacia un terreno común, hacia la tarea en cuestión (lejos del conflicto).</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="ebhqnpN1JhAQexIhw392" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;ebhqnpN1JhAQexIhw392&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Identifica y reconoce el conflicto y se mantiene comprometido con \u00e9l.&quot;},&quot;descripcion&quot;:&quot;Identifica y reconoce el conflicto y se mantiene comprometido con \u00e9l.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:107,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:107,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;c49fbfdbb69117d14f8760c384d6d27ccc68eac00c0d64179e7e4bd60d82e56e&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Identifica y reconoce el conflicto y se mantiene comprometido con él.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                                    <!-- <th wire:id="SCbD329rCDLIR6T2wXMI" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;SCbD329rCDLIR6T2wXMI&quot;,&quot;name&quot;:&quot;criterio-component&quot;,&quot;locale&quot;:&quot;es&quot;,&quot;url&quot;:&quot;http:\/\/127.0.0.1:8000\/misrubricas&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[&quot;refrescar&quot;]},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;6c50daf1&quot;,&quot;data&quot;:{&quot;criterio&quot;:{&quot;descripcion&quot;:&quot;Aborda los conflictos destructivos de forma directa y constructiva, ayudando a gestionarlos\/resolverlos de forma que se refuerce la cohesi\u00f3n general del equipo y la eficacia futura.&quot;},&quot;descripcion&quot;:&quot;Aborda los conflictos destructivos de forma directa y constructiva, ayudando a gestionarlos\/resolverlos de forma que se refuerce la cohesi\u00f3n general del equipo y la eficacia futura.&quot;,&quot;descripcion_avanzada&quot;:null,&quot;id_criterio&quot;:108,&quot;criterio_avanzado&quot;:false,&quot;deshabilitado&quot;:0},&quot;dataMeta&quot;:{&quot;models&quot;:{&quot;criterio&quot;:{&quot;class&quot;:&quot;App\\Models\\Criterio&quot;,&quot;id&quot;:108,&quot;relations&quot;:[],&quot;connection&quot;:&quot;mysql&quot;}}},&quot;checksum&quot;:&quot;cbdecd17835e7092af137d0ef3156e0c82c4fbe527c9dd8d90fb7d7bb9d85f34&quot;}}" >
+            <div>
+                            <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="criterio.descripcion" rows="10" cols="40" required></textarea>
+                    </div>
+        <div>
+            </div>
+    <div class="form-check">
+        
+        <input class="form-check-input" type="checkbox" id="blankCheckbox" value="1" wire:loading.attr="disabled" wire:model="deshabilitado" style="margin-top:6px">
+        <small >Deshabilitar</small>
+    </div>
+</th>
+ -->
+                            <th >
+                                                                    <div style="width:170px">
+                                                                                    <small style="white-space: pre-line;">Aborda los conflictos destructivos de forma directa y constructiva, ayudando a gestionarlos/resolverlos de forma que se refuerce la cohesión general del equipo y la eficacia futura.</small>
+                                                                            </div>
+                                                                <div>
+                                                                    </div>
+                            </th>
+
+                                            </tr>
+                            </tbody>
+            </table>
+        <br>
+    
+</div>
