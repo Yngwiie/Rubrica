@@ -87,6 +87,9 @@ class ShowRubricas extends Component
             'plantilla' => FALSE,
             'id_usuario' => Auth::user()->id,
             'id_evaluacion' => $this->id_evaluacion,
+            'escala_notas' => $rubrica->escala_notas,
+            'nota_aprobativa' => $rubrica->nota_aprobativa,
+            'tipo_puntaje' => $rubrica->tipo_puntaje,
         ]);
         $dimensiones = Dimension::where('id_rubrica',$rubrica->id)->get();
         foreach($dimensiones as $dimension){

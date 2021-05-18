@@ -716,6 +716,174 @@ class DatabaseSeeder extends Seeder
             'id_aspecto' => $aspecto2->id,
             'id_nivel' => $nivel4->id,
         ]);
+
+
+        /**
+         * Rúbrica 5
+         * 
+         * Comunicación Escrita
+         */
+        $rubrica1 = Rubrica::create([
+            'titulo' => "Comunicación escrita",
+            'descripcion' => "La comunicación escrita es el desarrollo y expresión de ideas por escrito. La comunicación escrita implica aprender a trabajar en muchos géneros y estilos. Puede implicar trabajar con muchas tecnologías de escritura diferentes y mezclar textos, datos e imágenes. Las habilidades de comunicación escrita se desarrollan a través de experiencias iterativas en todo el plan de estudios.",
+            'plantilla' => TRUE,
+        ]);
+        $dimension1 = Dimension::create([
+            'nombre' => 'Escritura',
+            'id_rubrica' => $rubrica1->id,
+            'porcentaje' => 100,
+        ]);
+        $nivel1 = NivelDesempeno::create([
+            'nombre' => 'Necesita mejorar',
+            'ordenJerarquico' => 1,
+            'id_dimension' => $dimension1->id,
+            'puntaje' => 1,
+        ]);
+        $nivel2 = NivelDesempeno::create([
+            'nombre' => 'En desarrollo',
+            'ordenJerarquico' => 2,
+            'id_dimension' => $dimension1->id,
+            'puntaje' => 2,
+        ]);
+        $nivel3 = NivelDesempeno::create([
+            'nombre' => 'Suficiente',
+            'ordenJerarquico' => 3,
+            'id_dimension' => $dimension1->id,
+            'puntaje' => 3,
+        ]);
+        $nivel4 = NivelDesempeno::create([
+            'nombre' => 'Superior al promedio',
+            'ordenJerarquico' => 4,
+            'id_dimension' => $dimension1->id,
+            'puntaje' => 4,
+        ]);
+        $aspecto1 = Aspecto::create([
+            'nombre' => 'Contexto y propósito de la escritura',
+            'id_dimension' => $dimension1->id,
+            'porcentaje' => 20,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Demuestra una mínima atención al contexto, la audiencia, el propósito y la(s) tarea(s) asignada(s) (por ejemplo, expectativa de instructor o de sí mismo como público).',
+            'id_aspecto' => $aspecto1->id,
+            'id_nivel' => $nivel1->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Demuestra ser consciente del contexto, de la audiencia, del propósito y de las tareas asignadas (por ejemplo, comienza a mostrar conciencia de las percepciones y suposiciones de la audiencia).',
+            'id_aspecto' => $aspecto1->id,
+            'id_nivel' => $nivel2->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Demuestra una adecuada consideración del contexto, la audiencia y el propósito, y un enfoque claro en la(s) tarea(s) asignada(s) (por ejemplo la tarea se ajusta a la audiencia, el propósito y el contexto).',
+            'id_aspecto' => $aspecto1->id,
+            'id_nivel' => $nivel3->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Demuestra una profunda comprensión del contexto, la audiencia y el propósito que responde a la(s) tarea(s) asignada(s) y enfoca todos los elementos del trabajo.',
+            'id_aspecto' => $aspecto1->id,
+            'id_nivel' => $nivel4->id,
+        ]);
+        $aspecto2 = Aspecto::create([
+            'nombre' => 'Desarrollo de contenidos.',
+            'id_dimension' => $dimension1->id,
+            'porcentaje' => 20,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Utiliza contenidos adecuados y relevantes para desarrollar ideas sencillas en algunas partes del trabajo.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel1->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Utiliza contenidos adecuados y relevantes para desarrollar y explorar ideas en la mayor parte del trabajo..',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel2->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Utiliza contenidos apropiados, pertinentes y convincentes para explorar ideas en el contexto de la disciplina y dar forma al trabajo completo.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel3->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Utiliza un contenido apropiado, relevante y convincente para ilustrar el dominio del tema, transmitiendo la comprensión del escritor y dando forma al trabajo completo.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel4->id,
+        ]);
+        $aspecto2 = Aspecto::create([
+            'nombre' => 'Formato y convenciones disciplinares.',
+            'id_dimension' => $dimension1->id,
+            'porcentaje' => 20,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Intenta utilizar un sistema coherente de organización y presentación básica.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel1->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Sigue las expectativas apropiadas para una disciplina específica y/o tarea(s) de escritura para la organización básica, el contenido y la presentación.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel2->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Demuestra un uso coherente de las convenciones importantes propias de una disciplina específica y/o de la(s) tarea(s) de escritura, incluyendo la organización, el contenido, la presentación y las elecciones estilísticas.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel3->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Demuestra una atención detallada y una ejecución satisfactoria de una amplia gama de convenciones propias de una disciplina específica y/o de una(s) tarea(s) de escritura, incluyendo la organización, el contenido, la presentación, el formato y las opciones estilísticas.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel4->id,
+        ]);
+
+        $aspecto2 = Aspecto::create([
+            'nombre' => 'Fuentes y pruebas.',
+            'id_dimension' => $dimension1->id,
+            'porcentaje' => 20,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Demuestra un intento de utilizar fuentes para apoyar las ideas en el escrito.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel1->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Demuestra un intento de utilizar fuentes creíbles y/o relevantes para apoyar ideas que son apropiadas para la disciplina y el género del escrito.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel2->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Demuestra el uso consistente de fuentes creíbles y relevantes para apoyar ideas que se situadas dentro de la disciplina y el género del escrito.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel3->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Demuestra un uso hábil de fuentes de alta calidad, creíbles y relevantes para desarrollar ideas que son apropiadas para la disciplina y el género del escrito',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel4->id,
+        ]);
+
+        $aspecto2 = Aspecto::create([
+            'nombre' => 'Control de la sintaxis y la mecánica de escritura.',
+            'id_dimension' => $dimension1->id,
+            'porcentaje' => 20,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Utiliza un lenguaje que a veces impide el significado debido a errores de uso',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel1->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Utiliza un lenguaje que generalmente transmite el significado a los lectores con claridad, aunque la escritura puede incluir algunos errores.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel2->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Utiliza un lenguaje directo que generalmente transmite el significado a los lectores. El lenguaje del portafolio tiene pocos errores.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel3->id,
+        ]);
+        Criterio::create([
+            'descripcion' => 'Utiliza un lenguaje elegante que comunica hábilmente el significado a los lectores con claridad y fluidez, y está prácticamente libre de errores.',
+            'id_aspecto' => $aspecto2->id,
+            'id_nivel' => $nivel4->id,
+        ]);
        
     }
 }

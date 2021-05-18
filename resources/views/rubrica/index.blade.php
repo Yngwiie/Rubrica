@@ -9,8 +9,8 @@
                     
                     <div class="card-body">
                         <h4 class="card-title"><strong><i class="fas fa-wrench"></i> Desde cero</strong></h4>
-                        <p class="card-text">Elaborar su rúbrica desde cero, definiendo todos los componentes
-                            a su gusto.</p>
+                        <p class="card-text">Elaborar una rúbrica desde cero, definiendo todos los componentes
+                            como se estime conveniente.</p>
                     </div>
                     <div class="card-footer text-right">
                         <a  href="{{route('rubric.cero')}}"class="btn btn-md btn-secondary">Continuar</a>
@@ -20,7 +20,7 @@
                     <img class="card-img-top" src="{{asset('images/template.png')}}" alt="Card image cap">
                     <div class="card-body">
                         <h4 class="card-title"><strong><i class="fas fa-wrench"></i> A partir de una plantilla</strong></h4>
-                        <p class="card-text">Elabore su rúbrica a partir de una plantilla predefinida, la cual podra
+                        <p class="card-text">Elaborar una rúbrica a partir de una plantilla predefinida, la cual podrá
                             modificar a su gusto.
                         </p>
                     </div>

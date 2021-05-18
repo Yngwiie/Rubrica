@@ -112,13 +112,17 @@
                             <input type="file"  id="customFile" wire:model="fileImport"/>
                         </div>
                         
-                        @error('fileImport') <span class="error text-danger">{{ $message }}</span> @enderror
+                        <!-- @error('fileImport') <span class="error text-danger">{{ $message }}</span> @enderror -->
                     </form>
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
+                                    @if($error == "El campo file import es obligatorio.")
+                                        <li>El archivo es obligatorio.</li>
+                                    @else
+                                        <li>{{ $error }}</li>
+                                    @endif
                                     @if($loop->index == 3)
                                         @break
                                     @endif
@@ -131,6 +135,13 @@
                         <div class="d-flex justify-content-center">
                             <strong>Importando estudiantes...</strong>
                         </div>
+                        <div class="d-flex justify-content-center">
+                            
+                            <x-loading-md></x-loading-md>
+                        </div>
+                </div>
+
+                <div wire:loading wire:target="descargarPlantillaImport">
                         <div class="d-flex justify-content-center">
                             
                             <x-loading-md></x-loading-md>
