@@ -40,10 +40,6 @@ class Estudiantes extends Component
     }
     public function render()
     {
-        /* $searchTerm = '%'.$this->searchTerm.'%';
-        $estudiantes = $this->modulo->estudiantes()->where('nombre','LIKE',$searchTerm)
-                                                   ->orderBy('modulo_estudiantes.id','desc')
-                                                   ->paginate(10); */
         
         $estudiantes = Modulo_estudiante::where('id_modulo','=',$this->id_modulo)
                                         ->whereHas('estudiante',function($q){
