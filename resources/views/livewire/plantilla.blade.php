@@ -47,6 +47,15 @@
                                 {{$evaluacion->modulo->nombre}}</option>
                         @endforeach
                     </select>
+                    <div class="form-row ml-1 mt-3">
+                        <div class="form-group">
+                            <label style="font-size:small" for="inputAddressLine2">Si no posee evaluaciones:</label>
+                            <label style="color:red"> </label>
+                            
+                            <a style="font-size:small" class="btn btn-outline-secondary" href="{{route('dashboard')}}"><i class="far fa-lg fa-plus-square"></i> Agregar Evaluaciones</a>
+                        </div>
+                    
+                    </div>
                     <div class="form-row">
                             @error('id_evaluacion') <small class="error text-danger">{{ $message }}</small> @enderror  
                     </div> 

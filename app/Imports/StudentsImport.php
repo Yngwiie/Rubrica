@@ -6,7 +6,7 @@ use App\Models\Estudiante;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-use App\Models\Modulo_estudiante;
+use App\Models\modulo_estudiante;
 use App\Models\estudiante_evaluacion;
 use App\Models\Evaluacion;
 

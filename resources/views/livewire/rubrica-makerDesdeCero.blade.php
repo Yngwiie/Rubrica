@@ -48,7 +48,13 @@
                                         @error('id_evaluacion') <span class="error text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-
+                                </div>
+                                <div class="col-sm-4">
+                                    <label style="font-size:small" for="inputAddressLine2">Si no posee evaluaciones:</label>
+                                    <label style="color:red"> </label>
+                                    <div class="form-group mt-1">
+                                        <a style="font-size:small" class="btn btn-outline-secondary" href="{{route('dashboard')}}"><i class="far fa-lg fa-plus-square"></i> Agregar Evaluaciones</a>
+                                    </div>
                                 </div>
                             </div>
 
