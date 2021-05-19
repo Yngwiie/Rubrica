@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Estudiante;
-use App\Models\Rubrica;
 use App\Models\RubricaAplicada;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Pagination\Paginator;
@@ -18,11 +17,16 @@ class EstudianteRubricasAplicadas extends Component
 
     public function render()
     {
-        $searchTerm = '%'.$this->searchTerm.'%';
+        
         $estudiante = Estudiante::where('email',Auth::user()->email)->first();
-        $rubricas = RubricaAplicada::where('id_estudiante',$estudiante->id)->where('titulo','LIKE',$searchTerm)
+        if($estudiante == null){
+            $rubricas = null;
+        }else{
+            $searchTerm = '%'.$this->searchTerm.'%';
+            $rubricas = RubricaAplicada::where('id_estudiante',$estudiante->id)->where('titulo','LIKE',$searchTerm)
                                                                            ->orderBy('id','DESC')
                                                                            ->paginate(10);
+        }
         return view('livewire.estudiante-rubricas-aplicadas',['rubricas' => $rubricas]);
     }
 

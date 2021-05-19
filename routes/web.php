@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\http\LiveWire\Modulos;
-use App\http\LiveWire\Show_modulo;
-use App\http\LiveWire\RubricaMakerDesdeCero;
-use App\http\LiveWire\ShowRubricas;
-use App\http\LiveWire\RubricaMakerEdit;
+use App\Http\Livewire\Modulos;
+use App\Http\Livewire\Show_modulo;
+use App\Http\Livewire\RubricaMakerDesdeCero;
+use App\Http\Livewire\ShowRubricas;
+use App\Http\Livewire\RubricaMakerEdit;
 use App\Http\Controllers\ControladorRubricas;
 use App\Http\Livewire\EstadisticasRubrica;
 use App\Http\Livewire\EstudianteRubricasAplicadas;
@@ -15,7 +15,6 @@ use App\Http\Livewire\RevisionRubrica;
 use App\Http\Livewire\RubricaAplicando;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
-use App\Models\Rubrica;
 
 /*
 |--------------------------------------------------------------------------

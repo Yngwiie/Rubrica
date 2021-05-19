@@ -4,8 +4,6 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Criterio;
-use App\Models\Aspecto;
-use phpDocumentor\Reflection\PseudoTypes\False_;
 
 class CriterioComponent extends Component
 {

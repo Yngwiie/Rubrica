@@ -2,17 +2,12 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Aspecto;
-use App\Models\Criterio;
-use App\Models\Dimension;
 use App\Models\Estudiante;
 use App\Models\estudiante_evaluacion;
-use App\Models\NivelDesempeno;
 use App\Models\Rubrica;
 use App\Models\RubricaAplicada;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Illuminate\Support\Facades\DB;
 
 class RubricaAplicando extends Component
 {
