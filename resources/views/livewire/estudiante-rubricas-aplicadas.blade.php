@@ -21,17 +21,18 @@
                         <input type="text" class="form-control" placeholder="Buscar por título..." wire:model="searchTerm" />
                     </div>
                 </div>
-
-
-                <table style="margin-top:10px" class="table table-responsive-md table-striped table-hover">
-                    <thead class="thead-secondary">
-                        <tr>
-                            <th scope="col">Título</th>
-                            <th scope="col">Evaluación</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    @if($rubricas == null)
+                            <h3>Sin rúbricas asociadas.</h3>
+                    @else
+                        <table style="margin-top:10px" class="table table-responsive-md table-striped table-hover">
+                            <thead class="thead-secondary">
+                                <tr>
+                                    <th scope="col">Título</th>
+                                    <th scope="col">Evaluación</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             @foreach($rubricas as $rubrica)
                                 <tr>
                                     <td><i class="far fa-lg fa-list-alt"></i> {{$rubrica->titulo}}</td>
@@ -43,9 +44,12 @@
                                     </td>
                                 </tr>
                             @endforeach
-                    </tbody>
-                </table>
-                {{ $rubricas->onEachSide(1)->links('vendor.pagination.tailwind') }}
+                            {{ $rubricas->onEachSide(1)->links('vendor.pagination.tailwind') }}
+                            </tbody>
+                        </table>
+                    @endif
+                    
+                
             </div>
 
         </div>

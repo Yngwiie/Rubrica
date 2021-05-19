@@ -5,9 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Evaluacion;
 use App\Models\Modulo;
-use App\Models\Estudiante;
 use App\Models\estudiante_evaluacion;
-use App\Models\modulo_estudiante;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
 

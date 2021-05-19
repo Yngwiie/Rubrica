@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Dimension;
 use App\Models\Aspecto;
 
 class AspectoComponent extends Component

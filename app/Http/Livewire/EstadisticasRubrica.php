@@ -8,11 +8,9 @@ use App\Models\Evaluacion;
 use App\Models\modulo_estudiante;
 use App\Models\RubricaAplicada;
 use Livewire\Component;
-use Asantibanez\LivewireCharts\Facades\LivewireCharts;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Asantibanez\LivewireCharts\Models\PieChartModel;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\URL;
 
 class EstadisticasRubrica extends Component
 {

@@ -8,7 +8,6 @@ use App\Models\Dimension;
 use App\Models\Aspecto;
 use App\Models\NivelDesempeno;
 use App\Models\Criterio;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class RubricaMakerEdit extends Component

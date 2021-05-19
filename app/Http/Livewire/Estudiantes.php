@@ -7,7 +7,7 @@ use Livewire\Component;
 use App\Models\Estudiante;
 use App\Models\estudiante_evaluacion;
 use App\Models\Evaluacion;
-use App\Models\Modulo_estudiante;
+use App\Models\modulo_estudiante;
 use App\Models\Modulo;
 use Illuminate\Pagination\Paginator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -29,7 +29,7 @@ class Estudiantes extends Component
     public $currentPage = 1;
     public $fileImport;
 
-
+    
     public function mount($id_modulo){
         $this->id_modulo = $id_modulo;
         $this->modulo = Modulo::find($id_modulo);
