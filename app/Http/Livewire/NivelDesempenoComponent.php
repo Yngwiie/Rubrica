@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\NivelDesempeno;
 use App\Models\Rubrica;
-use App\Models\Dimension;
 
 class NivelDesempenoComponent extends Component
 {
