@@ -828,5 +828,6 @@ class CriterioComponent extends Component
         $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
         $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
         $this->criterio->deshabilitado = $this->deshabilitado;
+        $this->criterio->save();
     }
 }
