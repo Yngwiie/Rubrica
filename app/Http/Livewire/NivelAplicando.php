@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\NivelDesempeno;
-use App\Models\Rubrica;
 use App\Models\RubricaAplicada;
 use Livewire\Component;
 

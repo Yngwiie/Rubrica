@@ -811,14 +811,13 @@ class CriterioComponent extends Component
         $this->criterio->save();
     }
 
-    public function porcentajeChange($index){
+    public function porcentajeChange($index){ 
         $this->emit('updatePorcentajeSubcriterio'.$this->criterio->id_aspecto,$index,$this->descripcion_avanzada[$index]->porcentaje);
-        
     }
 
     public function updatePorcentajeSubcriterio($index,$porcentaje){
-        if($this->descripcion_avanzada[$index]->porcentaje != $porcentaje){
-            $this->descripcion_avanzada[$index]->porcentaje = $porcentaje;
+        if($this->descripcion_avanzada[$index]['porcentaje'] != $porcentaje){
+            $this->descripcion_avanzada[$index]['porcentaje'] = $porcentaje;
 
             $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
             $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
@@ -826,6 +825,8 @@ class CriterioComponent extends Component
             $this->criterio->deshabilitado = $this->deshabilitado;
             $this->criterio->save();
         }
-        
+        $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+        $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+        $this->criterio->deshabilitado = $this->deshabilitado;
     }
 }
