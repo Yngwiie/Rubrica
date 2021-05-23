@@ -15,6 +15,7 @@ class CriterioComponent extends Component
     public $criterio_avanzado;
     public $deshabilitado;
     public $id_subcriterio;
+    public $desc_antigua;
 
     protected $rules = [
         'criterio.descripcion' => 'required|string',
@@ -35,7 +36,7 @@ class CriterioComponent extends Component
     }
     protected function getListeners()
     {
-        return ['updated_2'.$this->criterio->id_aspecto => 'updated_2',
+        return ['criterio_updated'.$this->criterio->id_aspecto => 'criterio_updated',
                 'removeSubCriteria'.$this->criterio->id_aspecto => 'removeSubCriteria',
                 'updatePorcentajeSubcriterio'.$this->criterio->id_aspecto => 'updatePorcentajeSubcriterio',
                 'setIdSubcriterio'.$this->criterio->id => 'setIdSubcriterio'];
@@ -52,7 +53,6 @@ class CriterioComponent extends Component
     {
 
         unset($this->descripcion_avanzada[$index]);
-        $this->descripcion_avanzada = array_values($this->descripcion_avanzada);
         $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
         $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
         
@@ -78,24 +78,51 @@ class CriterioComponent extends Component
         $this->updated();
     }
     public function updatedIdSubcriterio(){
-        $this->resetErrorBag();
-        if($this->criterio_avanzado){
-            $desc_antigua = $this->criterio->descripcion_avanzada;
+      /*   $this->emit('updatePorcentajeSubcriterio'.$this->criterio->id_aspecto,$this->id_subcriterio,$this->descripcion_avanzada[$this->id_subcriterio]->porcentaje); */
+        
+    }
+    public function updated()
+    {
+        if(!$this->criterio_avanzado){
+            $this->validate();
+            $this->criterio->deshabilitado = $this->deshabilitado;
+            $this->criterio->save();
+        }else{
             
+            $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+            $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+            $this->criterio->deshabilitado = $this->deshabilitado;
+            $this->criterio->save();
             $criterios = Criterio::where('id_aspecto',$this->criterio->id_aspecto)
                                  ->where('deshabilitado',0)
                                  ->get();
             $desc_avanzada_primera = json_decode($this->criterio->descripcion_avanzada);
-            foreach($desc_avanzada_primera as $descripcion){
-                $this->id_subcriterio = $descripcion->id;
+            //copiar porcentaje en el resto de niveles.
+            foreach($desc_avanzada_primera as $val => $descripcion){
+                foreach($criterios as $key => $criterio){
+                    /* if($key!=0){ */
+                        $desc_avanzada_aux = json_decode($criterio->descripcion_avanzada);
+                        $desc_avanzada_aux[$val]->porcentaje = $desc_avanzada_primera[$val]->porcentaje;
+                        $desc_avanzada_aux[$val]->text = $desc_avanzada_primera[$val]->text;
+                        $criterio->descripcion_avanzada = json_encode($desc_avanzada_aux);
+                        $criterio->save();
+                        
+                    /* } */
+                }
+            }
+            $desc_antigua = $this->criterio->descripcion_avanzada;
+            /* $this->emit('refrescar'); */
+            //realizar las validaciones en todos los subcriterios.
+            foreach($desc_avanzada_primera as $key => $descripcion){
+                $this->id_subcriterio = $key;
                 $magnitud_inicial = 0;
                 $magnitud_inicial_mayor = 100;
                 foreach($criterios as $key => $criterio){
                     $desc_avanzada = json_decode($criterio->descripcion_avanzada);
-    
-                    foreach($desc_avanzada as $descripcion){
+                    
+                    foreach($desc_avanzada as $val => $descripcion){
                         
-                        if($descripcion->id == $this->id_subcriterio){
+                        if($val == $this->id_subcriterio){
                             if($descripcion->magnitud == "porcentaje1"){
                                 if($descripcion->porcentaje_magnitud == ""){
                                     $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
@@ -163,7 +190,7 @@ class CriterioComponent extends Component
                                 }else{
                                     $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
                                 }
-                             }elseif($descripcion->magnitud == "frecuencia"){//para validar los subcriterios de tipo frecuencia.
+                             }elseif($descripcion->magnitud == "frecuencia"){//para validar los subcriterios de tipo frecuencia.                        
                                 $criterio_anterior = Criterio::where('id_aspecto',$this->criterio->id_aspecto)
                                                 ->where('id','<',$criterio->id)
                                                 ->where('deshabilitado',0)
@@ -171,8 +198,7 @@ class CriterioComponent extends Component
                                 $criterio_posterior = Criterio::where('id_aspecto',$this->criterio->id_aspecto)
                                                 ->where('id','>',$criterio->id)
                                                 ->where('deshabilitado',0)
-                                                ->orderBy('id','asc')->first();
-                                
+                                                ->orderBy('id','asc')->first();                              
                                 if($criterio_anterior==null){
                                     $desc_avanzada_posterior = json_decode($criterio_posterior->descripcion_avanzada);
                                     if($descripcion->frecuencia == "Nunca"){
@@ -252,12 +278,14 @@ class CriterioComponent extends Component
                                         if($desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Siempre" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Usualmente"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Generalmente" ){
                                             $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            /* dd($desc_avanzada_anterior[$this->id_subcriterio]->frecuencia."1"); */
         
                                         }
                                     }elseif($descripcion->frecuencia == "A menudo"){
                                         if($desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Siempre" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Usualmente"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Generalmente" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A menudo" ){
                                             $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            /* dd($desc_avanzada_anterior[$this->id_subcriterio]->frecuencia."2"); */
         
                                         }
                                     }elseif($descripcion->frecuencia == "A veces"){
@@ -377,127 +405,36 @@ class CriterioComponent extends Component
                 
                 }
             }
+
             if($this->getErrorBag()->isNotEmpty()){
+                $this->emit('criterio_updated'.$this->criterio->id_aspecto);
                 return;
             }
-            $this->emit('updated_2'.$this->criterio->id_aspecto);
+
+            /* $this->criterio->descripcion_avanzada = $this->desc_antigua; */
+            $this->emit('criterio_updated'.$this->criterio->id_aspecto);
+            $this->resetErrorBag();
             
         }  
     }
-    public function updated()
+    public function criterio_updated()
     {
+        
         if(!$this->criterio_avanzado){
             $this->validate();
             $this->criterio->deshabilitado = $this->deshabilitado;
             $this->criterio->save();
         }else{
-            $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-            $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
-            $this->criterio->deshabilitado = $this->deshabilitado;
-        }
-        /* else{
-            $magnitud_inicial = 0;
-            $magnitud_inicial_mayor = 100;
-            $desc_antigua = $this->criterio->descripcion_avanzada;
-            $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-            $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
-            $this->criterio->deshabilitado = $this->deshabilitado;
-            $this->criterio->save();
-            $criterios = Criterio::where('id_aspecto',$this->criterio->id_aspecto)
-                                 ->where('deshabilitado',0)
-                                 ->get();;
-            foreach($criterios as $key => $criterio){
-                $desc_avanzada = json_decode($criterio->descripcion_avanzada);
-
-                foreach($desc_avanzada as $descripcion){
-                    if($descripcion->id == $this->id_subcriterio){
-                        if($descripcion->magnitud == "porcentaje1"){
-                            if($descripcion->porcentaje_magnitud == ""){
-                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
-                                $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                $this->criterio->descripcion_avanzada = $desc_antigua;
-                                $this->criterio->save();
-                                return;
-                            }
-                            if($magnitud_inicial <= $descripcion->porcentaje_magnitud){
-                                $magnitud_inicial = $descripcion->porcentaje_magnitud;
-                            }else{//On error case I do a rollback.
-                                $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
-                            }
-                        }elseif($descripcion->magnitud == "escala"){
-                            if($descripcion->escala_magnitud == ""){
-                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
-                                $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                $this->criterio->descripcion_avanzada = $desc_antigua;
-                                $this->criterio->save();
-                                return;
-                            }
-                            if($magnitud_inicial <= $descripcion->escala_magnitud){
-                                $magnitud_inicial = $descripcion->escala_magnitud;
-                            }else{//On error case I do a rollback.
-                                $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
-                            }
-                        }elseif($descripcion->magnitud == "porcentaje2"){
-                            if($descripcion->porcentaje_magnitud == ""){
-                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
-                                $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                $this->criterio->descripcion_avanzada = $desc_antigua;
-                                $this->criterio->save();
-                                return;
-                            }
-                            if($magnitud_inicial_mayor >= $descripcion->porcentaje_magnitud){
-                                $magnitud_inicial_mayor = $descripcion->porcentaje_magnitud;
-                            }else{//On error case I do a rollback.
-                                $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
-                            }
-                        }elseif($descripcion->magnitud == "rango_asc"){
-                            if($descripcion->valor_min == "" or $descripcion->valor_max == ""){
-                                $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                $this->criterio->descripcion_avanzada = $desc_antigua;
-                                $this->criterio->save();
-                                return;
-                            }
-                            if($descripcion->valor_min > $descripcion->valor_max){
-                                $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
-                                $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' no estan en orden. 
-                                                                El valor mín. no puede ser mayor a '.$descripcion->valor_max);
-                                $this->criterio->descripcion_avanzada = $desc_antigua;
-                                $this->criterio->save();
-                                return;
-                            }
-
-                            if($key == 0){
-                                $magnitud_inicial=$descripcion->valor_max;
-                            }elseif($magnitud_inicial <= $descripcion->valor_min){
-                                $magnitud_inicial = $descripcion->valor_max;
-                            }else{
-                                $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
-                            }
-                         }
-                        break;
-                    }
-                }
-            
+            /* if($this->criterio);
+            dd(Criterio::find($this->criterio->id)); */
+            $this->criterio = Criterio::find($this->criterio->id);
+            $desc_aux = json_decode($this->criterio->descripcion_avanzada);
+            $this->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+            $this->descripcion_avanzada = json_decode($this->descripcion_avanzada);
+            foreach($this->descripcion_avanzada as $key => $desc){
+                $this->descripcion_avanzada[$key]->porcentaje = $desc_aux[$key]->porcentaje;
+                $this->descripcion_avanzada[$key]->text = $desc_aux[$key]->text;
             }
-            $this->emit('updated_2'.$this->criterio->id_aspecto);
-            $this->resetErrorBag();
-        }      */ 
-        
-        
-    }
-    public function updated_2()
-    {
-        
-        if(!$this->criterio_avanzado){
-            $this->validate();
-            $this->criterio->deshabilitado = $this->deshabilitado;
-            $this->criterio->save();
-        }else{
-            $this->resetErrorBag();
             $desc_antigua = $this->criterio->descripcion_avanzada;
             $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
             $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
@@ -507,71 +444,88 @@ class CriterioComponent extends Component
                                  ->where('deshabilitado',0)
                                  ->get();
             $desc_avanzada_primera = json_decode($this->criterio->descripcion_avanzada);
-            foreach($desc_avanzada_primera as $descripcion){
-                $this->id_subcriterio = $descripcion->id;
+            /* if($this->id_subcriterio!=-1){
+                $suma_porcentajes = 0;
+                if($this->descripcion_avanzada[$this->id_subcriterio]->porcentaje==""){
+                    $this->addError("subcriterios_porcentajes".$this->id_subcriterio,"El porcentaje es obligatorio.");
+                }
+                foreach ($this->descripcion_avanzada as $key => $desc) {
+                    $suma_porcentajes+=$desc->porcentaje;
+                }
+                
+                if($suma_porcentajes>100){
+                    $resta = $suma_porcentajes-100;
+                    $this->addError("subcriterios_porcentajes".$this->id_subcriterio,"Los porcentajes de los subcriterios sobrepasan el 100% en ".$resta."%.");
+                }elseif($suma_porcentajes<100){
+                    $resta = 100-$suma_porcentajes;
+                    $this->addError("subcriterios_porcentajes".$this->id_subcriterio,"Los porcentajes de los subcriterios no suman el 100%, falta ".$resta."%");
+                }
+            } */
+            foreach($desc_avanzada_primera as $key => $descripcion){
+                $this->id_subcriterio = $key;
                 $magnitud_inicial = 0;
                 $magnitud_inicial_mayor = 100;
                 foreach($criterios as $key =>   $criterio){
                     $desc_avanzada = json_decode($criterio->descripcion_avanzada);
-                    foreach($desc_avanzada as $descripcion){
-                        if($descripcion->id == $this->id_subcriterio){
+                    foreach($desc_avanzada as $val => $descripcion){
+                        if($val == $this->id_subcriterio){
                             if($descripcion->magnitud == "porcentaje1"){
                                 if($descripcion->porcentaje_magnitud == ""){
-                                    $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                    /* $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada); */
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                    $this->criterio->descripcion_avanzada = $desc_antigua;
-                                    $this->criterio->save();
+                                    /* $this->criterio->descripcion_avanzada = $desc_antigua;
+                                    $this->criterio->save(); */
                                     
                                 }
                                 if($magnitud_inicial <= $descripcion->porcentaje_magnitud){
                                     $magnitud_inicial = $descripcion->porcentaje_magnitud;
                                 }else{//On error case I do a rollback.
-                                    $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                    $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                     
                                 }
                             }elseif($descripcion->magnitud == "escala"){
                                 if($descripcion->escala_magnitud == ""){
-                                    $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                    /* $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada); */
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                    $this->criterio->descripcion_avanzada = $desc_antigua;
-                                    $this->criterio->save();
+                                    /* $this->criterio->descripcion_avanzada = $desc_antigua;
+                                    $this->criterio->save(); */
                                     
                                 }
                                 if($magnitud_inicial <= $descripcion->escala_magnitud){
                                     $magnitud_inicial = $descripcion->escala_magnitud;
                                 }else{//On error case I do a rollback.
-                                    $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                    $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                     
                                 }
                             }elseif($descripcion->magnitud == "porcentaje2"){
                                 if($descripcion->porcentaje_magnitud == ""){
-                                    $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                    /* $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada); */
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                    $this->criterio->descripcion_avanzada = $desc_antigua;
-                                    $this->criterio->save();
+                                    /* $this->criterio->descripcion_avanzada = $desc_antigua;
+                                    $this->criterio->save(); */
                                     
                                 }
                                 if($magnitud_inicial_mayor >= $descripcion->porcentaje_magnitud){
                                     $magnitud_inicial_mayor = $descripcion->porcentaje_magnitud;
                                 }else{//On error case I do a rollback.
-                                    $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                    $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                     
                                 }
                             }elseif($descripcion->magnitud == "rango_asc"){
                                 if($descripcion->valor_min == "" or $descripcion->valor_max == ""){
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                    $this->criterio->descripcion_avanzada = $desc_antigua;
-                                    $this->criterio->save();
+                                    /* $this->criterio->descripcion_avanzada = $desc_antigua;
+                                    $this->criterio->save(); */
                                     
                                 }
                                 if($descripcion->valor_min > $descripcion->valor_max){
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' no estan en orden. 
                                                                     El valor mín. no puede ser mayor a '.$descripcion->valor_max);
-                                    $this->criterio->descripcion_avanzada = $desc_antigua;
-                                    $this->criterio->save();
+                                    /* $this->criterio->descripcion_avanzada = $desc_antigua;
+                                    $this->criterio->save(); */
                                     
                                 }
                                 
@@ -580,7 +534,7 @@ class CriterioComponent extends Component
                                 }elseif($magnitud_inicial <= $descripcion->valor_min){
                                     $magnitud_inicial = $descripcion->valor_max;
                                 }else{
-                                    $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                    $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                     
                                 }
                             }elseif($descripcion->magnitud == "frecuencia"){
@@ -597,53 +551,53 @@ class CriterioComponent extends Component
                                     $desc_avanzada_posterior = json_decode($criterio_posterior->descripcion_avanzada);
                                     if($descripcion->frecuencia == "Nunca"){
                                         if($desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca"){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Casi nunca"){
                                         
                                         if($desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca" ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Ocasionalmente"){
                                         if($desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "A veces"){
                                         if($desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A veces" ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "A menudo"){
                                         if($desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A veces"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A menudo"  ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "A menudo"){
                                         if($desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A veces"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A menudo"  ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Generalmente"){
                                         if($desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A veces"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A menudo"  ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Usualmente"){
                                         if($desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A veces"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A menudo" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Usualmente"  ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Siempre"){
@@ -651,7 +605,7 @@ class CriterioComponent extends Component
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A veces"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A menudo" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Usualmente"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Siempre"){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }
@@ -660,38 +614,38 @@ class CriterioComponent extends Component
                                     $desc_avanzada_anterior = json_decode($criterio_anterior->descripcion_avanzada);
                                     if($descripcion->frecuencia == "Siempre"){
                                         if($desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Siempre"){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Usualmente"){
                                         if($desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Siempre" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Usualmente" ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Generalmente"){
                                         if($desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Siempre" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Usualmente"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Generalmente" ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "A menudo"){
                                         if($desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Siempre" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Usualmente"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Generalmente" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A menudo" ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "A veces"){
                                         if($desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Siempre" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Usualmente"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Generalmente" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A menudo"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A veces"  ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Ocasionalmente"){
                                         if($desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Siempre" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Usualmente"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Generalmente" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A menudo"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A veces" or  $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente"){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Casi nunca"){
@@ -699,7 +653,7 @@ class CriterioComponent extends Component
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Generalmente" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A menudo"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A veces" or  $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Casi nunca"){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Nunca"){
@@ -707,7 +661,7 @@ class CriterioComponent extends Component
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Generalmente" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A menudo"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A veces" or  $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Casi nunca" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Nunca" ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }
@@ -720,7 +674,7 @@ class CriterioComponent extends Component
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A veces"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A menudo" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Generalmente"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Usualmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Siempre"){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Usualmente"){
@@ -729,7 +683,7 @@ class CriterioComponent extends Component
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A veces"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A menudo" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Generalmente"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Usualmente"){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Generalmente"){
@@ -737,7 +691,7 @@ class CriterioComponent extends Component
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Generalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A veces"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A menudo" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Generalmente" ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "A menudo"){
@@ -746,7 +700,7 @@ class CriterioComponent extends Component
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A veces"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A menudo" ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "A veces"){
@@ -754,7 +708,7 @@ class CriterioComponent extends Component
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Generalmente" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A menudo"
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "A veces" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "A veces" ){
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Ocasionalmente"){
@@ -764,7 +718,7 @@ class CriterioComponent extends Component
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Ocasionalmente"){
                                                 
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Casi nunca"){
@@ -774,7 +728,7 @@ class CriterioComponent extends Component
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Casi nunca" or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca" 
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Casi nunca"){
 
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }elseif($descripcion->frecuencia == "Nunca"){
@@ -784,7 +738,7 @@ class CriterioComponent extends Component
                                             or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Casi nunca" or $desc_avanzada_anterior[$this->id_subcriterio]->frecuencia == "Nunca"
                                             or $desc_avanzada_posterior[$this->id_subcriterio]->frecuencia == "Nunca"){
                                                 
-                                            $this->returnErrorInfoMagnitude($descripcion->id,$desc_antigua);
+                                            $this->returnErrorInfoMagnitudeWithoutSave($descripcion->id,$desc_antigua);
                                             
                                         }
                                     }
@@ -799,35 +753,68 @@ class CriterioComponent extends Component
             if($this->getErrorBag()->isNotEmpty()){
                 return;
             }
+            $this->resetErrorBag();
         }
         
     }
 
     public function returnErrorInfoMagnitude($id_subcriterio,$desc_antigua){
-        $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-        $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+        $this->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+        $this->descripcion_avanzada = json_decode($this->descripcion_avanzada);
         $this->addError('subcriterio'.$id_subcriterio, 'Magnitudes de los subcriterios ID#'.$id_subcriterio.' no estan en orden.');
         $this->criterio->descripcion_avanzada = $desc_antigua;
         $this->criterio->save();
     }
 
+    public function returnErrorInfoMagnitudeWithoutSave($id_subcriterio,$desc_antigua){
+        /* $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+        $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada); */
+        $this->addError('subcriterio'.$id_subcriterio, 'Magnitudes de los subcriterios ID#'.$id_subcriterio.' no estan en orden.');
+        /* $this->criterio->descripcion_avanzada = $desc_antigua;
+        $this->criterio->save(); */
+    }
     public function porcentajeChange($index){ 
-        $this->emit('updatePorcentajeSubcriterio'.$this->criterio->id_aspecto,$index,$this->descripcion_avanzada[$index]->porcentaje);
+        /* $this->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+        $this->descripcion_avanzada = json_decode($this->descripcion_avanzada);
+        $this->criterio->deshabilitado = $this->deshabilitado; */
+        /* $suma_porcentajes = 0;
+        if($this->descripcion_avanzada[$index]->porcentaje==""){
+            $this->addError("subcriterios_porcentajes".$index,"El porcentaje es obligatorio.");
+            return;
+        }
+        foreach ($this->descripcion_avanzada as $key => $desc) {
+            $suma_porcentajes+=$desc->porcentaje;
+        }
+        
+        if($suma_porcentajes>100){
+            $resta = $suma_porcentajes-100;
+            $this->addError("subcriterios_porcentajes".$index,"Los porcentajes de los subcriterios sobrepasan el 100% en ".$resta."%.");
+            return;
+        }elseif($suma_porcentajes<100){
+            $resta = 100-$suma_porcentajes;
+            $this->addError("subcriterios_porcentajes".$index,"Los porcentajes de los subcriterios no suman el 100%, falta ".$resta."%");
+            return;
+        } */
+        
+        /* $this->emit('updatePorcentajeSubcriterio'.$this->criterio->id_aspecto,$index,$this->descripcion_avanzada[$index]->porcentaje); */
+
     }
 
     public function updatePorcentajeSubcriterio($index,$porcentaje){
-        if($this->descripcion_avanzada[$index]['porcentaje'] != $porcentaje){
-            $this->descripcion_avanzada[$index]['porcentaje'] = $porcentaje;
+        $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+        $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+        $this->criterio->deshabilitado = $this->deshabilitado;
+        $this->criterio->save();
+        if($this->descripcion_avanzada[$index]->porcentaje != $porcentaje){
+            $this->descripcion_avanzada[$index]->porcentaje = $porcentaje;
 
             $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
             $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
             
             $this->criterio->deshabilitado = $this->deshabilitado;
             $this->criterio->save();
+            /* $this->updated(); */
         }
-        $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-        $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
-        $this->criterio->deshabilitado = $this->deshabilitado;
-        $this->criterio->save();
+       
     }
 }

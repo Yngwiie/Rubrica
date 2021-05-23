@@ -485,6 +485,9 @@ class RubricaMakerEdit extends Component
             break;
         }
         $this->porcentaje_restante = 100-$suma_porcentajes;
+        /* if($this->porcentaje_restante<0){
+            $this->porcentaje_restante
+        } */
         $this->emit('addScroll');
     }
 
