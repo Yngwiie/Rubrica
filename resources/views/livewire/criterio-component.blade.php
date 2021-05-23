@@ -14,8 +14,8 @@
                         <small style="font-size:11px"> <b>ID#{{$desc->id}}</b></small>
                         <div class="form-row mb-1">
                             @if($desc->magnitud == "porcentaje1")
-                                <div class="w-41">
-                                    <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                <div class="col-8">
+                                    <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
                                 <!-- <div class="col-3">
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
@@ -29,7 +29,7 @@
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                                     <div class="row">
                                         <div class="col-sm-9">
-                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;margin-left:-5px" wire:change="$set('id_subcriterio',{{$desc->id}})" class="p-1 form-control col-12 @error('subcriterio'.$desc->id) is-invalid @enderror" min="1" max="100" wire:model="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
+                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;margin-left:-5px" class="p-1 form-control col-12 @error('subcriterio'.$desc->id) is-invalid @enderror" min="1" max="100" wire:model="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
                                         </div>
                                         <div class="w-3" style="margin-left:-13px" >
                                             <small>%</small> 
@@ -43,25 +43,25 @@
                                     </div>
                                 </div>
                             @elseif($desc->magnitud == "escala")
-                                <div class="w-41">
-                                    <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                <div class="w-8">
+                                    <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
                                 
                                 <div class="col-3">
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
-                                    <input title="Magnitud que se aplica el subcriterio"  style="font-size:small;margin-left:-5px" wire:change="$set('id_subcriterio',{{$desc->id}})" class="p-1 form-control col-12 @error('subcriterio'.$desc->id) is-invalid @enderror" min="1" max="100" wire:model="descripcion_avanzada.{{$loop->index}}.escala_magnitud" type="number">
+                                    <input title="Magnitud que se aplica el subcriterio"  style="font-size:small;margin-left:-5px" class="p-1 form-control col-12 @error('subcriterio'.$desc->id) is-invalid @enderror" min="1" max="100" wire:model="descripcion_avanzada.{{$loop->index}}.escala_magnitud" type="number">
                                 </div>
                             @elseif($desc->magnitud == "porcentaje2")
-                                <div class="w-41">
-                                    <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                <div class="col-8">
+                                    <textarea style="font-size:small" rows="3" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
                                 <div class="col-4" >
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                                     <div class="row">
                                         <div class="col-sm-9">
-                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;margin-left:-5px" wire:change="$set('id_subcriterio',{{$desc->id}})" class="p-1 form-control col-12 @error('subcriterio'.$desc->id) is-invalid @enderror"   min="1" max="100" wire:model="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
+                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;" class="p-1 form-control col-12 @error('subcriterio'.$desc->id) is-invalid @enderror"   min="1" max="100" wire:model="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
                                         </div>
-                                        <div class="w-3" style="margin-left:-13px" >
+                                        <div class="w-3" style="margin-left:-10px" >
                                             <small>%</small> 
                                         </div>
                                     </div>
@@ -73,18 +73,18 @@
                                     </div>
                                 </div>
                             @elseif($desc->magnitud == "rango_asc")
-                                <div class="w-41">
-                                    <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                <div class="col-8">
+                                    <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
                                 
-                                <div class="col-4" style="margin-top:-4px">
+                                <div class="col-4" style="margin-top:-4px;margin-left:-5px">
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                                     <div class="row">
                                         <div class="col-sm-1">
                                             <small>mín.</small>
                                         </div>
                                         <div class="col-sm-9">
-                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;padding: 1px;" wire:change="$set('id_subcriterio',{{$desc->id}})"
+                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;padding: 1px;" wire:change="$set('id_subcriterio',{{$loop->index}})"
                                              class="form-control form-control-sm @error('subcriterio'.$desc->id) is-invalid @enderror" min="1" max="100" wire:model="descripcion_avanzada.{{$loop->index}}.valor_min" type="number">
                                         </div>
                                     </div>
@@ -94,7 +94,7 @@
                                             <small>máx.</small>
                                         </div>
                                         <div class="col-sm-9">
-                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;padding: 1px;" wire:change="$set('id_subcriterio',{{$desc->id}})" 
+                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;padding: 1px;" wire:change="$set('id_subcriterio',{{$loop->index}})" 
                                             class="form-control form-control-sm @error('subcriterio'.$desc->id) is-invalid @enderror" min="1" max="100" wire:model="descripcion_avanzada.{{$loop->index}}.valor_max" type="number">
                                         </div>
                                     </div>
@@ -107,7 +107,7 @@
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                         
                                     <select style="font-size:small;" title="Magnitud que se aplica el subcriterio" 
-                                    class="form-control p-1 @error('subcriterio'.$desc->id) is-invalid @enderror" wire:change="$set('id_subcriterio',{{$desc->id}})"  name="frecuencias" wire:model="descripcion_avanzada.{{$loop->index}}.frecuencia">
+                                    class="form-control p-1 @error('subcriterio'.$desc->id) is-invalid @enderror" name="frecuencias" wire:model="descripcion_avanzada.{{$loop->index}}.frecuencia">
                                         <option wire:ignore value="Nunca">1.- Nunca</option>
                                         <option wire:ignore value="Casi nunca">2.- Casi nunca</option>
                                         <option wire:ignore value="Ocasionalmente">3.- Ocasionalmente</option>
@@ -142,23 +142,22 @@
                                 </div>
                             @endif
                         </div>
-                        <div>
-                            @error('subcriterio'.$desc->id) <small class="error text-danger"><b>{{ $message }}</b></small> @enderror
-                        </div>
+                        @error('subcriterio'.$desc->id)
+                            <div class="alert-danger p-1 rounded border-danger" style="width:94%">
+                                <small class="error text-danger"><b>{{ $message }}</b></small> 
+                            </div>
+                        @enderror
+                        @if($criterio->aspecto->criterios->first()->id == $criterio->id)
+                            <div>
+                                @error('subcriterios_porcentajes'.$desc->id) <small class="error text-warning"><b>{{ $message }}</b></small> @enderror
+                            </div>
+                        @endif
                         @if($loop->index != (count($descripcion_avanzada)-1))
                             <hr class="bg-dark">
                         @endif
                         </li>
-                        
                     @endforeach
-                    <div>
-                        @error('subcriterio') <small class="error text-danger"><b>{{ $message }}</b></small> @enderror
-                    </div>
-                    @if($criterio->aspecto->criterios->first()->id == $criterio->id)
-                        <div>
-                            @error('porcentaje_subcriterio') <small class="error text-danger"><b>{{ $message }}</b></small> @enderror
-                        </div>
-                    @endif
+                    
                 </ul>
             @else
                 <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model.lazy="criterio.descripcion" rows="10" cols="40" required></textarea>
