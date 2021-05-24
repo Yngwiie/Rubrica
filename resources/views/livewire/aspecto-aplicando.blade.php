@@ -59,20 +59,22 @@
                                     <select class="form-control" required name="id_evaluacion" wire:model="aplicados.{{$loop->index}}.id_criterio">
                                         <option hidden selected>Selecciona una opción</option>
                                         @foreach($criterios as $criterio)
-                                            @if(json_decode($criterio->descripcion_avanzada)[$key]->magnitud == "porcentaje1")
-                                                <option value="{{$criterio->id}}">{{json_decode($criterio->descripcion_avanzada)[$key]->porcentaje_magnitud}}%</option>
-                                            @endif
-                                            @if(json_decode($criterio->descripcion_avanzada)[$key]->magnitud == "escala")
-                                                <option value="{{$criterio->id}}">{{json_decode($criterio->descripcion_avanzada)[$key]->escala_magnitud}}</option>
-                                            @endif
-                                            @if(json_decode($criterio->descripcion_avanzada)[$key]->magnitud == "porcentaje2")
-                                                <option value="{{$criterio->id}}">{{json_decode($criterio->descripcion_avanzada)[$key]->porcentaje_magnitud}}%</option>
-                                            @endif
-                                            @if(json_decode($criterio->descripcion_avanzada)[$key]->magnitud == "rango_asc")
-                                                <option value="{{$criterio->id}}">[{{json_decode($criterio->descripcion_avanzada)[$key]->valor_min}}->{{json_decode($criterio->descripcion_avanzada)[$key]->valor_max}}]</option>
-                                            @endif
-                                            @if(json_decode($criterio->descripcion_avanzada)[$key]->magnitud == "frecuencia")
-                                                <option value="{{$criterio->id}}">{{json_decode($criterio->descripcion_avanzada)[$key]->frecuencia}}</option>
+                                            @if($criterio->deshabilitado != true)
+                                                @if(json_decode($criterio->descripcion_avanzada)[$key]->magnitud == "porcentaje1")
+                                                    <option value="{{$criterio->id}}">{{json_decode($criterio->descripcion_avanzada)[$key]->porcentaje_magnitud}}%</option>
+                                                @endif
+                                                @if(json_decode($criterio->descripcion_avanzada)[$key]->magnitud == "escala")
+                                                    <option value="{{$criterio->id}}">{{json_decode($criterio->descripcion_avanzada)[$key]->escala_magnitud}}</option>
+                                                @endif
+                                                @if(json_decode($criterio->descripcion_avanzada)[$key]->magnitud == "porcentaje2")
+                                                    <option value="{{$criterio->id}}">{{json_decode($criterio->descripcion_avanzada)[$key]->porcentaje_magnitud}}%</option>
+                                                @endif
+                                                @if(json_decode($criterio->descripcion_avanzada)[$key]->magnitud == "rango_asc")
+                                                    <option value="{{$criterio->id}}">[{{json_decode($criterio->descripcion_avanzada)[$key]->valor_min}}->{{json_decode($criterio->descripcion_avanzada)[$key]->valor_max}}]</option>
+                                                @endif
+                                                @if(json_decode($criterio->descripcion_avanzada)[$key]->magnitud == "frecuencia")
+                                                    <option value="{{$criterio->id}}">{{json_decode($criterio->descripcion_avanzada)[$key]->frecuencia}}</option>
+                                                @endif
                                             @endif
                                         @endforeach
                                     </select>

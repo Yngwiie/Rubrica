@@ -257,24 +257,28 @@ class RubricaMakerEdit extends Component
         $num_niveles = NivelDesempeno::where('id_dimension','=',$this->id_dim)->count();
         $niveles = NivelDesempeno::where('id_dimension','=',$this->id_dim)->get();
 
+        $array_0 = [0,100];
         $array_1 = [40,70,100];
         $array_2 = [20,50,70,100];
         $array_3 = [20,40,60,80,100];
         $array_4 = [10,30,50,70,90,100];
         $array_5 = [0,15,30,45,70,85,100];
 
+        $array_escala_0 = [0,1];
         $array_escala_1 = [1,2,3];
         $array_escala_2 = [1,2,3,4];
         $array_escala_3 = [1,2,3,4,5];
         $array_escala_4 = [1,2,3,4,5,6];
         $array_escala_5 = [1,2,3,4,5,6,7];
 
+        $array_descendiente_0 = [100,0];
         $array_descendiente_1 = [100,70,40];
         $array_descendiente_2 = [100,70,50,20];
         $array_descendiente_3 = [100,80,60,40,20];
         $array_descendiente_4 = [100,90,70,50,30,10];
         $array_descendiente_5 = [100,85,70,45,30,15,0];
 
+        $array_frecuencias_0 = ["Nunca","Siempre"];
         $array_frecuencias_1 = ["Casi nunca","A veces","Usualmente"];
         $array_frecuencias_2 = ["Casi nunca","Ocasionalmente","A menudo","Usualmente"];
         $array_frecuencias_3 = ["Casi nunca","Ocasionalmente","A menudo","Usualmente","Siempre"];
@@ -286,7 +290,9 @@ class RubricaMakerEdit extends Component
             foreach($this->sub_criterios as $subs){
                 $subs['id']=$z;
                 if($subs["magnitud"] == "porcentaje1"){
-                    if($num_niveles==3){
+                    if($num_niveles==2){
+                        $subs["porcentaje_magnitud"] = $array_0[$i];
+                    }elseif($num_niveles==3){
                         $subs["porcentaje_magnitud"] = $array_1[$i];
                     }elseif($num_niveles==4){
                         $subs["porcentaje_magnitud"] = $array_2[$i];
@@ -299,7 +305,9 @@ class RubricaMakerEdit extends Component
                     }
                 }
                 if($subs["magnitud"] == "escala"){
-                    if($num_niveles==3){
+                    if($num_niveles==2){
+                        $subs["escala_magnitud"] = $array_escala_0[$i];
+                    }elseif($num_niveles==3){
                         $subs["escala_magnitud"] = $array_escala_1[$i];
                     }elseif($num_niveles==4){
                         $subs["escala_magnitud"] = $array_escala_2[$i];
@@ -312,7 +320,9 @@ class RubricaMakerEdit extends Component
                     }
                 }
                 if($subs["magnitud"] == "porcentaje2"){
-                    if($num_niveles==3){
+                    if($num_niveles==2){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_0[$i];
+                    }elseif($num_niveles==3){
                         $subs["porcentaje_magnitud"] = $array_descendiente_1[$i];
                     }elseif($num_niveles==4){
                         $subs["porcentaje_magnitud"] = $array_descendiente_2[$i];
@@ -325,7 +335,10 @@ class RubricaMakerEdit extends Component
                     }
                 }
                 if($subs["magnitud"] == "rango_asc"){
-                    if($num_niveles==3){
+                    if($num_niveles==2){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }elseif($num_niveles==3){
                         $subs["valor_min"] = $i;
                         $subs["valor_max"] = $i+1;
                     }elseif($num_niveles==4){
@@ -343,9 +356,10 @@ class RubricaMakerEdit extends Component
                     }
                 }
                 if($subs["magnitud"] == "frecuencia"){
-                    if($num_niveles==3){
+                    if($num_niveles==2){
+                        $subs["frecuencia"] = $array_frecuencias_0[$i];
+                    }elseif($num_niveles==3){
                         $subs["frecuencia"] = $array_frecuencias_1[$i];
-                       /*  $subs["frecuencia_valor_numerico"] = $array_frecuencias_1[$i]; */
                     }elseif($num_niveles==4){
                         $subs["frecuencia"] = $array_frecuencias_2[$i];
                     }elseif($num_niveles==5){
@@ -502,24 +516,28 @@ class RubricaMakerEdit extends Component
         
         $num_niveles = NivelDesempeno::where('id_dimension','=',$aspecto->dimension->id)->count();
 
+        $array_0 = [0,100];
         $array_1 = [40,70,100];
         $array_2 = [20,50,70,100];
         $array_3 = [20,40,60,80,100];
         $array_4 = [10,30,50,70,90,100];
         $array_5 = [0,15,30,45,70,85,100];
-        
+
+        $array_escala_0 = [0,1];
         $array_escala_1 = [1,2,3];
         $array_escala_2 = [1,2,3,4];
         $array_escala_3 = [1,2,3,4,5];
         $array_escala_4 = [1,2,3,4,5,6];
         $array_escala_5 = [1,2,3,4,5,6,7];
 
+        $array_descendiente_0 = [100,0];
         $array_descendiente_1 = [100,70,40];
         $array_descendiente_2 = [100,70,50,20];
         $array_descendiente_3 = [100,80,60,40,20];
         $array_descendiente_4 = [100,90,70,50,30,10];
         $array_descendiente_5 = [100,85,70,45,30,15,0];
 
+        $array_frecuencias_0 = ["Nunca","Siempre"];
         $array_frecuencias_1 = ["Casi nunca","A veces","Usualmente"];
         $array_frecuencias_2 = ["Casi nunca","Ocasionalmente","A menudo","Usualmente"];
         $array_frecuencias_3 = ["Casi nunca","Ocasionalmente","A menudo","Usualmente","Siempre"];
@@ -534,7 +552,9 @@ class RubricaMakerEdit extends Component
                 $last_id+=1;
                 $subs["id"] = $last_id;
                 if($subs["magnitud"] == "porcentaje1"){
-                    if($num_niveles==3){
+                    if($num_niveles==2){
+                        $subs["porcentaje_magnitud"] = $array_0[$i];
+                    }elseif($num_niveles==3){
                         $subs["porcentaje_magnitud"] = $array_1[$i];
                     }elseif($num_niveles==4){
                         $subs["porcentaje_magnitud"] = $array_2[$i];
@@ -548,7 +568,9 @@ class RubricaMakerEdit extends Component
                     
                 }
                 if($subs["magnitud"] == "escala"){
-                    if($num_niveles==3){
+                    if($num_niveles==2){
+                        $subs["escala_magnitud"] = $array_escala_0[$i];
+                    }elseif($num_niveles==3){
                         $subs["escala_magnitud"] = $array_escala_1[$i];
                     }elseif($num_niveles==4){
                         $subs["escala_magnitud"] = $array_escala_2[$i];
@@ -561,7 +583,9 @@ class RubricaMakerEdit extends Component
                     }
                 }
                 if($subs["magnitud"] == "porcentaje2"){
-                    if($num_niveles==3){
+                    if($num_niveles==2){
+                        $subs["porcentaje_magnitud"] = $array_descendiente_0[$i];
+                    }elseif($num_niveles==3){
                         $subs["porcentaje_magnitud"] = $array_descendiente_1[$i];
                     }elseif($num_niveles==4){
                         $subs["porcentaje_magnitud"] = $array_descendiente_2[$i];
@@ -574,7 +598,10 @@ class RubricaMakerEdit extends Component
                     }
                 }
                 if($subs["magnitud"] == "rango_asc"){
-                    if($num_niveles==3){
+                    if($num_niveles==2){
+                        $subs["valor_min"] = $i;
+                        $subs["valor_max"] = $i+1;
+                    }elseif($num_niveles==3){
                         $subs["valor_min"] = $i;
                         $subs["valor_max"] = $i+1;
                     }elseif($num_niveles==4){
@@ -592,7 +619,9 @@ class RubricaMakerEdit extends Component
                     }
                 }
                 if($subs["magnitud"] == "frecuencia"){
-                    if($num_niveles==3){
+                    if($num_niveles==2){
+                        $subs["frecuencia"] = $array_frecuencias_0[$i];
+                    }elseif($num_niveles==3){
                         $subs["frecuencia"] = $array_frecuencias_1[$i];
                     }elseif($num_niveles==4){
                         $subs["frecuencia"] = $array_frecuencias_2[$i];

@@ -101,15 +101,19 @@ class CriterioComponent extends Component
             foreach($desc_avanzada_primera as $val => $descripcion){
                 foreach($criterios as $key => $criterio){
                     /* if($key!=0){ */
+                        
                         $desc_avanzada_aux = json_decode($criterio->descripcion_avanzada);
                         $desc_avanzada_aux[$val]->porcentaje = $desc_avanzada_primera[$val]->porcentaje;
-                        $desc_avanzada_aux[$val]->text = $desc_avanzada_primera[$val]->text;
+                        if($desc_avanzada_aux[$val]->magnitud != "none"){
+                            $desc_avanzada_aux[$val]->text = $desc_avanzada_primera[$val]->text;
+                        }
                         $criterio->descripcion_avanzada = json_encode($desc_avanzada_aux);
                         $criterio->save();
                         
                     /* } */
                 }
             }
+            
             $desc_antigua = $this->criterio->descripcion_avanzada;
             /* $this->emit('refrescar'); */
             //realizar las validaciones en todos los subcriterios.

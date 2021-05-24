@@ -14,30 +14,30 @@
                                         @if($desc->magnitud == "porcentaje1")
                                             <div class="w-41 ml-1">
                                                 <small>{{$desc->text}}</small>
-                                                <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                                <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
                                             </div>
                                     
                                         @elseif($desc->magnitud == "escala")
                                             <div class="w-41 ml-1">
                                                 <small>{{$desc->text}}</small>
-                                                <small>[Magnitud: {{$desc->escala_magnitud}}]</small>
+                                                <small><b>[Magnitud: {{$desc->escala_magnitud}}]</b></small>
                                             </div>
                                         @elseif($desc->magnitud == "porcentaje2")
                                             <div class="w-41 ml-1">
                                                 <small>{{$desc->text}}</small>
-                                                <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                                <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
                                             </div>
                                         @elseif($desc->magnitud == "rango_asc")
                                             <div class="w-41 ml-1">
                                                 <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
                                                 <small>{{$desc->text}}</small>
-                                                <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
+                                                <small><b>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</b></small>
                                             </div>
                                         @elseif($desc->magnitud == "frecuencia")
                                             <div class="w-41 ml-1">
                                                 <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
                                                 <small>{{$desc->text}}</small>
-                                                <small>[Magnitud: {{$desc->frecuencia}}]</small>
+                                                <small><b>[Magnitud: {{$desc->frecuencia}}]</b></small>
                                             </div>
                                         @else
                                             <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
@@ -59,30 +59,30 @@
                                     @if($desc->magnitud == "porcentaje1")
                                         <div class="w-41 ml-1">
                                             <small>{{$desc->text}}</small>
-                                            <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                            <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
                                         </div>
                                 
                                     @elseif($desc->magnitud == "escala")
                                         <div class="w-41 ml-1">
                                             <small>{{$desc->text}}</small>
-                                            <small>[Magnitud: {{$desc->escala_magnitud}}]</small>
+                                            <small><b>[Magnitud: {{$desc->escala_magnitud}}]</b></small>
                                         </div>
                                     @elseif($desc->magnitud == "porcentaje2")
                                         <div class="w-41 ml-1">
                                             <small>{{$desc->text}}</small>
-                                            <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                            <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
                                         </div>
                                     @elseif($desc->magnitud == "rango_asc")
                                         <div class="w-41">
                                             <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
                                             <small>{{$desc->text}}</small>
-                                            <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
+                                            <small><b>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</b></small>
                                         </div>
                                     @elseif($desc->magnitud == "frecuencia")
                                             <div class="w-41 ml-1">
                                                 <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
                                                 <small>{{$desc->text}}</small>
-                                                <small>[Magnitud: {{$desc->frecuencia}}]</small>
+                                                <small><b>[Magnitud: {{$desc->frecuencia}}]</b></small>
                                             </div>
                                     @else
                                         <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
@@ -143,24 +143,24 @@
                                         @if($desc->magnitud == "porcentaje1")
                                             <div class="w-41 ml-1">
                                                 <small>{{$desc->text}}</small>
-                                                <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                                <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
                                             </div>
                                     
                                         @elseif($desc->magnitud == "escala")
                                             <div class="w-41 ml-1">
                                                 <small>{{$desc->text}}</small>
-                                                <small>[Magnitud: {{$desc->escala_magnitud}}]</small>
+                                                <small><b>[Magnitud: {{$desc->escala_magnitud}}]</b></small>
                                             </div>
                                         @elseif($desc->magnitud == "porcentaje2")
                                             <div class="w-41 ml-1">
                                                 <small>{{$desc->text}}</small>
-                                                <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                                <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
                                             </div>
                                         @elseif($desc->magnitud == "rango_asc")
                                             <div class="w-41 ml-1">
                                                 <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
                                                 <small>{{$desc->text}}</small>
-                                                <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
+                                                <small><b>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</b></small>
                                             </div>
                                         @else
                                             <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
@@ -182,24 +182,24 @@
                                     @if($desc->magnitud == "porcentaje1")
                                         <div class="w-41 ml-1">
                                             <small>{{$desc->text}}</small>
-                                            <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                            <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
                                         </div>
                                 
                                     @elseif($desc->magnitud == "escala")
                                         <div class="w-41 ml-1">
                                             <small>{{$desc->text}}</small>
-                                            <small>[Magnitud: {{$desc->escala_magnitud}}]</small>
+                                            <small><b>[Magnitud: {{$desc->escala_magnitud}}]</b></small>
                                         </div>
                                     @elseif($desc->magnitud == "porcentaje2")
                                         <div class="w-41 ml-1">
                                             <small>{{$desc->text}}</small>
-                                            <small>[Magnitud: {{$desc->porcentaje_magnitud}}%]</small>
+                                            <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
                                         </div>
                                     @elseif($desc->magnitud == "rango_asc")
                                         <div class="w-41">
                                             <!-- <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
                                             <small>{{$desc->text}}</small>
-                                            <small>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</small>
+                                            <small><b>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</b></small>
                                         </div>
                                     @else
                                         <!-- <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea> -->
