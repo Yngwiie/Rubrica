@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                             @elseif($desc->magnitud == "escala")
-                                <div class="w-8">
+                                <div class="col-8">
                                     <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
                                 
@@ -53,15 +53,15 @@
                                 </div>
                             @elseif($desc->magnitud == "porcentaje2")
                                 <div class="col-8">
-                                    <textarea style="font-size:small" rows="3" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                    <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
                                 <div class="col-4" >
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                                     <div class="row">
                                         <div class="col-sm-9">
-                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;" class="p-1 form-control col-12 @error('subcriterio'.$desc->id) is-invalid @enderror"   min="1" max="100" wire:model="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
+                                            <input title="Magnitud que se aplica el subcriterio" style="font-size:small;margin-left:-5px" class="p-1 form-control col-12 @error('subcriterio'.$desc->id) is-invalid @enderror"   min="1" max="100" wire:model="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
                                         </div>
-                                        <div class="w-3" style="margin-left:-10px" >
+                                        <div class="w-3" style="margin-left:-13px" >
                                             <small>%</small> 
                                         </div>
                                     </div>
@@ -101,8 +101,6 @@
                                 </div>
                             @elseif($desc->magnitud == "frecuencia")
                                 <textarea style="font-size:small" class="form-control shadow ml-1" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
-
-                                
                                 <div class="col-8 mt-1">
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                         
@@ -126,11 +124,7 @@
                         <div class="form-row">
                             <div class="col-6">
                                 <div class="input-group mb-1">
-                                    @if($criterio->aspecto->criterios->first()->id == $criterio->id)
                                         <input title="Porcentaje de importancia del subcriterio." style="font-size:small" class="form-control" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje" wire:change="porcentajeChange({{$loop->index}})" type="number"/>
-                                    @else
-                                        <input title="Porcentaje de importancia del subcriterio." disabled style="font-size:small" class="form-control" min="1" max="100" value="{{$desc->porcentaje}}"  type="number"/>
-                                    @endif
                                     <div class="input-group-append">
                                         <span style="font-size:small" class="input-group-text">%</span>
                                     </div>
@@ -177,8 +171,8 @@
                         <small style="font-size:11px"> <b>ID#{{$desc->id}}</b></small>
                         <div class="form-row mb-1">
                             @if($desc->magnitud == "porcentaje1")
-                                <div class="w-41">
-                                    <textarea disabled style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
+                                <div class="col-8">
+                                    <textarea disabled style="font-size:small" class="form-control shadow">{{$desc->text}}</textarea>
                                 </div>
                                 
                                 <div class="col-4" >
@@ -199,7 +193,7 @@
                                     </div>
                                 </div>
                             @elseif($desc->magnitud == "escala")
-                                <div class="w-41">
+                                <div class="col-8">
                                     <textarea disabled style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
                                 
@@ -209,7 +203,7 @@
                                     
                                 </div>
                             @elseif($desc->magnitud == "porcentaje2")
-                                <div class="w-41">
+                                <div class="col-8">
                                     <textarea disabled style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
                                 
@@ -231,11 +225,11 @@
                                     </div>
                                 </div>
                             @elseif($desc->magnitud == "rango_asc")
-                                <div class="w-41">
+                                <div class="col-8">
                                     <textarea disabled style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
                                 
-                                <div class="col-4" style="margin-top:-4px">
+                                <div class="col-4" style="margin-top:-4px;;margin-left:-5px">
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                                     <div class="row">
                                         <div class="col-sm-1">
