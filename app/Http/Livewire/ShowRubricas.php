@@ -106,6 +106,8 @@ class ShowRubricas extends Component
                     'ordenJerarquico' => $nivel->ordenJerarquico,
                     'id_dimension' => $dim->id,
                     'puntaje' => $nivel->puntaje,
+                    'puntaje_minimo' => $nivel->puntaje_minimo,
+                    'puntaje_maximo' => $nivel->puntaje_maximo,
                 ]);
                 array_push($niveles_aux,$niv->id);
             }

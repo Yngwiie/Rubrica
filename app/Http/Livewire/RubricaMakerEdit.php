@@ -494,7 +494,12 @@ class RubricaMakerEdit extends Component
             
             $desc_avanzada = json_decode($criterio->descripcion_avanzada);
             foreach($desc_avanzada as $subs){
-                $suma_porcentajes+=$subs->porcentaje;
+                if($subs->porcentaje == ""){
+                    $suma_porcentajes+=0;
+                }else{
+                    $suma_porcentajes+=$subs->porcentaje;
+                }
+                
             }
             break;
         }
