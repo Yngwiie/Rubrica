@@ -1,6 +1,6 @@
 <tr style="background-color: #c9c9c9;">
 
-    <th >
+    <th style="border-top: 1px solid #8F9194;">
         <div class="row">
             <button class="btn btn-sm" style="color:red" data-toggle="modal" data-target="#deleteAspecto"
                 onclick="deleteAspecto({{$id_aspecto}})"><i class="fas fa-times"></i></button>
