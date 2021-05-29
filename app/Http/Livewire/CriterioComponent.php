@@ -77,10 +77,7 @@ class CriterioComponent extends Component
         array_push($this->descripcion_avanzada, ['text'=>"nuevo"]);
         $this->updated();
     }
-    public function updatedIdSubcriterio(){
-      /*   $this->emit('updatePorcentajeSubcriterio'.$this->criterio->id_aspecto,$this->id_subcriterio,$this->descripcion_avanzada[$this->id_subcriterio]->porcentaje); */
-        
-    }
+
     public function updated()
     {
         if(!$this->criterio_avanzado){
@@ -96,28 +93,34 @@ class CriterioComponent extends Component
             $criterios = Criterio::where('id_aspecto',$this->criterio->id_aspecto)
                                  ->where('deshabilitado',0)
                                  ->get();
-            $desc_avanzada_primera = json_decode($this->criterio->descripcion_avanzada);
-            //copiar porcentaje en el resto de niveles.
-            foreach($desc_avanzada_primera as $val => $descripcion){
-                foreach($criterios as $key => $criterio){
-                    /* if($key!=0){ */
+            $desc_avanzada_selected = json_decode($this->criterio->descripcion_avanzada);
+            $suma_porcentajes = 0;
+            
+            foreach($desc_avanzada_selected as $val => $descripcion){
+                $suma_porcentajes += $descripcion->porcentaje;
+                foreach($criterios as $key => $criterio){//copiar contenido en los demas criterios. Excepto si es un criterio sin magnitud.
                         
                         $desc_avanzada_aux = json_decode($criterio->descripcion_avanzada);
-                        $desc_avanzada_aux[$val]->porcentaje = $desc_avanzada_primera[$val]->porcentaje;
+                        $desc_avanzada_aux[$val]->porcentaje = $desc_avanzada_selected[$val]->porcentaje;
                         if($desc_avanzada_aux[$val]->magnitud != "none"){
-                            $desc_avanzada_aux[$val]->text = $desc_avanzada_primera[$val]->text;
+                            $desc_avanzada_aux[$val]->text = $desc_avanzada_selected[$val]->text;
                         }
                         $criterio->descripcion_avanzada = json_encode($desc_avanzada_aux);
                         $criterio->save();
                         
-                    /* } */
                 }
             }
-            
+            if($suma_porcentajes>100){
+                $resta = $suma_porcentajes-100;
+                $this->addError("subcriterios_porcentajes".$this->criterio->id,"Los porcentajes de los subcriterios sobrepasan el 100% en ".$resta."%.");
+            }elseif($suma_porcentajes<100){
+                $resta = 100-$suma_porcentajes;
+                $this->addError("subcriterios_porcentajes".$this->criterio->id,"Los porcentajes de los subcriterios no suman el 100%, falta ".$resta."%");
+            }
             $desc_antigua = $this->criterio->descripcion_avanzada;
             /* $this->emit('refrescar'); */
             //realizar las validaciones en todos los subcriterios.
-            foreach($desc_avanzada_primera as $key => $descripcion){
+            foreach($desc_avanzada_selected as $key => $descripcion){
                 $this->id_subcriterio = $key;
                 $magnitud_inicial = 0;
                 $magnitud_inicial_mayor = 100;
@@ -447,25 +450,20 @@ class CriterioComponent extends Component
             $criterios = Criterio::where('id_aspecto',$this->criterio->id_aspecto)
                                  ->where('deshabilitado',0)
                                  ->get();
-            $desc_avanzada_primera = json_decode($this->criterio->descripcion_avanzada);
-            /* if($this->id_subcriterio!=-1){
-                $suma_porcentajes = 0;
-                if($this->descripcion_avanzada[$this->id_subcriterio]->porcentaje==""){
-                    $this->addError("subcriterios_porcentajes".$this->id_subcriterio,"El porcentaje es obligatorio.");
-                }
-                foreach ($this->descripcion_avanzada as $key => $desc) {
-                    $suma_porcentajes+=$desc->porcentaje;
-                }
-                
-                if($suma_porcentajes>100){
-                    $resta = $suma_porcentajes-100;
-                    $this->addError("subcriterios_porcentajes".$this->id_subcriterio,"Los porcentajes de los subcriterios sobrepasan el 100% en ".$resta."%.");
-                }elseif($suma_porcentajes<100){
-                    $resta = 100-$suma_porcentajes;
-                    $this->addError("subcriterios_porcentajes".$this->id_subcriterio,"Los porcentajes de los subcriterios no suman el 100%, falta ".$resta."%");
-                }
-            } */
-            foreach($desc_avanzada_primera as $key => $descripcion){
+            $desc_avanzada_selected = json_decode($this->criterio->descripcion_avanzada);
+            $suma_porcentajes = 0;
+            
+            foreach($desc_avanzada_selected as $val => $descripcion){
+                $suma_porcentajes += $descripcion->porcentaje;
+            }
+            if($suma_porcentajes>100){
+                $resta = $suma_porcentajes-100;
+                $this->addError("subcriterios_porcentajes".$this->criterio->id,"Los porcentajes de los subcriterios sobrepasan el 100% en ".$resta."%.");
+            }elseif($suma_porcentajes<100){
+                $resta = 100-$suma_porcentajes;
+                $this->addError("subcriterios_porcentajes".$this->criterio->id,"Los porcentajes de los subcriterios no suman el 100%, falta ".$resta."%");
+            }
+            foreach($desc_avanzada_selected as $key => $descripcion){
                 $this->id_subcriterio = $key;
                 $magnitud_inicial = 0;
                 $magnitud_inicial_mayor = 100;

@@ -17,14 +17,7 @@
                                 <div class="col-8">
                                     <textarea style="font-size:small" class="form-control shadow" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.text"></textarea>
                                 </div>
-                                <!-- <div class="col-3">
-                                    <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
-                                    <input title="Magnitud que se aplica el sub-criterio" style="font-size:small;margin-left:-5px" onchange="setIdSubcriterio({{$criterio->id}},{{$desc->id}})" class="input col-12 " min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje_magnitud" type="number">
-                                    
-                                </div>
-                                <div class="w-3" style="margin-left:-7px" >
-                                    <small>%</small> 
-                                </div> -->
+
                                 <div class="col-4" >
                                     <input type="number" id="subcriterio{{$criterio->id.$desc->id}}" style="display:none" wire:model="id_subcriterio">
                                     <div class="row">
@@ -124,7 +117,7 @@
                         <div class="form-row">
                             <div class="col-6">
                                 <div class="input-group mb-1">
-                                        <input title="Porcentaje de importancia del subcriterio." style="font-size:small" class="form-control" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje" wire:change="porcentajeChange({{$loop->index}})" type="number"/>
+                                        <input title="Porcentaje de importancia del subcriterio." style="font-size:small" class="form-control @error('subcriterios_porcentajes'.$criterio->id) is-invalid @enderror" min="1" max="100" wire:model.lazy="descripcion_avanzada.{{$loop->index}}.porcentaje" wire:change="porcentajeChange({{$loop->index}})" type="number"/>
                                     <div class="input-group-append">
                                         <span style="font-size:small" class="input-group-text">%</span>
                                     </div>
@@ -138,13 +131,15 @@
                         </div>
                         @error('subcriterio'.$desc->id)
                             <div class="alert-danger p-1 rounded border-danger" style="width:94%">
-                                <small class="error text-danger"><b>{{ $message }}</b></small> 
+                                <small class="error text-danger"><b>- {{ $message }}</b></small> 
                             </div>
                         @enderror
                         @if($criterio->aspecto->criterios->first()->id == $criterio->id)
-                            <div>
-                                @error('subcriterios_porcentajes'.$desc->id) <small class="error text-warning"><b>{{ $message }}</b></small> @enderror
-                            </div>
+                            @error('subcriterios_porcentajes'.$criterio->id)
+                                <div class="alert-danger p-1 rounded border-danger" style="width:94%">
+                                    <small class="error text-danger"><b>- {{ $message }}</b></small> 
+                                </div>
+                            @enderror
                         @endif
                         @if($loop->index != (count($descripcion_avanzada)-1))
                             <hr class="bg-dark">
