@@ -43,10 +43,10 @@
                                         <a type="button" class="btn btn-sec" data-toggle="modal" data-target="#exportResultados" wire:click="setIdRubrica({{$rubrica->id}})" title="Exportar Resultados"><i class="fas fa-lg fa-file-download"></i></a>
                                     </td>
                                 </tr>
-                            @endforeach
-                            {{ $rubricas->onEachSide(1)->links('vendor.pagination.tailwind') }}
+                            @endforeach          
                             </tbody>
                         </table>
+                        {{ $rubricas->onEachSide(1)->links('vendor.pagination.tailwind') }}
                     @endif
                     
                 
