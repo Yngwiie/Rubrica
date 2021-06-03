@@ -244,7 +244,7 @@
                                 <tr>
                                     <td>{{$item['text']}}</td>
                                     <td>@if($item['magnitud']=="porcentaje1")
-                                        <p>Porcentajes [30%,60%,80%,etc.]</p>
+                                        <p>Porcentajes Ascendentes [30%,60%,80%,etc.]</p>
                                     @elseif($item['magnitud']=="escala")
                                         <p>Escala Numerica [1,2,3,4,etc.]</p>
                                     @elseif($item['magnitud']=="porcentaje2")
@@ -376,7 +376,7 @@
                                 <tr>
                                     <td>{{$item['text']}}</td>
                                     <td>@if($item['magnitud']=="porcentaje1")
-                                        <p>Porcentajes [30%,60%,80%,etc.]</p>
+                                        <p>Porcentajes Ascendentes [30%,60%,80%,etc.]</p>
                                     @elseif($item['magnitud']=="escala")
                                         <p>Escala Numerica [1,2,3,4,etc.]</p>
                                     @elseif($item['magnitud']=="porcentaje2")
