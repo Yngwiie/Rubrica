@@ -32,7 +32,7 @@ class Modulos extends Component
     public function store()
     {
         $validateData = $this->validate([
-            'nombre' => 'required|string|max:40',
+            'nombre' => 'required|string|max:100',
         ]);
 
         Modulo::create([
@@ -53,7 +53,7 @@ class Modulos extends Component
     public function update()
     {
         $validateData = $this->validate([
-            'nombre' => 'required|string|max:40',
+            'nombre' => 'required|string|max:100',
         ]);
         $data = Modulo::find($this->data_id);
         
