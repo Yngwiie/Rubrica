@@ -27,9 +27,11 @@ class CriterioComponent extends Component
         $this->descripcion = $criterio->descripcion;
         $this->id_criterio = $criterio->id;
         $this->deshabilitado = $criterio->deshabilitado;
-        $this->descripcion_avanzada = json_decode($criterio->descripcion_avanzada);
+        
+        $this->descripcion_avanzada = json_decode($criterio->descripcion_avanzada,true);
         if($criterio->descripcion==null){
             $this->criterio_avanzado = TRUE;
+            /* dd($this->descripcion_avanzada); */
         }else{
             $this->criterio_avanzado = FALSE;
         }
@@ -38,7 +40,6 @@ class CriterioComponent extends Component
     {
         return ['criterio_updated'.$this->criterio->id_aspecto => 'criterio_updated',
                 'removeSubCriteria'.$this->criterio->id_aspecto => 'removeSubCriteria',
-                'updatePorcentajeSubcriterio'.$this->criterio->id_aspecto => 'updatePorcentajeSubcriterio',
                 'setIdSubcriterio'.$this->criterio->id => 'setIdSubcriterio'];
     }
     public function render()
@@ -52,10 +53,11 @@ class CriterioComponent extends Component
     public function removeSubCriteria($index)
     {
 
-        unset($this->descripcion_avanzada[$index]);
-        $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-        $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
         
+        unset($this->descripcion_avanzada[$index]);
+        $this->descripcion_avanzada = array_values($this->descripcion_avanzada);
+        $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
+        $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada,true);
         $this->criterio->deshabilitado = $this->deshabilitado;
         $this->criterio->save();
         /* $this->updated(); */
@@ -69,14 +71,6 @@ class CriterioComponent extends Component
         
         $this->id_subcriterio = $id;
     }
-    /**
-     * Add sub criteria to array.
-     */
-    public function addSubcriteria()
-    {
-        array_push($this->descripcion_avanzada, ['text'=>"nuevo"]);
-        $this->updated();
-    }
 
     public function updated()
     {
@@ -87,29 +81,30 @@ class CriterioComponent extends Component
         }else{
             
             $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-            $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+            $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada,true);
             $this->criterio->deshabilitado = $this->deshabilitado;
             $this->criterio->save();
             $criterios = Criterio::where('id_aspecto',$this->criterio->id_aspecto)
-                                 ->where('deshabilitado',0)
                                  ->get();
-            $desc_avanzada_selected = json_decode($this->criterio->descripcion_avanzada);
+            $desc_avanzada_selected = json_decode($this->criterio->descripcion_avanzada,true);
             $suma_porcentajes = 0;
-            
             foreach($desc_avanzada_selected as $val => $descripcion){
-                $suma_porcentajes += $descripcion->porcentaje;
+                $suma_porcentajes += $descripcion['porcentaje'];
                 foreach($criterios as $key => $criterio){//copiar contenido en los demas criterios. Excepto si es un criterio sin magnitud.
                         
-                        $desc_avanzada_aux = json_decode($criterio->descripcion_avanzada);
-                        $desc_avanzada_aux[$val]->porcentaje = $desc_avanzada_selected[$val]->porcentaje;
-                        if($desc_avanzada_aux[$val]->magnitud != "none"){
-                            $desc_avanzada_aux[$val]->text = $desc_avanzada_selected[$val]->text;
+                        $desc_avanzada_aux = json_decode($criterio->descripcion_avanzada,true);
+                        $desc_avanzada_aux[$val]['porcentaje'] = $desc_avanzada_selected[$val]['porcentaje'];
+                        if($desc_avanzada_aux[$val]['magnitud'] != "none"){
+                            $desc_avanzada_aux[$val]['text'] = $desc_avanzada_selected[$val]['text'];
                         }
                         $criterio->descripcion_avanzada = json_encode($desc_avanzada_aux);
                         $criterio->save();
                         
                 }
             }
+            $criterios = Criterio::where('id_aspecto',$this->criterio->id_aspecto)
+                                 ->where('deshabilitado',0)
+                                 ->get();
             if($suma_porcentajes>100){
                 $resta = $suma_porcentajes-100;
                 $this->addError("subcriterios_porcentajes".$this->criterio->id,"Los porcentajes de los subcriterios sobrepasan el 100% en ".$resta."%.");
@@ -118,7 +113,7 @@ class CriterioComponent extends Component
                 $this->addError("subcriterios_porcentajes".$this->criterio->id,"Los porcentajes de los subcriterios no suman el 100%, falta ".$resta."%");
             }
             $desc_antigua = $this->criterio->descripcion_avanzada;
-            /* $this->emit('refrescar'); */
+
             //realizar las validaciones en todos los subcriterios.
             foreach($desc_avanzada_selected as $key => $descripcion){
                 $this->id_subcriterio = $key;
@@ -133,7 +128,7 @@ class CriterioComponent extends Component
                             if($descripcion->magnitud == "porcentaje1"){
                                 if($descripcion->porcentaje_magnitud == ""){
                                     $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada,true);
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
                                     $this->criterio->descripcion_avanzada = $desc_antigua;
                                     $this->criterio->save();
@@ -147,7 +142,7 @@ class CriterioComponent extends Component
                             }elseif($descripcion->magnitud == "escala"){
                                 if($descripcion->escala_magnitud == ""){
                                     $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada,true);
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
                                     $this->criterio->descripcion_avanzada = $desc_antigua;
                                     $this->criterio->save();
@@ -162,7 +157,7 @@ class CriterioComponent extends Component
                                 
                                 if($descripcion->porcentaje_magnitud == ""){
                                     $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada,true);
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
                                     $this->criterio->descripcion_avanzada = $desc_antigua;
                                     $this->criterio->save();
@@ -182,7 +177,7 @@ class CriterioComponent extends Component
                                 }
                                 if($descripcion->valor_min > $descripcion->valor_max){
                                     $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada,true);
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' no estan en orden. 
                                                                     El valor mín. no puede ser mayor a '.$descripcion->valor_max);
                                     $this->criterio->descripcion_avanzada = $desc_antigua;
@@ -432,19 +427,17 @@ class CriterioComponent extends Component
             $this->criterio->deshabilitado = $this->deshabilitado;
             $this->criterio->save();
         }else{
-            /* if($this->criterio);
-            dd(Criterio::find($this->criterio->id)); */
             $this->criterio = Criterio::find($this->criterio->id);
-            $desc_aux = json_decode($this->criterio->descripcion_avanzada);
+            $desc_aux = json_decode($this->criterio->descripcion_avanzada,true);
             $this->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-            $this->descripcion_avanzada = json_decode($this->descripcion_avanzada);
+            $this->descripcion_avanzada = json_decode($this->descripcion_avanzada,true);
             foreach($this->descripcion_avanzada as $key => $desc){
-                $this->descripcion_avanzada[$key]->porcentaje = $desc_aux[$key]->porcentaje;
-                $this->descripcion_avanzada[$key]->text = $desc_aux[$key]->text;
+                $this->descripcion_avanzada[$key]['porcentaje'] = $desc_aux[$key]['porcentaje'];
+                $this->descripcion_avanzada[$key]['text'] = $desc_aux[$key]['text'];
             }
             $desc_antigua = $this->criterio->descripcion_avanzada;
             $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-            $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
+            $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada,true);
             $this->criterio->deshabilitado = $this->deshabilitado;
             $this->criterio->save();
             $criterios = Criterio::where('id_aspecto',$this->criterio->id_aspecto)
@@ -473,11 +466,7 @@ class CriterioComponent extends Component
                         if($val == $this->id_subcriterio){
                             if($descripcion->magnitud == "porcentaje1"){
                                 if($descripcion->porcentaje_magnitud == ""){
-                                    /* $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada); */
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                    /* $this->criterio->descripcion_avanzada = $desc_antigua;
-                                    $this->criterio->save(); */
                                     
                                 }
                                 if($magnitud_inicial <= $descripcion->porcentaje_magnitud){
@@ -488,11 +477,7 @@ class CriterioComponent extends Component
                                 }
                             }elseif($descripcion->magnitud == "escala"){
                                 if($descripcion->escala_magnitud == ""){
-                                    /* $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada); */
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                    /* $this->criterio->descripcion_avanzada = $desc_antigua;
-                                    $this->criterio->save(); */
                                     
                                 }
                                 if($magnitud_inicial <= $descripcion->escala_magnitud){
@@ -503,11 +488,7 @@ class CriterioComponent extends Component
                                 }
                             }elseif($descripcion->magnitud == "porcentaje2"){
                                 if($descripcion->porcentaje_magnitud == ""){
-                                    /* $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-                                    $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada); */
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                    /* $this->criterio->descripcion_avanzada = $desc_antigua;
-                                    $this->criterio->save(); */
                                     
                                 }
                                 if($magnitud_inicial_mayor >= $descripcion->porcentaje_magnitud){
@@ -519,15 +500,12 @@ class CriterioComponent extends Component
                             }elseif($descripcion->magnitud == "rango_asc"){
                                 if($descripcion->valor_min == "" or $descripcion->valor_max == ""){
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' son obligatorias.');
-                                    /* $this->criterio->descripcion_avanzada = $desc_antigua;
-                                    $this->criterio->save(); */
+
                                     
                                 }
                                 if($descripcion->valor_min > $descripcion->valor_max){
                                     $this->addError('subcriterio'.$descripcion->id, 'Las magnitudes del subcriterio ID#'.$this->id_subcriterio.' no estan en orden. 
                                                                     El valor mín. no puede ser mayor a '.$descripcion->valor_max);
-                                    /* $this->criterio->descripcion_avanzada = $desc_antigua;
-                                    $this->criterio->save(); */
                                     
                                 }
                                 
@@ -762,61 +740,14 @@ class CriterioComponent extends Component
 
     public function returnErrorInfoMagnitude($id_subcriterio,$desc_antigua){
         $this->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-        $this->descripcion_avanzada = json_decode($this->descripcion_avanzada);
+        $this->descripcion_avanzada = json_decode($this->descripcion_avanzada,true);
         $this->addError('subcriterio'.$id_subcriterio, 'Magnitudes de los subcriterios ID#'.$id_subcriterio.' no estan en orden.');
         $this->criterio->descripcion_avanzada = $desc_antigua;
         $this->criterio->save();
     }
 
     public function returnErrorInfoMagnitudeWithoutSave($id_subcriterio,$desc_antigua){
-        /* $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-        $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada); */
         $this->addError('subcriterio'.$id_subcriterio, 'Magnitudes de los subcriterios ID#'.$id_subcriterio.' no estan en orden.');
-        /* $this->criterio->descripcion_avanzada = $desc_antigua;
-        $this->criterio->save(); */
-    }
-    public function porcentajeChange($index){ 
-        /* $this->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-        $this->descripcion_avanzada = json_decode($this->descripcion_avanzada);
-        $this->criterio->deshabilitado = $this->deshabilitado; */
-        /* $suma_porcentajes = 0;
-        if($this->descripcion_avanzada[$index]->porcentaje==""){
-            $this->addError("subcriterios_porcentajes".$index,"El porcentaje es obligatorio.");
-            return;
-        }
-        foreach ($this->descripcion_avanzada as $key => $desc) {
-            $suma_porcentajes+=$desc->porcentaje;
-        }
-        
-        if($suma_porcentajes>100){
-            $resta = $suma_porcentajes-100;
-            $this->addError("subcriterios_porcentajes".$index,"Los porcentajes de los subcriterios sobrepasan el 100% en ".$resta."%.");
-            return;
-        }elseif($suma_porcentajes<100){
-            $resta = 100-$suma_porcentajes;
-            $this->addError("subcriterios_porcentajes".$index,"Los porcentajes de los subcriterios no suman el 100%, falta ".$resta."%");
-            return;
-        } */
-        
-        /* $this->emit('updatePorcentajeSubcriterio'.$this->criterio->id_aspecto,$index,$this->descripcion_avanzada[$index]->porcentaje); */
-
     }
 
-    public function updatePorcentajeSubcriterio($index,$porcentaje){
-        $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-        $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
-        $this->criterio->deshabilitado = $this->deshabilitado;
-        $this->criterio->save();
-        if($this->descripcion_avanzada[$index]->porcentaje != $porcentaje){
-            $this->descripcion_avanzada[$index]->porcentaje = $porcentaje;
-
-            $this->criterio->descripcion_avanzada = json_encode($this->descripcion_avanzada);
-            $this->descripcion_avanzada = json_decode($this->criterio->descripcion_avanzada);
-            
-            $this->criterio->deshabilitado = $this->deshabilitado;
-            $this->criterio->save();
-            /* $this->updated(); */
-        }
-       
-    }
 }

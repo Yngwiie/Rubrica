@@ -29,12 +29,7 @@ class AspectoComponent extends Component
     {
         return view('livewire.aspecto-component');
     }
-    
-   /*  public function update(){
-        $this->validate();
-        $this->aspecto->save();
-        
-    } */
+
     public function updated()
     {
         $this->validate();

@@ -650,7 +650,7 @@ class RubricaMakerEdit extends Component
         }
         
         session()->flash('success','Subcriterio(s) agregado(s) con éxito.'); 
-        return redirect()->route('rubric.edit', $this->id_rubrica); 
+        return redirect()->route('rubric.edit', $this->id_rubrica);
     }
     
     public function newversion()
