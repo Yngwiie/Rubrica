@@ -64,7 +64,7 @@ class Estudiantes extends Component
     public function store()
     {
         $validateData = $this->validate([
-            'nombre' => 'required|string|max:40',
+            'nombre' => 'required|string|max:100',
             'apellido' => 'required',
             'email' => 'required|email'
         ]);
@@ -134,7 +134,7 @@ class Estudiantes extends Component
     public function update()
     {
         $validateData = $this->validate([
-            'nombre' => 'required|string|max:40',
+            'nombre' => 'required|string|max:100',
             'apellido' => 'required',
             'email' => 'required|email'
         ]);
