@@ -173,15 +173,19 @@ class RubricaMakerEdit extends Component
                 $porcentaje_total += $aspecto->porcentaje;
             }
             if($porcentaje_total>100){
-                $message .= '¡Cuidado!, Los aspectos de la dimension "'.$dimension->nombre.'" sobrepasa el 100% <br>';
+                $resta = $porcentaje_total - 100;
+                $message .= '¡Cuidado!, Los aspectos de la dimension "'.$dimension->nombre.'" sobrepasa el 100% en '.$resta.'% <br>';
             }elseif($porcentaje_total<100){
-                $message .= '¡Cuidado!, Los aspectos de la dimension "'.$dimension->nombre.'" no suman el 100% <br>';
+                $resta = 100 - $porcentaje_total;
+                $message .= '¡Cuidado!, Los aspectos de la dimension "'.$dimension->nombre.'" no suman el 100%, falta '.$resta.'% <br>';
             }
         }
         if($suma_porcentajes_dimensiones > 100){
-            $message .= '¡Cuidado!, Los porcentajes de las dimensiones de aspectos sobrepasan el 100% <br>';
+            $resta = $suma_porcentajes_dimensiones - 100;
+            $message .= '¡Cuidado!, Los porcentajes de las dimensiones de aspectos sobrepasan el 100% en '.$resta.'% <br>';
         }elseif($suma_porcentajes_dimensiones < 100){
-            $message .= '¡Cuidado!, Los porcentajes de las dimensiones de aspectos no suman el 100% <br>';
+            $resta = 100 - $suma_porcentajes_dimensiones;
+            $message .= '¡Cuidado!, Los porcentajes de las dimensiones de aspectos no suman el 100%, falta '.$resta.'% <br>';
         }
         if($message != ""){
             session()->flash('warning',$message); 
