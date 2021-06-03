@@ -52,7 +52,7 @@ class Show_modulo extends Component
     public function store()
     {
         $validateData = $this->validate([
-            'nombre' => 'required|string|max:40',
+            'nombre' => 'required|string|max:100',
             'fecha' => 'required',
         ]);
         
@@ -114,7 +114,7 @@ class Show_modulo extends Component
     public function update()
     {
         $validateData = $this->validate([
-            'nombre' => 'required|string|max:40',
+            'nombre' => 'required|string|max:100',
             'fecha' => 'required',
         ]);
         $data = Evaluacion::find($this->evaluacion_id);
