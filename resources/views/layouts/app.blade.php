@@ -93,15 +93,15 @@
                                 </a>
                                 <a class="nav-link" href="{{route('rubric.index')}}">
                                     <div class="sb-nav-link-icon"><i class="fas fa-wrench"></i></div>
-                                    Constructor de Rúbricas
+                                    Constructor de rúbricas
                                 </a>
                                 <a class="nav-link" href="{{route('misrubricas')}}">
                                     <div class="sb-nav-link-icon"><i class="far fa-list-alt"></i></div>
-                                    Mis Rúbricas
+                                    Mis rúbricas elaboradas
                                 </a>
                                 <a class="nav-link" href="{{route('rubricas.aplicadas')}}">
-                                    <div class="sb-nav-link-icon"><i class="far fa-list-alt"></i></div>
-                                    Rúbricas asociadas
+                                    <div class="sb-nav-link-icon"><i class="fas fa-id-badge"></i></div>
+                                    Rúbricas aplicadas asociadas
                                 </a>
                         </div>
                     </div>
