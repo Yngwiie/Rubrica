@@ -123,7 +123,7 @@
     @if($revision == 0)
         <th>
             <div class="row p-2">
-                <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model.lazy="aspecto.comentario" placeholder="Comentarios" 
+                <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="aspecto.comentario" placeholder="Comentarios" 
                     rows="5" cols="20"></textarea> 
             </div>
         </th>
