@@ -104,7 +104,7 @@
                                                             </div>
                                                         @elseif($desc->magnitud == "escala")
                                                             <div class="col">
-                                                                <small>- {{$desc->text}} [Magnitud:#{{$desc->escala_magnitud}}]</small>
+                                                                <small>- {{$desc->text}} [Magnitud:{{$desc->escala_magnitud}}]</small>
                                                             </div>
                                                         @elseif($desc->magnitud == "rango_asc")
                                                             <div class="col">

@@ -85,7 +85,7 @@
                                                             </div>
                                                         @elseif($desc->magnitud == "escala")
                                                             <div class="col">
-                                                                <small>- {!!nl2br($desc->text)!!} [Magnitud:#{{$desc->escala_magnitud}}]{!!nl2br("\n")!!}</small>
+                                                                <small>- {!!nl2br($desc->text)!!} [Magnitud:{{$desc->escala_magnitud}}]{!!nl2br("\n")!!}</small>
                                                             </div>
                                                         @elseif($desc->magnitud == "rango_asc")
                                                             <div class="col">

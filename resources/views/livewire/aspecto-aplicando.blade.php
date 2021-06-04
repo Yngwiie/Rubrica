@@ -1,18 +1,15 @@
 <tr style="background-color: #c9c9c9;">
     <th >
         <div class="row">
-            <div class="col-sm-9">
+            <div class="col-sm-12">
                 <small>{{$aspecto->nombre}}</small>
                 
             </div>
 
         </div>
-        <div class="row">
-            <div class="col-sm-8" style="margin-left: 27px;margin-top: 3px">
+            <div class="d-flex justify-content-center" >
                 <small>{{$aspecto->porcentaje}}%</small>
             </div>
-
-        </div>
         @if($revision!=true)
             @if($aspecto->criterios->first()->descripcion_avanzada!=null)
                 <div class="d-flex justify-content-center" >
@@ -23,7 +20,7 @@
         @if($tipo_puntaje == "unico")
             @if($aspecto->puntaje_obtenido != -1)
                 <div class="d-flex justify-content-center mt-2" >
-                    <small>Puntaje Obtenido: {{$aspecto->puntaje_obtenido}}</small>
+                    <u><small>Puntaje Obtenido: {{$aspecto->puntaje_obtenido}}</small></u>
                 </div>
             @endif
         @else
