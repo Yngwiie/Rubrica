@@ -1,4 +1,4 @@
-<th >
+<th style="width:250px" >
     <p style="width:200px;color:white">{{$nombre}}</p>
     
     <div class="row">
