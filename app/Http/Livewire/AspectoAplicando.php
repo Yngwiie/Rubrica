@@ -20,7 +20,7 @@ class AspectoAplicando extends Component
 
     protected $rules = [
         'aspecto.nombre' => 'required|string',
-        'aspecto.comentario' => 'string',
+        'aspecto.comentario' => 'max:1500',
         'aspecto.porcentaje' => 'required|integer|min:0|max:100'
     ];
 

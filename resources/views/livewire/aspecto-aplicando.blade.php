@@ -1,5 +1,5 @@
 <tr style="background-color: #c9c9c9;">
-    <th >
+    <th style="border-top: 1px solid #8F9194;">
         <div class="row">
             <div class="col-sm-12">
                 <small>{{$aspecto->nombre}}</small>
@@ -109,8 +109,12 @@
                 </div>
             </div>
         </div>
-        
-
+        @if($revision == 0)
+            <div class="row p-2">
+                <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="aspecto.comentario" placeholder="Comentarios" 
+                    rows="5" cols="20"></textarea> 
+            </div>
+        @endif
     </th>
 
     @foreach($aspecto->criterios as $criterio)
@@ -122,12 +126,12 @@
         
     @endforeach
     @if($revision == 0)
-        <th>
+        <!-- <th>
             <div class="row p-2">
                 <textarea style="font-size:small" type='text' class='form-control shadow-md' wire:model="aspecto.comentario" placeholder="Comentarios" 
                     rows="5" cols="20"></textarea> 
             </div>
-        </th>
+        </th> -->
     @else
         <th style="border-left: 1px solid #8F9194;">
             <div class="row p-2" >
