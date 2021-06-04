@@ -106,11 +106,9 @@
                 <thead class="bg-secondary">
                     <tr>
                         <livewire:dimension-component :dimension="$dimension" :key="time().$loop->index">
-                        <!-- @livewire('dimension-component',['dimension' => $dimension],key($loop->index)) -->
 
                         @foreach($dimension->nivelesDesempeno as $nivel)
                             <livewire:nivel-desempeno-component :nivel="$nivel" :rubrica="$rubrica" :key="time().$loop->index">
-                            <!-- @livewire('nivel-desempeno-component',['nivel' => $nivel], key($loop->index)) -->
                         @endforeach
                     </tr>
                 </thead>

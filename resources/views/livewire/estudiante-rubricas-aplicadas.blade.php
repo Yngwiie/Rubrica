@@ -65,7 +65,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex justify-content-center">
-                            <p>Seleccione Formato</p>
+                            <p>Seleccione el formato</p>
                         </div>
                         <div class="d-flex justify-content-center">
                                 <button class="btn btn-danger" wire:click="exportPDF()"><i class="far fa-lg fa-file-pdf"></i> PDF</button>
