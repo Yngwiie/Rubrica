@@ -193,6 +193,10 @@
                 contenedor.style.display = 'block'; 
                 toastr.info('No hay subcriterios que agregar.');  
             })
+            
+            window.Livewire.on('ErrorCalculo',()=>{
+                toastr.error('Error al calcular la nota, no puede existir un puntaje igual a cero.');  
+            })
             window.Livewire.on('quitarLoading',()=>{
                 var contenedor = document.getElementById('contenedor_carga');
 

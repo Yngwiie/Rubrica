@@ -136,7 +136,7 @@ class Estudiantes extends Component
         $validateData = $this->validate([
             'nombre' => 'required|string|max:100',
             'apellido' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email|unique:estudiantes'
         ]);
         $data = Estudiante::find($this->id_estudiante);
         
