@@ -18,7 +18,7 @@ class RevisionRubrica extends Component
     }
 
     public function mount($id_rubrica){
-        $this->rubrica_aplicando = RubricaAplicada::find($id_rubrica);
+        $this->rubrica_aplicando = RubricaAplicada::findOrFail($id_rubrica);
         $this->estudiante = Estudiante::find($this->rubrica_aplicando->id_estudiante);
         if($this->rubrica_aplicando->estudiante->email != Auth::user()->email ){//Evitar que puedan acceder a la revision de una rubrica de otro estudiante.
             $this->rubrica_aplicando = "";

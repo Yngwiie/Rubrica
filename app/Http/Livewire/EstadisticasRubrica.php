@@ -24,7 +24,7 @@ class EstadisticasRubrica extends Component
     public function mount($id_evaluacion, $misRubricas = null,$id_rubrica = null)
     {
         $this->misRubricas = $misRubricas;//Para identificar si el profesor esta consultando estadisticas o el estudiante.
-        $this->evaluacion = Evaluacion::find($id_evaluacion);
+        $this->evaluacion = Evaluacion::findOrFail($id_evaluacion);
 
         $this->rubrica_aplicada = RubricaAplicada::where('id_evaluacion',$id_evaluacion)->where('nota','!=',-1)->first();
 

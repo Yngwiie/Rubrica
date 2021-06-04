@@ -43,7 +43,7 @@ class RubricaMakerEdit extends Component
 
     public function mount($id_rubrica)
     {
-        $rubrica = Rubrica::find($id_rubrica);
+        $rubrica = Rubrica::findOrFail($id_rubrica);
         if($rubrica->id_usuario != Auth::user()->id && $rubrica->plantilla == false){//evitar acceder a rubricas de otros usuarios
             abort(401);
         }

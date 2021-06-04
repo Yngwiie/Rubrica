@@ -29,7 +29,7 @@ class RubricaAplicando extends Component
 
     public function mount($id_rubrica)
     {
-        $this->rubrica_aplicando = RubricaAplicada::find($id_rubrica);
+        $this->rubrica_aplicando = RubricaAplicada::findOrFail($id_rubrica);
         $this->rubrica = $this->rubrica_aplicando->evaluacion->rubrica;
         $this->estudiante = Estudiante::find($this->rubrica_aplicando->id_estudiante);
         if($this->rubrica_aplicando->evaluacion->rubrica->id_usuario != Auth::user()->id ){//Evitar que puedan acceder a rubricas aplicadas de otros usuarios
