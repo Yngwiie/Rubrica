@@ -9,7 +9,7 @@
                             <small style="font-size:11px"> <b>ID#{{$desc->id}}</b></small>
                             
                             @if($desc->aplicado == true)
-                                <div style="background-color:#D0FFD0">
+                                <div class="p-1" style="background-color:#D0FFD0">
                                     <div class="form-row mb-1">
                                         @if($desc->magnitud == "porcentaje1")
                                             <div class="w-41 ml-1">
@@ -53,45 +53,46 @@
                                     </div>
                                 </div>
                             @else
-                            
-                                <div class="form-row mb-1">
-                                    @if($desc->magnitud == "porcentaje1")
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                            <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
-                                        </div>
-                                
-                                    @elseif($desc->magnitud == "escala")
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                            <small><b>[Magnitud: {{$desc->escala_magnitud}}]</b></small>
-                                        </div>
-                                    @elseif($desc->magnitud == "porcentaje2")
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                            <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
-                                        </div>
-                                    @elseif($desc->magnitud == "rango_asc")
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                            <small><b>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</b></small>
-                                        </div>
-                                    @elseif($desc->magnitud == "frecuencia")
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                            <small><b>[Magnitud: {{$desc->frecuencia}}]</b></small>
-                                        </div>
-                                    @else
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                        </div>
-                                    @endif
-                                </div>
-                                
-                                <div class="form-row">
-                                    <div class="col-6">
-                                        <div class="input-group mb-1">
-                                            <small><i>[Peso: {{$desc->porcentaje}}%]</i></small>
+                                <div class="p-1">
+                                    <div class="form-row mb-1">
+                                        @if($desc->magnitud == "porcentaje1")
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                                <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
+                                            </div>
+                                    
+                                        @elseif($desc->magnitud == "escala")
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                                <small><b>[Magnitud: {{$desc->escala_magnitud}}]</b></small>
+                                            </div>
+                                        @elseif($desc->magnitud == "porcentaje2")
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                                <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
+                                            </div>
+                                        @elseif($desc->magnitud == "rango_asc")
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                                <small><b>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</b></small>
+                                            </div>
+                                        @elseif($desc->magnitud == "frecuencia")
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                                <small><b>[Magnitud: {{$desc->frecuencia}}]</b></small>
+                                            </div>
+                                        @else
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="col-6">
+                                            <div class="input-group mb-1">
+                                                <small><i>[Peso: {{$desc->porcentaje}}%]</i></small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +136,7 @@
                         @foreach($descripcion_avanzada as $desc)
                             <li wire:key="{{$loop->index}}">
                             @if($desc->aplicado == true)
-                                <div style="background-color:#D0FFD0">
+                                <div class="p-1" style="background-color:#D0FFD0">
                                     <div class="form-row mb-1">
                                         @if($desc->magnitud == "porcentaje1")
                                             <div class="w-41 ml-1">
@@ -179,45 +180,46 @@
                                     </div>
                                 </div>
                             @else
-                            
-                                <div class="form-row mb-1">
-                                    @if($desc->magnitud == "porcentaje1")
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                            <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
-                                        </div>
-                                
-                                    @elseif($desc->magnitud == "escala")
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                            <small><b>[Magnitud: {{$desc->escala_magnitud}}]</b></small>
-                                        </div>
-                                    @elseif($desc->magnitud == "porcentaje2")
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                            <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
-                                        </div>
-                                    @elseif($desc->magnitud == "rango_asc")
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                            <small><b>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</b></small>
-                                        </div>
-                                    @elseif($desc->magnitud == "frecuencia")
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                            <small><b>[Magnitud: {{$desc->frecuencia}}]</b></small>
-                                        </div>
-                                    @else
-                                        <div class="w-41 ml-1">
-                                            <small>{!!nl2br($desc->text)!!}</small>
-                                        </div>
-                                    @endif
-                                </div>
-                                
-                                <div class="form-row">
-                                    <div class="col-6">
-                                        <div class="input-group mb-1">
-                                            <small><i>[Peso: {{$desc->porcentaje}}%]</i></small>
+                                <div class="p-1">
+                                    <div class="form-row mb-1">
+                                        @if($desc->magnitud == "porcentaje1")
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                                <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
+                                            </div>
+                                    
+                                        @elseif($desc->magnitud == "escala")
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                                <small><b>[Magnitud: {{$desc->escala_magnitud}}]</b></small>
+                                            </div>
+                                        @elseif($desc->magnitud == "porcentaje2")
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                                <small><b>[Magnitud: {{$desc->porcentaje_magnitud}}%]</b></small>
+                                            </div>
+                                        @elseif($desc->magnitud == "rango_asc")
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                                <small><b>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</b></small>
+                                            </div>
+                                        @elseif($desc->magnitud == "frecuencia")
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                                <small><b>[Magnitud: {{$desc->frecuencia}}]</b></small>
+                                            </div>
+                                        @else
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="col-6">
+                                            <div class="input-group mb-1">
+                                                <small><i>[Peso: {{$desc->porcentaje}}%]</i></small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
