@@ -40,7 +40,7 @@
         <table class="table shadow" style="font-size:smaller"id="table{{$dimension->id}}">
             <thead class="bg-secondary">
                 <tr>
-                    <th >
+                    <th style="width:150px">
                         <p style="color:white"><u>{{$dimension->nombre}}</u></p>
                         <div class="row">
                             <div class="col-sm-8" style="margin-top:4px">
@@ -50,7 +50,7 @@
                     </th>
 
                     @foreach($dimension->nivelesDesempeno as $nivel)
-                    <th >
+                    <th style="width:150px">
                         <p style="color:white">{{$nivel->nombre}}</p>
                         <div class="row">
                             @if($rubrica->tipo_puntaje=="rango")
@@ -126,6 +126,9 @@
                                                             <small><i>[Peso:{{$desc->porcentaje}}%]</i></small>
                                                         </div>
                                                     </div>
+                                                    @if($loop->index != (count(json_decode($criterio->descripcion_avanzada))-1))
+                                                        <hr class="bg-dark">
+                                                    @endif
                                                 @endforeach
 
                                         @else
