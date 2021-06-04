@@ -35,7 +35,7 @@ class EstudiantesAplicacion extends Component
 
     public function mount($id_rubrica)
     {
-        $this->rubrica = Rubrica::find($id_rubrica);
+        $this->rubrica = Rubrica::findOrFail($id_rubrica);
         if($this->rubrica->id_usuario != Auth::user()->id ){//Evitar que puedan acceder a modulos de otros usuarios
             $this->rubrica = "";
             abort(401);

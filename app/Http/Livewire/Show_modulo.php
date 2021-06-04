@@ -40,7 +40,7 @@ class Show_modulo extends Component
 
     public function mount($id_modulo){
         $this->id_modulo = $id_modulo;
-        $modulo = Modulo::find($id_modulo);
+        $modulo = Modulo::findOrFail($id_modulo);
         if($modulo->id_usuario != Auth::user()->id ){//Evitar que puedan acceder a modulos de otros usuarios
             $this->id_modulo = "";
             abort(401);
