@@ -158,6 +158,11 @@
                                                 <small>{!!nl2br($desc->text)!!}</small>
                                                 <small><b>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</b></small>
                                             </div>
+                                        @elseif($desc->magnitud == "frecuencia")
+                                            <div class="w-41 ml-1">
+                                                <small>{!!nl2br($desc->text)!!}</small>
+                                                <small><b>[Magnitud: {{$desc->frecuencia}}]</b></small>
+                                            </div>
                                         @else
                                             <div class="w-41 ml-1">
                                                 <small>{!!nl2br($desc->text)!!}</small>
@@ -196,6 +201,11 @@
                                         <div class="w-41 ml-1">
                                             <small>{!!nl2br($desc->text)!!}</small>
                                             <small><b>[Magnitud: {{$desc->valor_min}}->{{$desc->valor_max}}]</b></small>
+                                        </div>
+                                    @elseif($desc->magnitud == "frecuencia")
+                                        <div class="w-41 ml-1">
+                                            <small>{!!nl2br($desc->text)!!}</small>
+                                            <small><b>[Magnitud: {{$desc->frecuencia}}]</b></small>
                                         </div>
                                     @else
                                         <div class="w-41 ml-1">
