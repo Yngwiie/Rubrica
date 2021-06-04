@@ -67,9 +67,6 @@
                         @foreach($dimension->nivelesDesempeno as $nivel)
                             <livewire:nivel-aplicando :nivel="$nivel" :rubrica="$rubrica_aplicando" :key="time().$loop->index">
                         @endforeach
-                        <th >
-                        <p style="width:200px;color:white">Comentarios</p>
-                        </th>
                     </tr>
                 </thead>
                 <tbody>

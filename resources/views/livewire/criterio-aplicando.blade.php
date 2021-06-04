@@ -1,4 +1,4 @@
-<th >
+<th style="border-top: 1px solid #8F9194;">
     @if($revision == 0)
         @if($deshabilitado == 0)
             <div>
