@@ -49,18 +49,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form wire:submit.prevent="store">
                     <div class="form-group">
                         <label for="Nombre">Nombre</label>
-                        <input type="text" name="nombre" class="form-control" wire:model="nombre">
+                        <input type="text" name="nombre" class="form-control" wire:model.defer="nombre">
                         @error('nombre') <span class="error text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
                         <label for="fecha">Fecha</label>
-                        <input type="date" name="fecha" class="form-control" wire:model="fecha">
+                        <input type="date" name="fecha" class="form-control" wire:model.defer="fecha">
                         @error('fecha') <span class="error text-danger">{{ $message }}</span> @enderror
                     </div>
-                </form>
+                
                 <div class="d-flex justify-content-center mt-2">
                     <div wire:loading wire:target="store">
                         <x-loading></x-loading>
@@ -69,10 +69,11 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" wire:loading.attr="disabled" wire:click="store()">Agregar Evaluación</button>
+                <a type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
+                <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Agregar Evaluación</button>
 
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -115,18 +116,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form wire:submit.prevent="update">
                     <div class="form-group">
                         <label for="Nombre">Nombre</label>
-                        <input type="text" name="nombre" class="form-control" wire:model="nombre">
+                        <input type="text" name="nombre" class="form-control" wire:model.defer="nombre">
                         @error('Nombre') <span class="error text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
                         <label for="Fecha">Fecha</label>
-                        <input type="date" name="nombre" class="form-control" wire:model="fecha">
+                        <input type="date" name="nombre" class="form-control" wire:model.defer="fecha">
                         @error('Nombre') <span class="error text-danger">{{ $message }}</span> @enderror
                     </div>
-                </form>
+                
                 <div class="d-flex justify-content-center mt-2">
                     <div wire:loading wire:target="update">
                         <x-loading></x-loading>
@@ -135,10 +136,11 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" wire:loading.attr="disabled" wire:click="update()">Editar Evaluación</button>
+                <a type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
+                <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Editar Evaluación</button>
 
             </div>
+            </form>
         </div>
     </div>
 </div>

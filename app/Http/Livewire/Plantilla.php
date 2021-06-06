@@ -45,7 +45,9 @@ class Plantilla extends Component
         $this->id_evaluacion = "";
         $this->id_rubrica = "";
     }
-
+    /**
+     * Método para copiar una plantilla y crear una rúbrica nueva.
+     */
     public function copyTemplate()
     {
         $this->validate();

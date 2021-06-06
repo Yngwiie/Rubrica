@@ -37,14 +37,12 @@ class RubricaAplicando extends Component
             abort(401);
         }
     }
-    public function updated2()
-    {
-        $this->rubrica_aplicando->save();
-        $this->emit('addScroll');
-    }
-    
+    /**
+     * Método para aplicar/ejecutar una rúbrica, donde se calcula la nota final.
+     */
     public function aplicarRubrica()
-        {try {
+    {
+        try {
             if($this->rubrica_aplicando->tipo_puntaje == "unico"){//si el tipo de puntaje es único
                 $porcentaje_nota_dimension = 0;
                 foreach($this->rubrica_aplicando->dimensiones as $dimension)
@@ -145,7 +143,6 @@ class RubricaAplicando extends Component
                     $primer_nivel = $dimension->nivelesDesempeno->first();
                     $ultimo_nivel = $dimension->nivelesDesempeno->last();
                     
-                    /* $puntaje_total_dimension = $nivel->puntaje*$num_aspectos; */
                     $sumas_puntajes_obtenido_minimo = 0;
                     $sumas_puntajes_obtenido_maximo = 0;
                     $sumas_puntajes_obtenido_sugerido = 0;
@@ -224,10 +221,8 @@ class RubricaAplicando extends Component
             $this->emit('ErrorCalculo');
         }
         
-
-        
-        
     }
+    
     public function redondeado ($numero, $decimales) 
     {
         $factor = pow(10, $decimales);

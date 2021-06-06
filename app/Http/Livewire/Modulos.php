@@ -28,7 +28,9 @@ class Modulos extends Component
                         ->orderBy('id','DESC')->paginate(5);
         return view('livewire.modulos',['modulos' => $modulos]);
     }
-
+    /**
+     * Método para registrar un módulo.
+     */
     public function store()
     {
         $validateData = $this->validate([
@@ -43,6 +45,9 @@ class Modulos extends Component
         $this->resetInputFields();
         $this->emit('moduloAgregado');
     }
+    /**
+     * Metodo para setear datos que se editarán.
+     */
     public function edit($id)
     {   
        $data =   Modulo::findOrFail($id); 
@@ -50,6 +55,9 @@ class Modulos extends Component
        $this->data_id = $id;
        $this->nombre = $data->nombre;
     }
+    /**
+     * Método para actualizar datos de un módulo.
+     */
     public function update()
     {
         $validateData = $this->validate([
@@ -65,6 +73,9 @@ class Modulos extends Component
         $this->resetInputFields();
         $this->emit('moduloAgregado');
     }
+    /**
+     * Método para setear los datos de un módulo que se eliminará.
+     */
     public function delete($id)
     {   
        $data =   Modulo::findOrFail($id); 
@@ -72,6 +83,9 @@ class Modulos extends Component
        $this->data_id = $id;
        $this->nombre = $data->nombre;
     }
+    /**
+     * Método para eliminar un módulo.
+     */
     public function destroy()
     {
         Modulo::destroy($this->data_id);
@@ -79,6 +93,7 @@ class Modulos extends Component
         $this->resetInputFields();
         $this->emit('moduloEliminado');
     }
+
     public function setPage($url)
     {
         $this->currentPage = explode('page=',$url)[1];

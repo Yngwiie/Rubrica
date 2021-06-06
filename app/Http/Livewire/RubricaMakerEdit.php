@@ -52,7 +52,7 @@ class RubricaMakerEdit extends Component
         $this->porcentaje_restante = 100;
     }
     /**
-     * add new sub criteria
+     * Agregar un nuevo subcriterio al arreglo de subcriterios.
      */
     public function addSubcriterio()
     {   
@@ -102,20 +102,20 @@ class RubricaMakerEdit extends Component
         $this->magnitud_subcriterio = "";
         $this->porcentaje_subcriterio = "";
     }
+
     function redondeado ($numero, $decimales)
     {
         $factor = pow(10, $decimales);
         return (round($numero*$factor)/$factor); 
     }
     /**
-     * Remove sub criteria
+     * Remover un subcriterio del arreglo de subcriterios.
      */
     public function removeSubcriterio($index)
     {
         $this->porcentaje_restante += $this->sub_criterios[$index]["porcentaje"];
         unset($this->sub_criterios[$index]);
         $this->sub_criterios = array_values($this->sub_criterios);
-
     }
 
     public function updated()
@@ -190,17 +190,13 @@ class RubricaMakerEdit extends Component
         if($message != ""){
             session()->flash('warning',$message); 
         }
-        /* session()->flash('success','Salvado.');  */
         $this->newversion();
         $this->emit("salvado");
-        /* return redirect()->route('rubric.edit', $this->id_rubrica);  */
         
     }
 
     public function storeAspecto($id_dimension)
     {
-        /* $this->validate();
-        $this->rubrica->save(); */
         $dimension = Dimension::findOrFail($id_dimension);
         $aspecto = Aspecto::create([
             'nombre' => 'aspecto',
@@ -240,7 +236,7 @@ class RubricaMakerEdit extends Component
         }
     }
     /**
-     * store an aspect with criteria associated(Advanced version)
+     * Registrar un aspecto avanzado en la base de datos.
      */
     public function storeAspectoAvanzado()
     {
@@ -392,7 +388,7 @@ class RubricaMakerEdit extends Component
     }
 
     /**
-     * Delete specific aspect.
+     * Eliminar un aspecto especifico.
      */
     public function deleteAspecto($id_aspecto)
     {
@@ -404,7 +400,7 @@ class RubricaMakerEdit extends Component
         
     }
     /**
-     * 
+     * Eliminar un nivel especifico.
      */
     public function deleteLevel($id_nivel)
     {
@@ -415,7 +411,7 @@ class RubricaMakerEdit extends Component
         return redirect()->route('rubric.edit', $this->id_rubrica);
     }
     /**
-     * 
+     * Registrar un nivel.
      */
     public function storeNivel($id_dimension){
 
@@ -444,7 +440,7 @@ class RubricaMakerEdit extends Component
         return redirect()->route('rubric.edit', $this->id_rubrica);
     }
     /**
-     * Create a new dimension
+     * Registrar una nueva dimensión.
      */
     public function storeDimension(){
         $this->rubrica->save();

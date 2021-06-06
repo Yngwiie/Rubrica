@@ -161,7 +161,7 @@ class DatabaseSeeder extends Seeder
             'porcentaje' => 20,
         ]);
         Criterio::create([
-            'descripcion' => 'Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:
+            'descripcion' => 'Apoya un clima de equipo constructivo al realizar una de las siguientes acciones:
 - Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicación.
 - Utiliza un tono vocal o escrito positivo, expresiones faciales y/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.
 - Motiva a los compañeros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.
@@ -170,7 +170,7 @@ class DatabaseSeeder extends Seeder
             'id_nivel' => $nivel1->id,
         ]);
         Criterio::create([
-            'descripcion' => 'Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:
+            'descripcion' => 'Apoya un clima de equipo constructivo haciendo dos de las siguientes acciones:
 - Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicación.
 - Utiliza un tono vocal o escrito positivo, expresiones faciales y/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.
 - Motiva a los compañeros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.
@@ -179,7 +179,7 @@ class DatabaseSeeder extends Seeder
             'id_nivel' => $nivel2->id,
         ]);
         Criterio::create([
-            'descripcion' => 'Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:
+            'descripcion' => 'Apoya un clima de equipo constructivo haciendo tres de las siguientes acciones:
 - Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicación.
 - Utiliza un tono vocal o escrito positivo, expresiones faciales y/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.
 - Motiva a los compañeros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.
@@ -188,7 +188,7 @@ class DatabaseSeeder extends Seeder
             'id_nivel' => $nivel3->id,
         ]);
         Criterio::create([
-            'descripcion' => 'Apoya un clima de equipo constructivo haciendo cualquiera de las siguientes acciones:
+            'descripcion' => 'Apoya un clima de equipo constructivo haciendo todo lo siguiente:
 - Tratar a los miembros del equipo con respeto, siendo educado y constructivo en la comunicación.
 - Utiliza un tono vocal o escrito positivo, expresiones faciales y/o lenguaje corporal para transmitir una actitud positiva sobre el equipo y su trabajo.
 - Motiva a los compañeros de equipo expresando confianza en la importancia de la tarea y en la capacidad del equipo para llevarla a cabo.

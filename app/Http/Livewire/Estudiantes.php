@@ -60,7 +60,9 @@ class Estudiantes extends Component
         $this->email = '';
         $this->apellido = '';
     }
-
+    /**
+     * Método para registrar un estudiante.
+     */
     public function store()
     {
         $validateData = $this->validate([
@@ -107,9 +109,6 @@ class Estudiantes extends Component
             }
         }
         
-        
-        
-
         session()->flash('success','Estudiante agregado con éxito.');
         $this->resetInputFields();
         $this->emit('estudianteAgregado');
@@ -133,13 +132,23 @@ class Estudiantes extends Component
      */
     public function update()
     {
-        $validateData = $this->validate([
-            'nombre' => 'required|string|max:100',
-            'apellido' => 'required',
-            'email' => 'required|email|unique:estudiantes'
-        ]);
         $data = Estudiante::find($this->id_estudiante);
+
+        if($data->email == $this->email){
+            $this->validate([
+                'nombre' => 'required|string|max:100',
+                'apellido' => 'required',
+                'email' => 'required|email'
+            ]);
+        }else{
+            $this->validate([
+                'nombre' => 'required|string|max:100',
+                'apellido' => 'required',
+                'email' => 'required|email|unique:estudiantes'
+            ]);
+        }
         
+    
         $data->update([
             'nombre' => $this->nombre,
             'apellido' =>$this->apellido,
@@ -185,7 +194,9 @@ class Estudiantes extends Component
             return $this->currentPage;
         });
     }
-
+    /**
+     * Método para importar estudiantes a través de un excel.
+     */
     public function import()
     {
         $this->validate([

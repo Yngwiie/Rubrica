@@ -119,7 +119,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal agregar evaluacion -->
+    <!-- Modal clonar rúbrica -->
     <div wire:ignore.self class="modal fade" id="copyRubrica" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -143,7 +143,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary"  onclick="copyRubric()" data-dismiss="modal">Seleccionar</button>
+                    <button type="button" class="btn btn-primary"  onclick="copyRubric()" data-dismiss="modal">Clonar</button>
                 </div>
             </div>
         </div>
