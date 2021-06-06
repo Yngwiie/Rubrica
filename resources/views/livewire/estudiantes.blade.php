@@ -55,36 +55,36 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="Nombre">Nombre</label>
-                            <input type="text" name="nombre" class="form-control" wire:model.defer="nombre">
-                            @error('nombre') <span class="error text-danger">{{ $message }}</span> @enderror
+                <form wire:submit.prevent="store">
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label for="Nombre">Nombre</label>
+                                <input type="text" name="nombre" class="form-control" wire:model.defer="nombre">
+                                @error('nombre') <span class="error text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha">Apellido</label>
+                                <input type="text" name="fecha" class="form-control" wire:model.defer="apellido">
+                                @error('apellido') <span class="error text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha">Correo Electrónico</label>
+                                <input type="text" name="fecha" class="form-control" wire:model.defer="email">
+                                @error('email') <span class="error text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        
+                        <div class="d-flex justify-content-center mt-2">
+                            <div wire:loading wire:target="store">
+                                <x-loading></x-loading>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="fecha">Apellido</label>
-                            <input type="text" name="fecha" class="form-control" wire:model.defer="apellido">
-                            @error('apellido') <span class="error text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="fecha">Correo Electrónico</label>
-                            <input type="text" name="fecha" class="form-control" wire:model="email">
-                            @error('email') <span class="error text-danger">{{ $message }}</span> @enderror
-                        </div>
-                    </form>
-                    <div class="d-flex justify-content-center mt-2">
-                        <div wire:loading wire:target="store">
-                            <x-loading></x-loading>
-                        </div>
+
                     </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" wire:loading.attr="disabled" wire:click="store()">Agregar Estudiante</button>
-
-                </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
+                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Agregar Estudiante</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -111,8 +111,6 @@
                             </div>
                             <input type="file"  id="customFile" wire:model="fileImport"/>
                         </div>
-                        
-                        <!-- @error('fileImport') <span class="error text-danger">{{ $message }}</span> @enderror -->
                     </form>
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -132,25 +130,22 @@
                     @endif
                 </div>
                 <div wire:loading wire:target="import">
-                        <div class="d-flex justify-content-center">
-                            <strong>Importando estudiantes...</strong>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            
-                            <x-loading-md></x-loading-md>
-                        </div>
+                    <div class="d-flex justify-content-center">
+                        <strong>Importando estudiantes...</strong>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <x-loading-md></x-loading-md>
+                    </div>
                 </div>
 
                 <div wire:loading wire:target="descargarPlantillaImport">
-                        <div class="d-flex justify-content-center">
-                            
-                            <x-loading-md></x-loading-md>
-                        </div>
+                    <div class="d-flex justify-content-center">
+                        <x-loading-md></x-loading-md>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" wire:target="fileImport,import" wire:loading.attr="disabled" wire:click="import()">Importar Estudiantes</button>
-                    
                 </div>
             </div>
         </div>
@@ -177,7 +172,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-danger" wire:loading.attr="disabled" wire:click="destroy()">Eliminar Estudiante</button>
-
                 </div>
             </div>
         </div>
@@ -193,34 +187,35 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                <form>
+                <form wire:submit.prevent="update">
+                    <div class="modal-body">
                         <div class="form-group">
                             <label for="Nombre">Nombre</label>
-                            <input type="text" name="nombre" class="form-control" wire:model="nombre">
+                            <input type="text" name="nombre" class="form-control" wire:model.defer="nombre">
                             @error('nombre') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <label for="fecha">Apellido</label>
-                            <input type="text" name="fecha" class="form-control" wire:model="apellido">
+                            <input type="text" name="fecha" class="form-control" wire:model.defer="apellido">
                             @error('apellido') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group">
                             <label for="fecha">Correo Electrónico</label>
-                            <input type="text" name="fecha" class="form-control" wire:model="email">
+                            <input type="text" name="fecha" class="form-control" wire:model.defer="email">
                             @error('email') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
-                    </form>
-                    <div class="d-flex justify-content-center mt-2">
-                        <div wire:loading wire:target="update">
-                            <x-loading></x-loading>
+                        
+                        <div class="d-flex justify-content-center mt-2">
+                            <div wire:loading wire:target="update">
+                                <x-loading></x-loading>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" wire:loading.attr="disabled" wire:click="update()">Editar Estudiante</button>
-                </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
+                        <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">Editar Estudiante</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

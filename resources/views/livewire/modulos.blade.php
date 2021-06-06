@@ -74,13 +74,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form wire:submit.prevent="store">
                         <div class="form-group">
                             <label for="Nombre">Nombre</label>
-                            <input type="text" name="nombre" class="form-control" wire:model="nombre">
+                            <input type="text" name="nombre" class="form-control" wire:model.defer="nombre">
                             @error('nombre') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
-                    </form>
+                    
                     <div class="d-flex justify-content-center mt-2">
                         <div wire:loading wire:target="store">
                             <x-loading></x-loading>
@@ -88,10 +88,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:loading.attr="disabled" class="btn btn-primary" wire:click="store()">Agregar Módulo</button>
-
+                    <a type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
+                    <button type="submit" wire:loading.attr="disabled" class="btn btn-primary">Agregar Módulo</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -107,13 +107,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form wire:submit.prevent="update">
                         <div class="form-group">
                             <label for="Nombre">Nombre</label>
-                            <input type="text" name="nombre" class="form-control" wire:model.lazy="nombre">
+                            <input type="text" name="nombre" class="form-control" wire:model.defer="nombre">
                             @error('Nombre') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
-                    </form>
+                    
                     <div class="d-flex justify-content-center mt-2">
                         <div wire:loading wire:target="update">
                             <x-loading></x-loading>
@@ -122,10 +122,11 @@
                 </div>
                 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:loading.attr="disabled" class="btn btn-primary" wire:click="update()">Editar Módulo</button>
+                    <a type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</a>
+                    <button type="submit" wire:loading.attr="disabled" class="btn btn-primary">Editar Módulo</button>
 
                 </div>
+                </form>
             </div>
         </div>
     </div>
