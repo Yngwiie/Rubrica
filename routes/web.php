@@ -15,6 +15,7 @@ use App\Http\Livewire\RevisionRubrica;
 use App\Http\Livewire\RubricaAplicando;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,11 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    if (Auth::guest()) {
+        return redirect()->guest('login');
+    }else{
+        return redirect()->route('dashboard');
+    }
 });
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
