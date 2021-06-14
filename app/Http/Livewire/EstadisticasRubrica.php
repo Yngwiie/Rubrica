@@ -50,13 +50,17 @@ class EstadisticasRubrica extends Component
             $this->rubrica_aplicada = $this->evaluacion->rubrica;
             return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel,'pocosDatos' => true]);
         }
-        $estudiante = Estudiante::where('email',Auth::user()->email)->first();
-        $modulo_estudiante = modulo_estudiante::where('id_estudiante',$estudiante->id)->where('id_modulo',$this->rubrica_aplicada->evaluacion->modulo->id)->first();
-        if($modulo_estudiante == null & $this->misRubricas==null){//validar si el estudiante aun pertenece al curso, para poder ver estadisticas.
-            $this->estudiante_no_percenece_al_modulo = true;
-            $this->rubrica_aplicada = $this->evaluacion->rubrica;
-            return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel,'pocosDatos' => true]);
+
+        if($this->misRubricas != null){
+            $estudiante = Estudiante::where('email',Auth::user()->email)->first();
+            $modulo_estudiante = modulo_estudiante::where('id_estudiante',$estudiante->id)->where('id_modulo',$this->rubrica_aplicada->evaluacion->modulo->id)->first();
+            if($modulo_estudiante == null){//validar si el estudiante aun pertenece al curso, para poder ver estadisticas.
+                $this->estudiante_no_percenece_al_modulo = true;
+                $this->rubrica_aplicada = $this->evaluacion->rubrica;
+                return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel,'pocosDatos' => true]);
+            }
         }
+        
         if($this->rubrica_aplicada->escala_notas == "1-7"){
             $estudiantes_aprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','>=',$this->rubrica_aplicada->nota_aprobativa)->where('nota','!=','-1')->count();
             $estudiantes_reprobados = estudiante_evaluacion::where('id_evaluacion',$this->rubrica_aplicada->id_evaluacion)->where('nota','<',$this->rubrica_aplicada->nota_aprobativa)->where('nota','!=','-1')->count();
