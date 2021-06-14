@@ -51,7 +51,7 @@ class EstadisticasRubrica extends Component
             return view('livewire.estadisticas-rubrica',['pieChartModel' => $pieChartModel,'columnChartModel' => $columnChartModel,'pocosDatos' => true]);
         }
 
-        if($this->misRubricas != null){
+        if($this->misRubricas != true){
             $estudiante = Estudiante::where('email',Auth::user()->email)->first();
             $modulo_estudiante = modulo_estudiante::where('id_estudiante',$estudiante->id)->where('id_modulo',$this->rubrica_aplicada->evaluacion->modulo->id)->first();
             if($modulo_estudiante == null){//validar si el estudiante aun pertenece al curso, para poder ver estadisticas.
